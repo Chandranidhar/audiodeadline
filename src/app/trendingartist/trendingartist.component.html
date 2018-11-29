@@ -1,0 +1,896 @@
+<app-artistheader></app-artistheader>
+
+<div *ngIf="this.showLoader!=0" class="loder_body">
+  <div class="loder_wrapper">
+    <div class="loader"></div>
+  </div>
+</div>
+
+<form class="tatopheaderform">
+
+  <div class="container-fluid pageheaderblock tendingheaderborder">
+    <div class="row no-gutter">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1>TRENDING ARTISTS</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid tendingartistblock1 tendingheaderborder">
+    <div class="row no-gutter">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tendingartistblock1contentwrapper">
+        <div class="tendingartistblock1content">
+          <h2>
+            <span>Newest to Oldest</span>
+            <span>|</span>
+            <span>By Largest Audience</span>
+            <span>|</span>
+            <span>Date Range</span>
+            <label><input type="text" class="form-control" name="searchattribute" value="">  <span>view all</span></label>
+          </h2>
+          <div class="btntopformgraylists">
+            <div class="col"><button type="button" class="btn btntopformgray" (click)="showgenremodal()">Genre</button></div>
+            <!--<div class="col"><button type="button" class="btn btntopformgray">Country</button></div>-->
+            <div class="col"><button type="button" class="btn btntopformgray" (click)="showstatemodal()">State</button></div>
+            <div class="col"><button type="button" class="btn btntopformgray" (click)="showcitymodal()">City</button></div>
+            <div class="col"><button type="button" class="btn btntopformgray">Zip Code</button></div>
+            <!--<div class="col"><button type="button" class="btn btntopformgray">Radius</button></div>-->
+          </div>
+          <div class="btntopformredlists">
+            <div class="col" *ngFor="let vals of selectedgenrearray" ><button type="button" class="btn btntopformred" (click)="removeselectedgenre(vals)"><i class="fa fa-close"></i> {{vals.genrename}}</button></div>
+            <!--
+            <div class="col" *ngFor="let vals of selectedgenrearray"><a (click)="removeselectedgenre(vals)" class="btntopformrednew"><i class="fa fa-close"></i>{{vals.genrename}}</a></div>
+
+
+            <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> Jazz</button></div>
+            <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> Instrumental</button></div>
+            <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> New York</button></div>
+            <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> California</button></div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid tendingartistblock2 tendingheaderborder">
+    <div class="row no-gutter">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tendingartistblock2contentwrapper">
+        <div class="tendingartistblock2content">
+          <div class="btntopformoffwhitelists">
+            <div class="col"><h2>Saved Search</h2></div>
+            <div class="col"><button type="button" class="btn btntopformoffwhite"><i class="fa fa-close"></i> California</button></div>
+            <div class="col"><button type="button" class="btn btntopformoffwhite"><i class="fa fa-close"></i> DJ</button></div>
+            <div class="col"><button type="button" class="btn btntopformoffwhite"><i class="fa fa-close"></i> Christian Rock</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid tendingartistblock3 tendingheaderborder">
+    <div class="row no-gutter">
+      <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 tendingartistleftdiv">
+        <div class="row no-gutter sectionheaderinner col-container">
+
+          <div class="col-1-2 col tendingartistsinglecol"  *ngFor="let val of userlist">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <a [routerLink]="['/userprofile',val._id,val.username]">
+                      <img *ngIf="val.images!= undefined" src={{imgPath(val.images)}} alt="rightbannerdiv screen6" style="cursor: pointer">
+                    </a>
+                    <a [routerLink]="['/userprofile',val._id,val.username]">
+                    <img *ngIf="val.images== undefined" src="../../assets/images/default_profile_pic.jpg" alt="rightbannerdiv screen6">
+                    </a>
+                    <!--<img src="assets/images/taimg4.jpg" alt="rightbannerdiv screen6">-->
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop" >
+
+                      <a [routerLink]="['/userprofile',val._id,val.username]"><h2>{{val.fullname}}</h2></a>
+                      <!--<h4 *ngIf="val.fulladdress!=null ">{{val.fulladdress}}</h4>-->
+                      <!--<h4 *ngIf="val.fulladdress==null "> </h4>-->
+                      <h4>{{val.fulladdress}}</h4>
+                    </div>
+                    <div *ngIf="val.musicians==1 || val.dancer==1"  class="contentmiddle  ">
+                      <h2 class="gn5">
+                        <label class="greenclrtxt">Genre:</label>
+                          <!--<span>{{getgenrelist(val.genredetail)}}</span>-->
+                          <span>{{getgenrelist(val.genredetail)}}</span>
+                      </h2>
+                    </div>
+                    <div class="contentmiddle">
+ <h2>
+   <label class="greenclrtxt" *ngIf="val.musicians==1">Musician</label>
+   <label class="greenclrtxt" *ngIf="val.musicians==1 && (val.dancer==1 || val.model==1)">,</label>
+   <label class="greenclrtxt" *ngIf="val.dancer==1">Dancer</label>
+   <label class="greenclrtxt" *ngIf="val.dancer==1 && val.model==1">,</label>
+   <label class="greenclrtxt" *ngIf="val.model==1">Model</label>
+
+
+                        <!--<span *ngIf="val.musicians==1">Musician</span>-->
+                        <!--<span *ngIf="val.musicians==1 && (val.dancer==1 || val.model==1)">,</span>-->
+                        <!--<span *ngIf="val.dancer==1">Dancer</span>-->
+                        <!--<span *ngIf="val.dancer==1 && val.model==1">,</span>-->
+                        <!--<span *ngIf="val.model==1">Model</span>-->
+
+ </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 0 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 0 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 0 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient" [routerLink]="['/userprofile',val._id,val.username]">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         <!-- <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg3.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg4.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg5.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg6.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg7.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg8.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg9.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg10.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg11.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg12.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg13.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg14.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg15.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-2 col tendingartistsinglecol">
+            <div class="tendingartistcol">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col tendingartistsinglecolleft">
+                  <div class="imagewrappertamain">
+                    <img src="assets/images/taimg16.jpg" alt="rightbannerdiv screen6">
+                  </div>
+                </div>
+                <div class="col tendingartistsinglecolright">
+                  <div class="tendingartistsinglecolrightcontent">
+                    <div class="contenttop">
+                      <h2>Farin Sahn</h2>
+                      <h4>25, Disney Land,<br>
+                        Branford, Florida<br>
+                        32008, US</h4>
+                    </div>
+                    <div class="contentmiddle">
+                      <h2>
+                        <label class="greenclrtxt">Genre:</label>
+                        <span>Jazz,</span><span>Hip-Hop,</span><span>Poping,</span><span>+3 more..</span>
+                      </h2>
+                    </div>
+                    <div class="contentbottom">
+                      <div class="feedslinks">
+                        <span class="feedslinks1"><i class="fa fa-users"></i>[ 389 ]</span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 351 ]</span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 51 ]</span>
+                        <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient">view profile</a></div></span>
+                      </div>
+                    </div>
+                    <div class="hearticon">
+                      <i class="fa fa-heart"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+        <div class="col-md-12 buttonviewallwrappernew">
+          <!--<a class="btn icon-btn" href="javascrip:void(0);">-->
+            <!--<label>View All</label> <span class="glyphicon btn-glyphicon fa fa-angle-down img-circle text-primary"></span>-->
+          <!--</a>-->
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv">
+        <!---Right Side Banner Start Block---->
+        <div class="rightbannerdivwrapper">
+          <div class="rightbannerdiv">
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen6.jpg" alt="rightbannerdiv screen6"></div>
+            </div>
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
+            </div>
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen7.jpg" alt="rightbannerdiv screen7"></div>
+            </div>
+          </div>
+        </div>
+        <!---Right Side Banner End Block---->
+
+        <!--<div class="rightbannerdivwrapper">
+          <div class="rightbannerdiv">
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen6.jpg" alt="competitionrightbannerdivscreen6"></div>
+            </div>
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen3.jpg" alt="competitionrightbannerdivscreen3"></div>
+            </div>
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen7.jpg" alt="competitionrightbannerdivscreen7"></div>
+            </div>
+            <div class="rightbannerdivimg">
+              <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen9.jpg" alt="competitionrightbannerdivscreen9"></div>
+            </div>
+          </div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+
+
+
+</form>
+
+<app-artistfooter></app-artistfooter>
+
+
+<ng-template #commingsoontemplate>
+  <div class="modal-body text-center signupeamilbody">
+
+    <button type="button" class="close" (click)="closep()">&times;</button>
+    <img src="../../assets/images/artistheaderlogo.png" alt="logo">
+    <p><span>This is currently a concept page to give you and idea of what the ArtistXP Experience is going to be all about. When we launch you will have access to these incredible features. <br><br>Get the ArtistXP Experience NOW!  <a style="cursor: pointer; width: 360px;" (click)="gotoSignUp()">Get back to Pre Launch Sign Up</a></span></p>
+
+  </div>
+</ng-template>
+
+
+<!--modal starts here-->
+<div *ngIf="isGenreModalShown" class="modal fade modalUpload tatopheaderformnew" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Genre</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isGenreModalShown=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <div><h2>Genre For Music</h2></div>
+          <div class="btntopformgraylistsnew" >
+            <div class="col" *ngFor="let valm of musicgenrearray"><a class="btntopformgraynew" (click)="selectedgenre(valm)">{{valm.genrename}}</a></div>
+            <!--<div class="col"><a class="btntopformgraynew">Blues</a></div>
+            <div class="col"><a class="btntopformgraynew">Country</a></div>
+            <div class="col"><a class="btntopformgraynew">EDM</a></div>
+            <div class="col"><a class="btntopformgraynew">Heavy Metal</a></div>
+            <div class="col"><a class="btntopformgraynew">Hip-Hop (Music)</a></div>
+            <div class="col"><a class="btntopformgraynew">Jazz (Music)</a></div>
+            <div class="col"><a class="btntopformgraynew">Musical</a></div>
+            <div class="col"><a class="btntopformgraynew">Pop</a></div>
+            <div class="col"><a class="btntopformgraynew">Rap</a></div>
+            <div class="col"><a class="btntopformgraynew">Rock</a></div>-->
+          </div>
+
+        <div><h2>Genre For Dance</h2></div>
+        <div class="btntopformgraylistsnew" >
+          <div class="col" *ngFor="let vald of dancegenrearray"><a (click)="selectedgenre(vald)" class="btntopformgraynew" >{{vald.genrename}}</a></div>
+         <!-- <div class="col"><a class="btntopformgraynew">Ballet</a></div>
+          <div class="col"><a class="btntopformgraynew">Contemporary</a></div>
+          <div class="col"><a class="btntopformgraynew">Hip-Hop (Dance)</a></div>
+          <div class="col"><a class="btntopformgraynew">Jazz (Dance)</a></div>
+          <div class="col"><a class="btntopformgraynew">Lyrical</a></div>
+          <div class="col"><a class="btntopformgraynew">Modern</a></div>
+          <div class="col"><a class="btntopformgraynew">Open (Combination of Dance)</a></div>
+          <div class="col"><a class="btntopformgraynew">Tap</a></div>-->
+        </div>
+
+
+        <div><h2>Selected Genre</h2></div>
+        <div class="btntopformredlistsnew">
+          <div class="col" *ngFor="let vals of selectedgenrearray"><a (click)="removeselectedgenre(vals)" class="btntopformrednew"><i class="fa fa-close"></i>{{vals.genrename}}</a></div>
+          <!--<div class="col" ><a class="btntopformrednew"><i class="fa fa-close"></i> Jazz</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Instrumental</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Modern</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Country</a></div>-->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btnpink" data-dismiss="modal" >Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--state modal starts here-->
+<div *ngIf="isStateModalShown" class="modal fade modalUpload tatopheaderformnew" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">State</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isStateModalShown=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="btntopformgraylistsnew" >
+          <div class="col" *ngFor="let valc of statearray"><a class="btntopformgraynew" (click)="selectedstate(valc)">{{valc.name}}</a></div>
+         <!-- <div class="col"><a class="btntopformgraynew">Ballet</a></div>
+          <div class="col"><a class="btntopformgraynew">Contemporary</a></div>
+          <div class="col"><a class="btntopformgraynew">Hip-Hop (Dance)</a></div>
+          <div class="col"><a class="btntopformgraynew">Jazz (Dance)</a></div>
+          <div class="col"><a class="btntopformgraynew">Lyrical</a></div>
+          <div class="col"><a class="btntopformgraynew">Modern</a></div>
+          <div class="col"><a class="btntopformgraynew">Open (Combination of Dance)</a></div>
+          <div class="col"><a class="btntopformgraynew">Tap</a></div>-->
+        </div>
+
+
+        <div><h2>Selected Genre</h2></div>
+        <div class="btntopformredlistsnew">
+          <div class="col" *ngFor="let vals of selectedstatearray"><a class="btntopformrednew" (click)="removeselectedstate(vals)" ><i class="fa fa-close"></i>{{vals.name}}</a></div>
+          <!--(click)="removeselectedgenre(vals)"-->
+          <!--<div class="col" ><a class="btntopformrednew"><i class="fa fa-close"></i> Jazz</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Instrumental</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Modern</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Country</a></div>-->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btnpink" data-dismiss="modal" >Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--state modal ends here-->
+
+<!--city modal starts here-->
+
+<div *ngIf="isCityModalShown" class="modal fade modalUpload tatopheaderformnew" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">City</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isCityModalShown=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="btntopformgraylistsnew" >
+
+          <form  name="cityForm" novalidate [formGroup]="cityForm" (ngSubmit)="citysubmit(cityForm.value)">
+
+            <div class="form-group">
+              <label>Name of the city:</label>
+              <input name="first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="cityForm.controls['cityname']">
+              <span class="has-error" *ngIf ="cityForm.controls['cityname'].touched && !cityForm.controls['cityname'].valid">City field can not be blank</span>
+            </div>
+          </form>
+        </div>
+
+        <!--<div class="btntopformgraylistsnew" >
+          <div class="col" *ngFor="let valc of statearray"><a class="btntopformgraynew" (click)="selectedstate(valc)">{{valc.name}}</a></div>
+          &lt;!&ndash; <div class="col"><a class="btntopformgraynew">Ballet</a></div>
+           <div class="col"><a class="btntopformgraynew">Contemporary</a></div>
+           <div class="col"><a class="btntopformgraynew">Hip-Hop (Dance)</a></div>
+           <div class="col"><a class="btntopformgraynew">Jazz (Dance)</a></div>
+           <div class="col"><a class="btntopformgraynew">Lyrical</a></div>
+           <div class="col"><a class="btntopformgraynew">Modern</a></div>
+           <div class="col"><a class="btntopformgraynew">Open (Combination of Dance)</a></div>
+           <div class="col"><a class="btntopformgraynew">Tap</a></div>&ndash;&gt;
+        </div>-->
+
+
+        <!--<div><h2>Selected Genre</h2></div>
+        <div class="btntopformredlistsnew">
+          <div class="col" *ngFor="let vals of selectedstatearray"><a class="btntopformrednew" (click)="removeselectedstate(vals)" ><i class="fa fa-close"></i>{{vals.name}}</a></div>
+          &lt;!&ndash;(click)="removeselectedgenre(vals)"&ndash;&gt;
+          &lt;!&ndash;<div class="col" ><a class="btntopformrednew"><i class="fa fa-close"></i> Jazz</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Instrumental</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Modern</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Country</a></div>&ndash;&gt;
+        </div>-->
+
+        <div class="modal-footer">
+          <button type="button" class="btnpink" data-dismiss="modal" >Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--city modal ends here-->

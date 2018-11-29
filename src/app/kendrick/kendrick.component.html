@@ -1,0 +1,143 @@
+<app-header></app-header>
+
+<div class="container-fluid multi_bg_example">
+  <div class="row">
+    <div class="container landingwrapper">
+      <div class="logowrapper">
+        <img src="../../assets/images/landing-logo.png">
+      </div>
+      <div class="landingformwrapper">
+        <div class="landingformheader">
+          <h1>Get Started</h1>
+          <h3>Right Away!</h3>
+        </div>
+        <div class="landingforminnerwrapper">
+          <!--[contact-form-7 id="122" title="Landing Page Form"]-->
+          <form novalidate [formGroup]="kendrickform" name="kendrickform" (ngSubmit)="dosubmit(kendrickform.value)" class="wpcf7-form">
+            <label>
+        <span>
+            <input name="first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="First Name" type="text"  [formControl]="kendrickform.controls['firstname']">
+        </span>
+            </label>
+            <span *ngIf ="kendrickform.controls['firstname'].touched && !kendrickform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> First Name field can not be blank</span>
+            <br>
+            <label>
+        <span><input name="last-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Last Name" type="text" [formControl]="kendrickform.controls['lastname']">
+        </span>
+            </label>
+            <span *ngIf ="kendrickform.controls['lastname'].touched && !kendrickform.controls['lastname'].valid" class="wpcf7-not-valid-tip"> Last Name field can not be blank</span>
+            <br>
+            <label>
+        <span>
+            <input name="your-email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Email" type="text" [formControl]="kendrickform.controls['email']">
+        </span>
+            </label>
+            <span *ngIf ="kendrickform.controls['email'].touched && !kendrickform.controls['email'].valid" class="wpcf7-not-valid-tip"> Email field can not be blank</span>
+            <br>
+            <label>
+        <span>
+            <input name="your-phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Phone" type="text" [formControl]="kendrickform.controls['phone']">
+        </span>
+            </label>
+            <span *ngIf ="kendrickform.controls['phone'].touched && !kendrickform.controls['phone'].valid" class="wpcf7-not-valid-tip"> Phone field can not be blank</span>
+            <br>
+            <label>
+            <span>
+        <input name="your-zip" type="text" name="zip-code" value="" size="40" class="form-control" aria-required="true" placeholder="Zip" [formControl]="kendrickform.controls['zipcode']"/>
+            </span>
+              <span *ngIf ="kendrickform.controls['zipcode'].touched && !kendrickform.controls['zipcode'].valid" class="wpcf7-not-valid-tip"> Zip code can not be blank</span>
+              <br>
+              <span>
+        <span>
+            <span class="first last">
+                <input name="accept-tc[]" value="Accept Terms And Conditions" type="checkbox" [formControl]="kendrickform.controls['terms']">
+                <span>Accept Terms And Conditions</span>
+            </span>
+          <span *ngIf ="kendrickform.controls['terms'].touched && !kendrickform.controls['terms'].valid" class="wpcf7-not-valid-tip"> You have to accept the Terms and Conditions !</span>
+        </span>
+    </span>
+              <br>
+              <input value="BUY MY TICKETS NOW !" class="btnbuyticket" type="submit">
+              </label>
+          </form>
+        </div>
+        <div class="landingformfooter">
+        </div>
+      </div>
+      <div class="img1wrapper">
+        <img src="../../assets/images/landingimg1.png">
+      </div>
+      <div class="txt1wrapper">
+        <h1>NEXT on</h1>
+        <h1>Audio Deadline</h1>
+        <h2>The Premier Deadline Artist!</h2>
+        <h3>Seven time Emmy Award winning hip hop recording artist</h3>
+      </div>
+      <div class="txt2wrapper">
+        <div class="txt2wrapperheader">
+          <h1>Kendrick Lamar</h1>
+        </div>
+        <ul>
+          <li><span>Join us in a music production revolution!</span></li>
+          <li><span>Go behind the scenes and participate in the production of a music hit!</span></li>
+          <li><span>Watch as artists are up against the clock to create original music from nothing and a professional team of technicians put it all together!</span></li>
+          <li><span>Throw out your original ideas and shape the way the music turns out!</span></li>
+          <li><span>Follow your dream and be the artist producing the music!</span></li>
+          <li><span>This is your chance to produce an instant musical hit.</span></li>
+          </ul>
+      </div>
+      <div class="txt3wrapper">
+        <div class="txt3wrapperheader">
+          <h1>EXPERIENCE YOUR FAVORITE<br>ARTIST LIKE NEVER BEFORE!</h1>
+          <h5>Go behind the scenes to witness firsthand what happens during a live studio recording session with your favorite artist! From the first key played, all the way to the final take, <span>Audio Deadline</span> brings you behind-the-scenes to show viewers what it takes to make a hit single in one sitting.</h5>
+          <div class="img3wrapper">
+            <img src="../../assets/images/landingtxt3img1.png">
+          </div>
+          <div class="btnbuyticketwrapper">
+            <a href="" class="btnbuyticket">BUY MY TICKETS NOW !</a>
+          </div>
+        </div>
+      </div>
+      <div class="txt4wrapper">
+        <div class="txt4wrapperheader">
+          <div class="img4wrapper">
+            <img src="../../assets/images/landingtxt4img1.png">
+          </div>
+          <h1>THIS IS A ONE-OF-A-KIND SOCIAL-<br>MUSIC COMMUNITY EXPERIENCE!</h1>
+
+          <h5> <div class="img4wrapper1">
+            <img src="../../assets/images/landingtxt4img2.png">
+          </div><span>Audio Deadline</span> functions as a portal destination, live event, and population lab. We get mainstream artists to collaborate for an 8-hour studio session and stream it as a live event for paying consumers. The new song, just created, is available for purchase and immediately downloadable after the studio session.<br><br>
+            The <span>Audio Deadline</span> portal will become the premier destination for music lovers everywhere!</h5>
+        </div>
+      </div>
+      <div class="txt5wrapper">
+        <div class="txt5wrapperheader">
+          <h1>Watch live as Kendrick Lamar <br>works his magic in our studio</h1>
+          <h5>Kendrick Lamar has won seven Emmy awards and has previously produced music with Les Claypool and has collaborated with The Game, Snoop Dogg, Busta Rhymes and Lil Wayne. You can watch live and participate as this platinum musical genius creates a completely new and unique piece of hip hop history. It promised to be an epic good time. Kendrick Lamar was voted one of the 100 most influential people in the world by Time Magazine and the number one <span>"Hottest MC in the Game" by MTV</span>. What that kind of clout and charisma on tap, this is a monumental event that you don't want to miss!</h5>
+
+          <h6>The great team behind the creation of the <span>Audio Deadline</span> concept are brilliant music industry leaders and talented performers. There is no place else where you can step foot into a top ranked musical studio and record a potential number one hit with a celebrity of this magnitude! This will be an experience that you will talk and dream about for the rest of your life. You cannot miss this once in a lifetime chance to see what it is like to live your dream.</h6>
+          <div class="img5wrapper">
+            <img src="../../assets/images/landingtxt5img.png">
+          </div>
+          <div class="txt6commentbox">
+            <h2>“When I'm in the studio, I'm looking for creativity I haven't matched yet, a feeling I haven't felt. It's a high.”</h2>
+          </div>
+          <div class="btnbuyticketwrapper">
+            <a href="" class="btnbuyticket">BUY MY TICKETS NOW !</a>
+          </div>
+        </div>
+      </div>
+      <div class="txt6wrapper">
+        <div class="txt6wrapperheader">
+          <h1>THE ULTIMATE INTERACTIVE <br>EXPERIENCE</h1>
+        </div>
+        <div class="landingcopyright">©2017 COPYRIGHT by Audio Deadline</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>

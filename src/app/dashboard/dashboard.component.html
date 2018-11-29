@@ -1,0 +1,157 @@
+<div class="container-fluid dashboard_body">
+    <div class="dashboard_wrappertop"><div class="dashboradtoplogo"><img src="../../assets/images/logo.png"></div></div>
+    <div class="row rowmaindiv">
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+            <app-adminleft></app-adminleft>
+        </div>
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+            <div class="dashboard_right_wrapper">
+                <div class="dashboard1_div1">
+                    <h4>Dashboard</h4>
+                    <div class="dashboardwrapper">
+                        <div class=" dbblog dblog1">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td><i class="fa fa-black-tie" aria-hidden="true"></i></td>
+                                    <td>
+                                        <span>Admin Management</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"  class="linktd">
+                                        <a [routerLink]="['/admin-list']" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="dbblog dblog2">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td><i class="fa fa-life-ring" aria-hidden="true"></i></td>
+                                    <td>
+                                        <span>Affiliate List</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"  class="linktd">
+                                        <a [routerLink]="['/affiliate-list']" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="dbblog dblog2">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td><i class="fa fa-life-ring" aria-hidden="true"></i></td>
+                                    <td>
+                                        <span>Ambassador List</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"  class="linktd">
+                                        <a [routerLink]="['/ambassador-list']" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="dbblog dblog3">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td><i class="fa fa-users" aria-hidden="true"></i></td>
+                                    <td>
+                                        <span>User List</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"  class="linktd">
+                                        <a [routerLink]="['/user-list']" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class=" dbblog dblog4">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td><i class="fa fa-newspaper-o" aria-hidden="true"></i></td>
+                                    <td>
+                                        <span>Blog Management</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="linktd">
+                                        <a [routerLink]="['/blog-list']" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class=" dbblog dblog5">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td><i class="fa fa-user" aria-hidden="true"></i></td>
+                                    <td>
+                                        <span>My Account</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="linktd">
+                                        <a [routerLink]="['/my-account']" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--        <div class=" dbblog dblog6">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td><i class="fa fa-unlock-alt" aria-hidden="true"></i></td>
+                                            <td>
+                                                <h6>26</h6>
+                                                <span>Lorem ipsum dolor</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="linktd">
+                                                <a href="javascript:void(0)" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class=" dbblog dblog7">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td><i class="fa fa-pie-chart" aria-hidden="true"></i></td>
+                                            <td>
+                                                <h6>26</h6>
+                                                <span>Lorem ipsum dolor</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="linktd">
+                                                <a href="javascript:void(0)" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class=" dbblog dblog8">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td><i class="fa fa-link" aria-hidden="true"></i></td>
+                                            <td>
+                                                <h6>26</h6>
+                                                <span>Lorem ipsum dolor</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="linktd">
+                                                <a href="javascript:void(0)" class="viewdetail"> View Details <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

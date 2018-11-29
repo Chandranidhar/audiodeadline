@@ -1,0 +1,165 @@
+<app-header></app-header>
+
+<div class="container-fluid multi_bg_example_as">
+  <div class="row">
+    <div class="container landingwrapper_as">
+      <div class="landingwrapper_as_wrapper">
+        <div class="logowrapper_as">
+          <img src="../../assets/images/landing-logo.png">
+        </div>
+        <div class="landingformwrapper_as">
+          <div class="landingformheader_as">
+            <h1>JOIN OUR <br>COMMUNITY FOR</h1>
+            <h3>FREE RIGHT NOW!</h3>
+          </div>
+          <div class="landingforminnerwrapper_as">
+            <form name="ambassadorsignupform" class="wpcf7-form" method="post" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value,template)">
+              <div *ngIf="is_error" class="singleerror" style="font-family: 'OpenSans' !important; text-align: left;">{{is_error}}</div>
+              <div class="form-group">
+                <label><span>First Name</span> </label>
+                <input name="first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['firstname']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid"> First Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Last Name</span></label>
+                <input name="last-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['lastname']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid"> Last Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Gender</span></label>
+                <select class="form-control classic" name="gender"  [formControl]="dataForm.controls['gender']">
+                  <option value="">Select One</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['gender'].touched && !dataForm.controls['gender'].valid"> Gender field can not be blank</span>
+              </div>
+
+              <div class="form-group">
+                <label><span>Email</span></label>
+                <input name="your-email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['email']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid"> Email field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Username</span></label>
+                <input name="your-uname" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['username']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['username'].touched && !dataForm.controls['username'].valid"> Username field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Password</span></label>
+                <input name="password" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="password" [formControl]="dataForm.controls['password']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['password'].touched && !dataForm.controls['password'].valid"> Password field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Confirm Password</span></label>
+                <input name="confirmpassword" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="password" [formControl]="dataForm.controls['confirmpassword']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['confirmpassword'].touched && !dataForm.controls['confirmpassword'].valid"> Confirm Password field can not be blank</span>
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.hasError('mismatchedPasswords') && dataForm.controls['confirmpassword'].valid "> Passwords must match</span>
+              </div>
+              <div class="form-group">
+                <label><span>Phone</span></label>
+                <input name="your-phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['phone']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid"> Phone field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>State/Province</span></label>
+                <select class="form-control classic" name="state"  [formControl]="dataForm.controls['state']">
+                  <option value="">Select State</option>
+                  <option *ngFor="let item of state2" value="{{item.abbreviation}}">{{item.name}}</option>
+                </select>
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid"> State field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Zip</span></label>
+                <input name="your-zip" type="text" name="zip-code" value="" size="40" class="form-control" aria-required="true" [formControl]="dataForm.controls['zip']">
+                <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid"> Zip code can not be blank</span>
+              </div>
+              <div class="form-group termsandconditioncls">
+                <label class="checkcontainer">Accept Terms And Conditions
+                  <input name="accept-tc[]" value="Accept Terms And Conditions" type="checkbox"  [formControl]="dataForm.controls['accepttermscond']">
+                  <span class="checkmark" [ngClass]="{'ng-invalid': !dataForm.controls['accepttermscond'].valid }"></span>
+                  <span class="wpcf7-not-valid-tip" *ngIf="chkerror"> You have to accept the Terms and Conditions !</span>
+                </label>
+
+                <!--<span>
+                    <span>
+                      <span class="first last">
+                        <input name="accept-tc[]" value="Accept Terms And Conditions" type="checkbox">
+                        <span></span>
+                      </span>
+
+                  </span>
+                </span>-->
+              </div>
+              <input value="GET YOUR PROFILE" class="btnbuyticket_as" type="submit">
+            </form>
+          </div>
+          <div class="landingformfooter_as">
+          </div>
+        </div>
+        <div class="txt1wrapper_as">
+          <h1>Our Ambassador Program is an</h1>
+          <h1>invitation only opportunity. If you are</h1>
+          <h1>seeing this page you are qualified to work</h1>
+          <h1> with us as an Ambassador!</h1>
+          <h4>Who qualifies as an Ambassador?</h4>
+          <h3>Influencers, Musicians, Models, Dancers and other artists that have a substantial following that would engage and enjoy the free services and the streaming tickets with AudioDeadline.com.<br><br>The privileges as an Ambassador for AudioDeadline.com and the Artist Exchange are very big.</h3>
+          <div class="videoWrapper_outer_as">
+            <div class="videoWrapper_as">
+              <div class="videoWrapper">
+                <!-- Copy & Pasted from YouTube -->
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/MJhE32bE7Ew" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <!-- <img src="../../assets/images/videoposter1_as.jpg">-->
+              </div>
+            </div>
+            <h6>Lorem ipsum is placeholder text commonly used in the graphic</h6>
+          </div>
+          <h2>First and foremost, it is about</h2>
+          <h2>engaging with us and getting paid</h2>
+          <h2>to participate based on performance.</h2>
+        </div>
+      </div>
+
+      <div class="txt2wrapper_as">
+        <div class="txt2wrapperheader_as">
+          <h1>Here is a list of what you will <br>get with us as an Ambassador</h1>
+        </div>
+        <ul>
+          <li><span>The ability to sell streaming tickets to the AudioDeadline.com A-List artist live experience and earn 10% of all streaming sales.</span></li>
+          <li><span>The ability to have a 3-tier affiliate system tied to your account. This means that if someone you invite to the platform to sign up for free or through buying a streaming ticket decides to also promote you are tied to their revenue stream! You get 5% of those on you first tear and ONLY Ambassadors have the additional 3rd tier at 3%.</span></li>
+          <li><span>We will put you on our about us page as an Ambassador of the AudioDeadline.com show and the Artist Exchange community.  This gives you exclusive high
+visibility in our network.</span></li>
+          <li><span>We will also do special promotions that will be tied to the Ambassadors so that we can help you continue to build your brand.</span></li>
+          <li><span>During each of the Deadline live streamed events Flii Stylz, our host, will do shout outs and give people links to social sites for Ambassadors while airing.</span></li>
+        </ul>
+      </div>
+      <div class="txt6wrapper_as">
+        <div class="imagebottomleftwrapper">
+          <img src="../../assets/images/imagebottomleftwrapper.png">
+        </div>
+        <div class="txt6wrapperheader_as">
+          <h1>These are just a few things we offer to<br>
+            start with and we will continue to enhance<br>
+            programs for Ambassadors as we continue<br>
+            building our community!</h1>
+        </div>
+        <div class="imagebottomrightwrapper">
+          <img src="../../assets/images/imagebottomrightwrapper.png">
+        </div>
+        <div class="landingcopyright_as">©2018 COPYRIGHT by Audio Deadline</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>
+<ng-template #template>
+  <div class="modal-body text-center signupeamilbody">
+
+    <button type="button" class="close" (click)="closep()">&times;</button>
+    <img src="../../assets/images/logo.png" alt="logo">
+    <p><span>Sign up begin Aug 27th After our company opening webinar. <a href="https://registerforwebinar.audiodeadline.com" target="_blank">Sign up for the webinar</a></span></p>
+
+  </div>
+</ng-template>

@@ -1,0 +1,63 @@
+<div class="container-fluid dashboard_body">
+  <div class="dashboard_wrappertop"><img src="../../assets/images/logo.png"></div>
+  <div class="row rowmaindiv">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+      <app-adminleft></app-adminleft>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+      <div class="dashboard_right_wrapper">
+        <div class="dashboard1_div1">
+          <h4> Edit Admin</h4>
+          <div class="dashboard1form">
+            <form name="dataForm" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+              <div *ngIf="is_error" class="singleerror">{{is_error}}</div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="firstname" placeholder="First Name*" [formControl]="dataForm.controls['firstname']">
+                <span *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid" class="has-error">First Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="lastname" placeholder="Last Name*" [formControl]="dataForm.controls['lastname']">
+                <span *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid" class="has-error">Last Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="phone" placeholder="Telephone*" [formControl]="dataForm.controls['phone']">
+                <span *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid" class="has-error">Phone field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input readonly="readonly" type="text" class="form-control" name="email" placeholder="Email*" [formControl]="dataForm.controls['email']">
+                <span *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid" class="has-error">Email field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input readonly="readonly" type="text" class="form-control" name="username" placeholder="Username*" [formControl]="dataForm.controls['username']">
+                <span *ngIf ="dataForm.controls['username'].touched && !dataForm.controls['username'].valid" class="has-error">Username field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="address" placeholder="Address*" [formControl]="dataForm.controls['address']">
+                <span *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid" class="has-error">Address field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="address2" placeholder="Address2" [formControl]="dataForm.controls['address2']">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="city" placeholder="City*" [formControl]="dataForm.controls['city']">
+                <span *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid" class="has-error">City field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="state" [formControl]="dataForm.controls['state']">
+                  <option value="">Select State</option>
+                  <option *ngFor="let item of state2" value="{{item.abbreviation}}">{{item.name}}</option>
+                </select>
+                <span *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid" class="has-error">State field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="zip" placeholder="Zip Code*" [formControl]="dataForm.controls['zip']">
+                <span *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid" class="has-error">Zip Code field can not be blank</span>
+              </div><input type="submit" name="submit" value="SUBMIT" class="loginbtn2">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

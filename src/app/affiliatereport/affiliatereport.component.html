@@ -1,0 +1,34 @@
+<div class="container-fluid dashboard_body">
+  <div class="dashboard_wrappertop"><div class="dashboradtoplogo"><img src="../../assets/images/logo.png"></div></div>
+  <div class="row rowmaindiv">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+      <app-adminleft></app-adminleft>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+      <div class="dashboard_right_wrapper">
+        <div class="dashboard1_div1 adminlisttable">
+          <h4>Affiliate Report (On basis of Media)</h4>
+          <div class="tablediv">
+            <table>
+              <thead>
+              <tr>
+                <th>Media</th>
+                <th>No Of Click</th>
+                <th>No of Signups</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of reportlist">
+                <td><img src="../../assets/images/{{item.image}}" style="max-width: 150px; max-height: 150px;"></td>
+                <td data-label="No Of Clicks">{{item.noofclick}}</td>
+                <td data-label="No of Signups">{{item.noofsignups}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

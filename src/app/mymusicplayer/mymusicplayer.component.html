@@ -1,0 +1,607 @@
+<app-artistheader></app-artistheader>
+
+
+<div *ngIf="this.showLoader!=0" class="loder_body">
+    <div class="loder_wrapper">
+        <div class="loader"></div>
+    </div>
+</div>
+
+<div class="container-fluid pageheaderblock">
+  <div class="row no-gutter">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h1>My Music</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid competitionblock2 trendingvideoandlistingwrapper">
+  <div class="row no-gutter">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 artistsexchangeleftdiv trendingmusic-contaioner">
+      <div class="sectionbody">
+        <div class="row no-gutter sectionheaderinner col-container tranding_videoandlisting">
+          <div class="row avi_trandingmedia">
+            <div class="col-md-8 col-lg-8 col-sm-7 col-xs-12 audioplayer_play">
+              <div class="col-1-1">
+                <div class="col-1-5 col colcolor">
+                  <div class="videoWrapper">
+                    <!--<img src="assets/images/audioplayerbackground.jpg" alt="RTR1">-->
+                    <div class="audioinfo">
+                      <div class="audioinfologo">
+                        <img src="../../assets/images/artistheaderlogo.png" alt="%">
+                      </div>
+                      <div class="audioinfotitle">
+                        <!--Audio Default title-->
+                        {{chosenaudiotitle}}
+                      </div>
+                      <div class="audioinfousername">
+                        <!--UserName - <span>IBM</span>-->
+                        By - <span>{{audiousername}}</span>
+                      </div>
+
+                    </div>
+                    <img *ngIf="isaudioplay" src="../../assets/images/audio-play-image.gif" alt="RTR1">
+                    <img *ngIf="!isaudioplay" src="../../assets/images/pause-gif-image.jpg" alt="RTR1">
+
+                    <!--<img src="../../assets/images/audio-play-image.gif" alt="RTR1" class="playaudioimage">-->
+
+                    <audio *ngIf="chosenaudiourl!=''" id="audioplayer1">
+                      <source [attr.src]="chosenaudiourl" type="audio/mpeg">
+                      Your browser does not support the audio tag.
+                    </audio>
+
+                  </div>
+                  <div class="sectionheaderinnercontainer">
+                    <div class="playsilider">
+
+                      <ng5-slider [(value)]="value1" [options]="options1" (userChange)="changeaudioplayertimer()" (valueChange)="setval1()"></ng5-slider>
+
+                      <!--<ng5-slider [(value)]="value1" [options]="options1"></ng5-slider>-->
+                    </div>
+                    <div class="playericons">
+                      <!--<blockquote>
+                          <p class="mb-0">Total Audience 31,000 </p>
+                          <p class="mb-1">Genre Hip Hop, Rap </p>
+                          <p class="mb-2"><a href="javascript:void(0);">See Trade</a></p>
+                      </blockquote>-->
+                      <div class="audioicon_d audioicon1">
+                        <!--<p>0:00:00/01:21:36</p>-->
+                        <p>{{convertsecstoformat(value1)}}/{{convertsecstoformat(audioDuration)}}</p>
+                      </div>
+                      <div class="audioicon_d audioicon2">
+
+                        <span class="icons1"><img src="assets/images/audio_leftarrow.png" (click)="playbackward()" alt="#"> </span>
+                        <span *ngIf="!isaudioplay" class="icons2" (click)="playmusic()"><img src="assets/images/audio_playicon.png" alt="#"> </span>
+                        <span *ngIf="isaudioplay" class="icons2" (click)="playmusic()"><img src="assets/images/audio_pauseicon.png" alt="#"> </span>
+                        <span class="icons3"><img src="assets/images/audio_rightarrow.png" (click)="playforward()" alt="#"> </span>
+
+
+                        <!--<span class="icons1"><img src="assets/images/audio_leftarrow.png" alt="#"> </span>-->
+                        <!--<span class="icons2"><img src="assets/images/audio_playicon.png" alt="#"> </span>-->
+                        <!--<span class="icons3"><img src="assets/images/audio_rightarrow.png" alt="#"> </span>-->
+
+                      </div>
+                      <div class="audioicon_d audioicon3">
+                        <!--<span class="icons01"><img src="assets/images/audioicon1.png" alt="#"> </span>-->
+                        <span class="icons01" *ngIf="!shuffleflag"><img  (click)="shuffleon()" src="../../assets/images/audioicon1-inactive.png" alt="#"></span>
+                        <span class="icons01" *ngIf="shuffleflag"><img  (click)="shuffleoff()" src="../../assets/images/audioicon1-active.png" alt="#"></span>
+                        <!-- <span class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>-->
+                        <span *ngIf="!ismuteaudio" (click)="muteaudio()"  class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>
+                        <span *ngIf="ismuteaudio" (click)="unmuteaudio()"  class="icons02"><img src="../../assets/images/audio_muteicon.png" alt="#"> </span>
+                        <span class="icons03">
+                                                                           <!-- <ng5-slider [(value)]="value" [options]="options"></ng5-slider>-->
+                                                    <ng5-slider [(value)]="value" [options]="options" (userChange)="changeaudioplayervolume()"></ng5-slider>
+                                                                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span *ngIf="musicArray.length>0">
+              <!--<span *ngIf="musicdetailArray.length>0">-->
+                            <div class="feedslinks" >
+                                <!--<span class="feedslinks5"><i class="fa fa-eye"></i>Views:784</span>-->
+                                 <span class="feedslinks5" *ngIf="selectedaudio.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{selectedaudio.musicviews[0].musiccount}}</span>
+                                        <span class="feedslinks5" *ngIf="selectedaudio.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+                              <!--<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:158</span>-->
+                                <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && !getlikeonstatus(selectedaudio.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedaudio.musiclikes[0].vlike}}</span>
+                                        <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                        <span (click)="showmusicunlike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && getlikeonstatus(selectedaudio.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedaudio.musiclikes[0].vlike}}</span>
+
+                                <!--<span class="feedslinks3"><i class="fa fa-comment"></i> Comments:{{selectedmusictrending.comments.length}}</span>-->
+                                <span class="feedslinks3"><i class="fa fa-comment"></i> Comments:{{selectedaudio.comments.length}}</span>
+                                <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
+                                <ng-template #popTemplate ><div [innerHtml]="html"></div></ng-template>
+                                    <span class="feedslinks4" [popover]="popTemplate" [outsideClick]="true"  (mouseenter)="setshareflag('audio',selectedaudio)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                            </div>
+
+                        </span>
+              <div class="comment_modal">
+                <div class="comment_container">
+                  <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedaudio.comments">
+                  <!--<div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedmusictrending.comments">-->
+                    <div class="col">
+                      <div class="feedslinks">
+                            <span class="feedslinks1 comment_user_image">
+                                <div class="imgwrapper">
+
+
+                                    <!--<img src="assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                    <span *ngIf="valc.userdata[0].images!=null" >
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                        <img src="{{siteurl}}nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                        </a>
+                                    </span>
+
+                                    <span *ngIf="valc.userdata[0].images==null">
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+                                            </a>
+                                    </span>
+
+                                </div>
+                            </span>
+                        <span class="feedslinks3 comment_user_text">
+                                <div class="row">
+                                    <div class="row comment_box">
+                                        <span class="timespan">{{convertunixtotimeago(valc.added_time)}}</span>
+                                      <!--<a href="#">User name</a>
+                                      <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>-->
+
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                        <b>{{valc.comment}}</b>
+                                    </div>
+                                    <!--<div class="row no-gutter col-container bodybloc5bottom">
+                                        <div class="col">
+                                            <div class="feedslinks comment_text_reply">
+                                                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                          <!-- <div class="row">
+                               <div class="row no-gutter col-container bodybloc5bottom">
+                                   <div class="col">
+                                       <div class="feedslinks">
+                                           <span class="feedslinks1 comment_user_image">
+                                               <div class="imgwrapper"><img src="assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                           </span>
+                                           <span class="feedslinks3 comment_user_text">
+                                               <div class="row">
+                                                   <div class="row comment_box">
+                                                       <a href="#">User name</a>
+                                                       <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
+                                                   </div>
+                                                   <div class="row no-gutter col-container bodybloc5bottom">
+                                                       <div class="col">
+                                                           <div class="feedslinks comment_text_reply">
+                                                               <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                               <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </span>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="row">
+                               <div class="row no-gutter col-container bodybloc5bottom">
+                                   <div class="col">
+                                       <div class="feedslinks">
+                                           <span class="feedslinks1 comment_user_image">
+                                               <div class="imgwrapper"><img src="assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                           </span>
+                                           <span class="feedslinks3 comment_user_text">
+                                               <div class="row">
+                                                   <div class="row comment_input">
+                                                       <input type="text" class="form-control">
+                                                   </div>
+
+                                               </div>
+                                           </span>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>-->
+                            </span>
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="row" *ngIf="isloggedin==1">-->
+                  <div class="row" *ngIf="isloggedin==1">
+                    <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                        <div class="feedslinks">
+                                                    <span class="feedslinks1 comment_user_image">
+                                                        <div class="imgwrapper">
+                                                            <!--<img src="assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
+                                                            <span *ngIf="image==null">
+
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+
+                                        </span>
+                                        <span *ngIf="image!=null" >
+
+                                            <img src="{{siteurl}}nodeserver/uploads/{{image}}" >
+
+                                        </span>
+                                                        </div>
+                                                    </span>
+                          <span class="feedslinks3 comment_user_text">
+                                                        <div class="row">
+                                                            <div class="row comment_input">
+                                                               <!-- <input type="text" class="form-control">-->
+                                                                <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                            </div>
+
+                                                        </div>
+                                                    </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 trending_video_list">
+              <div class="scrollbar trendingvideoscrollbar style-2" id="style-4">
+                <div class="row" *ngFor="let valMusic of musicArray;let i=index;">
+                  <div class="video_list">
+                  <!--<div class="video_list" *ngFor="let val of musicdetailArray;let i=index;" >-->
+                    <div class="col-md-4 col-sm-4 col-xs-3">
+                      <div class="videowrapper">
+                        <!--<img src="assets/images/xp_music_banner2.jpg" alt="#">-->
+
+                        <img *ngIf="(audioplayerindex!=i  && isaudioplay==false ) || (audioplayerindex==i && i==0 && isaudioplay==false )|| (audioplayerindex!=i && i!=0 && isaudioplay==true ) || (audioplayerindex!=i && i==0 && isaudioplay==true ) || isaudioplay==false " (click)="playaudio(valMusic)" src="../../assets/images/xp_music_banner.jpg" alt="#">
+                        <img *ngIf="audioplayerindex==i && isaudioplay==true " (click)="playaudio(valMusic)" src="../../assets/images/xp-music-pause-banner-2.png" alt="#">
+                        <!--<img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">-->
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                     <!-- <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>-->
+                      <p>{{valMusic.title_music}}</p>
+                      <!--<p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>-->
+                      <p>{{valMusic.userdata[0].firstname+' '+valMusic.userdata[0].lastname}} <span class="pull-right">{{convertunixtotimeago(valMusic.added_time)}}</span></p>
+                      <p>
+                        <!--<span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>-->
+                          <span class="feedslinks5" *ngIf="valMusic.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{valMusic.musicviews[0].musiccount}}</span>
+                          <span class="feedslinks5" *ngIf="valMusic.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+
+                        <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                          <ng-template #popTemplate1 ><div [innerHtml]="html"></div></ng-template>
+                          <span class="feedslinks4" [popover]="popTemplate1" [outsideClick]="true"  (mouseenter)="setshareflag('audio',valMusic)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+
+
+                        <!--<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>-->
+
+                        <!--<span (click)="showmusiclike(val)" *ngIf="val.musiclikes[0]!=null && !getlikeonstatus(val.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{val.musiclikes[0].vlike}}</span>
+                        <span (click)="showmusiclike(val)" *ngIf="val.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                        <span (click)="showmusicunlike(val)" *ngIf="val.musiclikes[0]!=null && getlikeonstatus(val.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{val.musiclikes[0].vlike}}</span>-->
+                        <span (click)="showmusiclike(valMusic)" *ngIf="valMusic.musiclikes[0]!=null && !getlikeonstatus(valMusic.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{valMusic.musiclikes[0].vlike}}</span>
+                        <span (click)="showmusiclike(valMusic)" *ngIf="valMusic.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                        <span (click)="showmusicunlike(valMusic)" *ngIf="valMusic.musiclikes[0]!=null && getlikeonstatus(valMusic.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{valMusic.musiclikes[0].vlike}}</span>
+
+                      </p>
+
+                        <!--hover button for edit and delete starts here -->
+
+                        <div class="hover_button">
+                            <button class="button" *ngIf="cookie_user_id==valMusic.user_id"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="editMusic(valMusic)" ></i> </button>
+                            <button class="button" *ngIf="cookie_user_id==valMusic.user_id"><i class="fa fa-trash-o" aria-hidden="true" (click)="deleteVideo(0,valMusic._id,4)" ></i> </button>
+                        </div>
+                        <!--hover button for edit and delete ends here-->
+
+
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row">
+                     <div class="video_list">
+                         <div class="col-md-4 col-sm-4 col-xs-3">
+                             <div class="videowrapper">
+                                 <img src="assets/images/xp_music_banner2.jpg" alt="#">
+                                 <img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">
+                             </div>
+                         </div>
+                         <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+
+                             <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>
+                             <p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>
+                             <p>
+                                 <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                 <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="video_list">
+                         <div class="col-md-4 col-sm-4 col-xs-3">
+                             <div class="videowrapper">
+                                 <img src="assets/images/xp_music_banner2.jpg" alt="#">
+                                 <img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">
+                             </div>
+                         </div>
+                         <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                             <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>
+                             <p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>
+                             <p>
+                                 <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                 <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="video_list">
+                         <div class="col-md-4 col-sm-4 col-xs-3">
+                             <div class="videowrapper">
+                                 <img src="assets/images/xp_music_banner2.jpg" alt="#">
+                                 <img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">
+                             </div>
+                         </div>
+                         <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                             <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>
+                             <p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>
+                             <p>
+                                 <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                 <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="video_list">
+                         <div class="col-md-4 col-sm-4 col-xs-3">
+                             <div class="videowrapper">
+                                 <img src="assets/images/xp_music_banner2.jpg" alt="#">
+                                 <img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">
+                             </div>
+                         </div>
+                         <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                             <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>
+                             <p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>
+                             <p>
+                                 <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                 <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="video_list">
+                         <div class="col-md-4 col-sm-4 col-xs-3">
+                             <div class="videowrapper">
+                                 <img src="assets/images/xp_music_banner2.jpg" alt="#">
+                                 <img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">
+                             </div>
+                         </div>
+                         <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                             <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>
+                             <p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>
+                             <p>
+                                 <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                 <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="video_list">
+                         <div class="col-md-4 col-sm-4 col-xs-3">
+                             <div class="videowrapper">
+                                 <img src="assets/images/xp_music_banner2.jpg" alt="#">
+                                 <img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">
+                             </div>
+                         </div>
+                         <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                             <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>
+                             <p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>
+                             <p>
+                                 <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                 <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                             </p>
+                         </div>
+                     </div>
+                 </div>-->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!--<div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
+        <nav class="paginationtab">
+          <div class="paginationwrapper">
+            <ul class="pagination pg-darkgrey pagination_list">
+              <li class="page-item">
+                <a class="page-link" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item active"><a class="page-link">1</a></li>
+              <li class="page-item"><a class="page-link">2</a></li>
+              <li class="page-item"><a class="page-link">3</a></li>
+              <li class="page-item"><a class="page-link">4</a></li>
+              <li class="page-item"><a class="page-link">5</a></li>
+              <li class="page-item">
+                <a class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>-->
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv competitionrightdivtop">
+      <!---Right Side Banner Start Block---->
+      <div class="rightbannerdivwrapper">
+        <div class="rightbannerdiv">
+          <div class="rightbannerdivimg">
+            <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen6.jpg" alt="rightbannerdiv screen6"></div>
+          </div>
+          <div class="rightbannerdivimg">
+            <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
+          </div>
+        </div>
+      </div>
+      <!---Right Side Banner End Block---->
+    </div>
+  </div>
+
+</div>
+
+
+
+<app-artistfooter></app-artistfooter>
+
+<!--music player modal starts here-->
+<div *ngIf="isModalMusicShown" class="modal fade modalVideoUpload" (onHidden)="onHidden()"  bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="dialog-static-name3" class="modal-title pull-left demoModalHeader">Add Your Music</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="isModalMusicShown=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form novalidate [formGroup]="musicform" name="pictureform"  (ngSubmit)="musicSubmit(musicform.value)">
+                    <div class="form-group">
+                        <p>Title:</p>
+                        <input type="text" name="music-title" value="" size="40" placeholder=""  [formControl]="musicform.controls['title_music']">
+                        <input type="hidden" name="id" value="" size="40" placeholder=""  [formControl]="musicform.controls['_id']">
+                        <span *ngIf ="musicform.controls['title_music'].touched && !musicform.controls['title_music'].valid" class="has-error">Title is Required !</span>
+                    </div>
+                    <div class="form-group">
+
+                        <p>Privacy:</p>
+                        <select name="privacy"  [formControl]="musicform.controls['privacy']">
+                            <option value="">Select One</option>
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                            <option value="friends">Friends Only</option>
+                        </select>
+                        <span class="has-error" *ngIf ="musicform.controls['privacy'].touched && !musicform.controls['privacy'].valid"> Privacy field can not be blank!</span>
+                    </div>
+                    <div class="form-group">
+
+                        <p>Add Music:</p>
+                        <div class="imageuploaddiv">
+                            <!--<input style="display: none" type="file" (change)="onFileUpload($event)" #fileInput3>-->
+                            <input style="display: none" type="file" (change)="onaudioUpload($event)" #fileInput3>
+                            <div class="file btn btnpink"  (click)="fileInput3.click()"> Select File </div>
+                        </div>
+                        <input type="hidden" name="music" value="" size="40" placeholder="" [formControl]="musicform.controls['music']">
+
+                        <audio class="audioplayerModal" id="audioplayer2" controls *ngIf="selectedaudiourl!='' && selectedaudiourl!= null">
+                            <!--<source [attr.src]="chosenaudiourl" type="audio/mpeg">-->
+                            <source [attr.src]="selectedaudiourl" type="audio/mpeg">
+                            Your browser does not support the audio tag.
+                        </audio>
+                        <span class="imageuploaderror" *ngIf ="musicform.controls['music'].touched && !musicform.controls['music'].valid" >Music is Required !</span>
+
+                    </div>
+                    <div class="form-group">
+                        <label>
+                        <span class="accept-tc">
+                          <input name="accept-tc[]" value="Accept Terms And Conditions" type="checkbox" [formControl]="musicform.controls['accepttermscond']">
+                          <span>Accept Terms And Conditions</span>
+                        </span>
+                            <span class="has-error" *ngIf="chkerror"> You have to accept the Terms and Conditions !</span>
+                        </label>
+                    </div>
+
+                    <div class="av_button">
+                        <button type="button" class="" type="submit">Save</button>
+
+                        <button type="button" class=" cancelvideomodal" (click)="isModalMusicShown=false">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<!--music player modal ends here-->
+
+<!--common modals-->
+
+<div *ngIf="iscommonmodal" class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header deletemodal" style="border: none">
+
+                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-title pull-left demoModalHeader1" >{{commonmodalmessage}}</h4>
+                <img class="demoModalImg" src="../../assets/images/artistheaderlogo.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="iscommonconfirmmodal" class="modal fade modalVideoUpload" (onHidden)="onHidden()" data-backdrop="static" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header deletemodal" style="border: none">
+
+                <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="demoModalImg" src="../../assets/images/artistheaderlogo.png">
+                <h4 class="modal-title pull-left demoModalHeader1" >{{commonconfirmmodalmessage}}</h4>
+                <div class="av_button">
+                    <button type="button" class="" (click)="hideModal()" type="button">Cancel</button>
+                    <button type="button" (click)="deleteVideo(1,tempval,deleteflag)" class="">Yes</button>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--common modals-->
+
+
+
+<ng-template #commingsoontemplate>
+  <div class="modal-body text-center signupeamilbody">
+
+    <button type="button" class="close" (click)="closep()">&times;</button>
+    <img src="../../assets/images/artistheaderlogo.png" alt="logo">
+    <p><span>This is currently a concept page to give you and idea of what the ArtistXP Experience is going to be all about. When we launch you will have access to these incredible features. <br><br>Get the ArtistXP Experience NOW!  <a style="cursor: pointer; width: 360px;" (click)="gotoSignUp()">Get back to Pre Launch Sign Up</a></span></p>
+
+  </div>
+</ng-template>
+
+<a style="display: none;" #gsharelink [attr.href]="generalshareurl" class="gsharelink" target="_blank">Share</a>

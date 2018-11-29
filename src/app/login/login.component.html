@@ -1,0 +1,30 @@
+<div *ngIf="this.showLoader!=0" class="loder_body">
+  <div class="loder_wrapper">
+    <div class="loader"></div>
+  </div>
+</div>
+
+<div class="dashboardwelcomewrapper">
+  <div class="bashboardlogincenterblock">
+    <div class="loginnew_bg">
+      <div class="loginnew_wrapper">
+        <img src="../../assets/images/artistheaderlogo.png">
+        <h1>login</h1>
+        <div class="loginnew_formbox">
+          <!-- <form action="" method="post" class="loginform">-->
+          <form novalidate [formGroup]="loginform" name="loginform" (ngSubmit)="dosubmit(loginform.value)" class="loginformnew">
+            <!--  <div class="help-block" *ngIf="is_error">{{error_msg}}</div>-->
+            <div *ngIf="is_error" class="singleerror" style="padding: 4px 0; color: #ff0000; text-align: left;">{{is_error}}</div>
+            <p>
+              <label><span class="your-email"><input type="email" name="your-email" value="" size="40" class="form-control" placeholder="USER NAME / EMAIL" [formControl]="loginform.controls['email']"></span> </label><span *ngIf ="loginform.controls['email'].touched && !loginform.controls['email'].valid" class="wpcf7-not-valid-tip">Email id is Required !</span><br>
+              <label><span class="your-phone"><input type="password" name="your-password" value="" size="40" class="form-control" placeholder="Password" [formControl]="loginform.controls['password']"></span> </label><span *ngIf ="loginform.controls['password'].touched && !loginform.controls['password'].valid" class="wpcf7-not-valid-tip">Password is Required !</span><br>
+              <input type="submit" value="sign IN" class="btnloginnew">
+              <span class="login_link1">Not registered? <a [routerLink]="['']">Request Sign Up Here</a></span>
+              <span class="login_link2"><a [routerLink]="['/forgot-password']">Forgot your password?</a></span>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

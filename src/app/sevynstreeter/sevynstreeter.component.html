@@ -1,0 +1,101 @@
+<div class="container-fluid multi_bg_example_ss">
+  <div class="row">
+    <div class="container landingwrapper_ss">
+      <div class="logowrapper_ss">
+        <img src="../../assets/images/landing-logo.png">
+      </div>
+      <div class="landingformwrapper_ss">
+        <div class="landingformheader_ss">
+          <h1>Get Started</h1>
+          <h3>Right Away!</h3>
+        </div>
+        <div class="landingforminnerwrapper_ss">
+   <!--       <form action="" method="post" class="wpcf7-form">-->
+          <form novalidate [formGroup]="sevynstreeterform" name="sevynstreeter" (ngSubmit)="dosubmit(sevynstreeterform.value)" class="wpcf7-form">
+            <p><label> <span><input name="your-first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="First Name" type="text" [formControl]="sevynstreeterform.controls['firstname']"></span> </label></p>
+              <span *ngIf ="sevynstreeterform.controls['firstname'].touched && !sevynstreeterform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> First Name field can not be blank</span>
+            <p><label> <span><input name="your-last-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Last Name" type="text" [formControl]="sevynstreeterform.controls['lastname']"></span> </label></p>
+              <span *ngIf ="sevynstreeterform.controls['lastname'].touched && !sevynstreeterform.controls['lastname'].valid" class="wpcf7-not-valid-tip"> Last Name field can not be blank</span>
+            <p><label> <span><input name="your-active-email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Email" type="text" [formControl]="sevynstreeterform.controls['email']"></span> </label></p>
+              <span *ngIf ="sevynstreeterform.controls['email'].touched && !sevynstreeterform.controls['email'].valid" class="wpcf7-not-valid-tip"> Email id can not be blank</span>
+            <p><label> <span><input name="your-active-phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Phone" type="text" [formControl]="sevynstreeterform.controls['phone']"></span> </label></p>
+              <span *ngIf ="sevynstreeterform.controls['phone'].touched && !sevynstreeterform.controls['phone'].valid" class="wpcf7-not-valid-tip"> Phone can not be blank</span>
+            <p><label> <span><input name="your-zip-code" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Zip Code" type="text" [formControl]="sevynstreeterform.controls['zipcode']"></span> </label></p>
+              <span *ngIf ="sevynstreeterform.controls['zipcode'].touched && !sevynstreeterform.controls['zipcode'].valid" class="wpcf7-not-valid-tip"> Zipcode can not be blank</span>
+            <p><span><span><span class="first last"><input name="your-accept-tc[]" value="Accept Terms And Conditions" type="checkbox" [formControl]="sevynstreeterform.controls['terms']"><span>Accept Terms And Conditions</span></span>
+            <span *ngIf ="sevynstreeterform.controls['terms'].touched && !sevynstreeterform.controls['terms'].valid" class="wpcf7-not-valid-tip">You have to accept the Terms and Conditions !</span></span></span></p>
+            <p><button type="submit" class="btnbuyticket_ss">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button></p>
+          </form>
+        </div>
+      </div>
+      <div class="img1wrapper_ss">
+        <img src="../../assets/images/ss-landingimg1.png">
+      </div>
+      <div class="txt1wrapper_ss">
+        <h4>NEXT on</h4>
+        <h1>Audio Deadline</h1>
+        <h2>Nominated as 2014 Soul Train Awards</h2>
+        <h3>BEST NEW ARTIST</h3>
+      </div>
+      <div class="txt2wrapper_ss">
+        <div class="txt2wrapperheader_ss">
+          <h1>Sevyn Streeter</h1>
+        </div>
+        <ul>
+          <li><span><label>Another huge hit is in queue and you'll be there to help produce it!</label></span></li>
+          <li><span><label>You don't want to miss this chance to shape the way this song turns out!</label></span></li>
+          <li><span><label>This is your chance to help produce an instant musical hit.</label></span></li>
+          <li><span><label>Watch as artists are up against the clock to create original music from nothing.</label></span></li>
+          <li><span><label>Experience history as a professional team of technicians put it all together!</label></span></li>
+          <li><span><label>Check out the precise mechanics of top-end musical production!</label></span></li>
+          </ul>
+      </div>
+      <div class="txt3wrapper_ss">
+        <div class="txt3wrapperheader_ss">
+          <h1>Don't miss this once in a lifetime <br>opportunity to experience music history!</h1>
+        </div>
+        <p>You won't find this chance anywhere else but on <span>Audio Deadline</span>. You'll have a chance that most people only dream of, to go behind the scenes during a live recording session as real artists create a unique, original musical creation. You'll have a chance to influence the music from the first note played to the final take. The new song will be available for you to download after the studio session, before anyone else gets their hands on it!</p>
+        <div class="txt3wrapperheader_ss">
+          <h1>This one of a kind social-music experience <br>is only available on Audio Deadline</h1>
+        </div>
+        <p>The <span>Audio Deadline</span> portal is becoming the premier destination for music lovers everywhere. Only here can you see a live-streamed event such as this. We have mainstream artists that you love come in to face the challenge of creating a single in only 8 hours. From
+          just an idea, or even from nothing, to final cut,
+          you can be there and participating the entire time.
+          <button type="button" class="btnbuyticket_ss">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button>
+        </p>
+        <div class="txt3wrapperheader_ss">
+          <h1>Watch live as Sevyn works her magic <br>in our studio!</h1>
+        </div><p>Many of us are just getting to know this sexy songstress from her singles “Don’t Stop” and “I Like It”. But, Sevyn has been performing since she was 15 and has built quite the reputation as a talented writer, singer and performer. Now we’re celebrating the chance to watch her work on, and complete an original creation in only 8 hours on <span>Audio Deadline!</span> Dive deep into the creative process and live your dream. Discover things you need to know to be the artist and produce the music. <br><br>Sevyn's writing credits include Tamar Braxton’s “All The Way Home”, Ariana Grande’s “The Way”, Chris Brown’s “Yeah 3X”, “Wet The Bed” and “Fine China”,  Trey Songz’s “Without A Woman” and many more. She’s also known for her work with Alicia Keys, Estelle, Kelly Roland and more. Call me crazy but, I think it’s safe to say that Sevyn will be an artist that will be around for years to come. Be there as she races the clock on Audio Deadline and judge for yourself!</p>
+      </div>
+      <div class="landingtxt4img1wrapper_ss">
+        <img src="../../assets/images/landingtxt4img1_ss.png">
+      </div>
+      <div class="landingtxt3img1wrapper_ss">
+        <img src="../../assets/images/landingtxt3img1_ss.png">
+      </div>
+      <div class="landingtxt4img2wrapper_ss">
+        <img src="../../assets/images/landingtxt4img2_ss.png">
+      </div>
+      <div class="landingtxt5imgwrapper_ss">
+        <img src="../../assets/images/landingtxt5img_ss.png">
+      </div>
+      <div class="dialogbox">
+
+        <div class="commentbody">
+          <span class="pointer"></span>
+          <div class="message">
+            <span>Music is emotional. Your job is to make people feel something. The best way to do that is to sing and speak from something they've personally been through. That's where I write from.</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="txt6wrapper_ss">
+        <button type="button" class="btnbuyticket_ss">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button>
+        <div class="landingcopyright_ss">©2017 COPYRIGHT by Audio Deadline</div>
+      </div>
+
+    </div>
+  </div>
+</div>

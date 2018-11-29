@@ -1,0 +1,75 @@
+<app-artistheader></app-artistheader>
+
+<div class="container-fluid axpcontactusblock1 tendingheaderborder">
+  <div class="row no-gutter">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 axpcontactusleftdiv">
+      <div class="bg">
+        <img src="assets/images/axpcontactusleftdivbg.jpg" alt="">
+      </div>
+      <div class="axplandingformwrapper_signup">
+        <div class="axplandingforminnerwrapper_signup">
+          <h1>contact us</h1>
+          <div role="form" id="form" lang="en-US" dir="ltr">
+            <div class="screen-reader-response"></div>
+
+            <form class="form" role="form" name="dataForm" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit()" >
+              <!--<form novalidate [formGroup]="loginform" name="loginform" (ngSubmit)="dosubmit(loginform.value)" class="loginformnew">-->
+              <!--<div *ngIf="is_error" class="singleerror">{{is_error}}</div>-->
+              <div class="form-group">
+                <p><label> <span class="your-first-name"><input type="text" name="your-first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="First Name" [formControl]="dataForm.controls['firstname']"></span> </label></p> <span *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid" class="has-error">First Name field can not be blank</span>
+              </div>
+
+              <div class="form-group">
+              <p><label> <span class="your-last-name"><input type="text" name="your-last-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Last Name" [formControl]="dataForm.controls['lastname']"></span> </label></p><span *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid" class="has-error">Last Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+              <p><label> <span class="your-active-phone"><input type="tel" name="your-active-phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Telephone" [formControl]="dataForm.controls['phone']"></span> </label></p><span *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid" class="has-error">Phone field can not be blank</span>
+              </div>
+              <div class="form-group">
+
+              <p><label> <span class="your-active-email"><input type="text" name="your-active-email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Email" [formControl]="dataForm.controls['email']"></span> </label></p><span *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid" class="has-error">Email field can not be blank ! </span>
+              </div>
+              <div class="form-group">
+              <p><label> <span class="your-address"><input type="text" name="your-address" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Address" [formControl]="dataForm.controls['address']"></span> </label></p><span *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid" class="has-error">Address field can not be blank</span>
+              </div>
+              <div class="form-group">
+              <p><label><span class="your-message"><textarea _ngcontent-c4="" aria-invalid="false" aria-required="true" class="textarea" cols="40" name="your-message" placeholder="Message Here" rows="10" [formControl]="dataForm.controls['message']"></textarea>
+                  </span></label></p><span *ngIf ="dataForm.controls['message'].touched && !dataForm.controls['message'].valid" class="has-error">Message field can not be blank</span>
+              </div>
+              <p><button type="submit" class="btnformsubmitnew"><span>Submit</span></button></p>
+              <div class="response-output display-none"></div>
+            </form>
+          </div>
+        </div>
+        <img src="assets/images/artistxp-contactus-form-bg.png"  class="artistxpcontactusformbg" alt="">
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv">
+      <!---Right Side Banner Start Block---->
+      <div class="rightbannerdivwrapper">
+        <div class="rightbannerdiv">
+          <div class="rightbannerdivimg">
+            <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen1.jpg" alt="rightbannerdiv screen1"></div>
+          </div>
+          <div class="rightbannerdivimg">
+            <div class="rightbannerdivimgwrapper"><img src="assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
+          </div>
+        </div>
+      </div>
+      <!---Right Side Banner End Block---->
+    </div>
+  </div>
+</div>
+
+
+<app-artistfooter></app-artistfooter>
+
+<ng-template #commingsoontemplate>
+  <div class="modal-body text-center signupeamilbody">
+
+    <button type="button" class="close" (click)="closep()">&times;</button>
+    <img src="../../assets/images/artistheaderlogo.png" alt="logo">
+    <p><span>This is currently a concept page to give you and idea of what the ArtistXP Experience is going to be all about. When we launch you will have access to these incredible features. <br><br>Get the ArtistXP Experience NOW!  <a style="cursor: pointer; width: 360px;" (click)="gotoSignUp()">Get back to Pre Launch Sign Up</a></span></p>
+
+  </div>
+</ng-template>

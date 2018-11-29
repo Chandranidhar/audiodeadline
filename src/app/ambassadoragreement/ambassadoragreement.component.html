@@ -1,0 +1,53 @@
+<div  class="newpage_logo"><img src="../../assets/images/logo.png"></div>
+
+<div class="container-fluid newpage_wrapper">
+  <div class="pdf_wrapper page1pdf">
+    <div class="pdf_page1_block1" style="text-align: left; padding: 6px 0;">Ambassador will receive 10% commissions from any products or services sold to their fans/reach/clients on the Company's platform.</div>
+    <div class="pdf_page1_block1" style="text-align: left; padding: 6px 0;">Ambassador will get 5% commissions from any products or services sold by any individual that signs up officially through the ambassador's links if they decided to also join as an affiliate of the company.</div>
+    <div class="pdf_page1_block1" style="text-align: left; padding: 6px 0;">Again the Ambassador will gain 3% commissions from any products or services sold by any individual that signs up officially through the 2nd tier ambassador's links if they decided to also join as an user of the company.</div>
+    <div class="pdf_page1_block1" style="text-align: left; padding: 6px 0;">Commissions, as described above, will commence for the lifetime purchase of the fan/reach/client.</div>
+    <div class="pdf_page1_signblock">
+      <h3>Audio Deadline Corp</h3>
+      <h4>By: Beto Paredes</h4>
+      <h4>Its: Chief Executive Officer</h4>
+    </div>
+    <div class="clearfix"></div>
+    <div class="pdf_page1_signblock">
+      <h3>Ambassador</h3>
+      <div class="new_signup_condiv">
+        <div class="new_signup_inpitdiv">
+          <div class="new_signupdiv">
+            <input type="button"  class="signherebtn" value="Sign Here" (click)="openSignModal(template)">
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <h5>By: <span>{{signval}} </span></h5>
+      <span *ngIf="error" class="signerror">Please sign here!</span>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <input type="button" (click)="contractagrrement()" value="Submit " class="ep_contractbtn">
+</div>
+
+
+
+
+<ng-template #template>
+  <div class="modal-body newsignmodal">
+    <h1>Digital Signature</h1>
+    <label>Full name</label>
+    <input  type="text" name="fullname" (keyup)="onKey($event)" value="{{signval2}}">
+    <div class="popsigndiv">
+      <h2>Digitally Signed By:</h2>
+      <h3> {{signval2}}</h3>
+      <h4>{{currentdate | date:'MMM dd, yyyy'}}</h4>
+    </div>
+    <h5>By selecting “agree”, the parties agree that this agreement may be electronically signed. The parties agree that the electronic signatures appearing on this agreement are the same as handwritten signatures for the purposes of validity, enforceability, and admissibility.</h5>
+    <div class="pop_btn_drapper">
+      <button type="button" class="btn btn-default" (click)="agree()">Agree</button>
+      <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</ng-template>

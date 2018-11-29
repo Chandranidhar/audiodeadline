@@ -1,0 +1,113 @@
+<div class="container-fluid multi_bg_example_us">
+  <div class="row">
+    <div class="container landingwrapper_us">
+      <div class="logowrapper_us">
+        <img src="../../assets/images/landing-logo.png">
+      </div>
+      <div class="landingformwrapper_us">
+        <div class="landingformheader_us">
+        </div>
+        <div class="landingforminnerwrapper_us">
+          <h1>Get Started</h1>
+          <h3>Right Away!</h3>
+         <!-- <form action="" method="post" class="wpcf7-form">-->
+            <form novalidate [formGroup]="usherform" name="usherform" (ngSubmit)="dosubmit(usherform.value)" class="wpcf7-form">
+            <div> <span><input name="your-first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="First Name" type="text" [formControl]="usherform.controls['firstname']"></span> </div>
+              <span *ngIf ="usherform.controls['firstname'].touched && !usherform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> First Name field can not be blank</span>
+            <div> <span><input name="your-last-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Last Name" type="text" [formControl]="usherform.controls['lastname']"></span> </div>
+              <span *ngIf ="usherform.controls['lastname'].touched && !usherform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> Last Name field can not be blank</span>
+            <div> <span><input name="your-active-email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Email" type="text" [formControl]="usherform.controls['email']"></span> </div>
+              <span *ngIf ="usherform.controls['email'].touched && !usherform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> Email id field can not be blank</span>
+            <div> <span><input name="your-active-phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Phone" type="text" [formControl]="usherform.controls['phone']"></span> </div>
+              <span *ngIf ="usherform.controls['phone'].touched && !usherform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> Phone can not be blank</span>
+            <div> <span><input name="your-zip-code" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" placeholder="Zip Code" type="text" [formControl]="usherform.controls['zipcode']"></span> </div>
+              <span *ngIf ="usherform.controls['zipcode'].touched && !usherform.controls['firstname'].valid" class="wpcf7-not-valid-tip"> Zip code can not be blank</span>
+            <p><span><span><span class="first last"><input name="your-accept-tc[]" value="Accept Terms And Conditions" type="checkbox" [formControl]="usherform.controls['terms']"><span>Accept Terms And Conditions</span></span>
+               <span *ngIf ="usherform.controls['terms'].touched && !usherform.controls['terms'].valid" class="wpcf7-not-valid-tip"> You have to accept the Terms and Conditions !</span></span></span></p>
+            <p><button type="submit" class="btnbuyticket_us">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"> </button></p>
+          </form>
+        </div>
+        <div class="landingformfooter_us">
+        </div>
+      </div>
+      <div class="img1wrapper_us">
+        <img src="../../assets/images/us-landingimg1.png">
+      </div>
+      <div class="txt1wrapper_us">
+        <h4>NEXT on</h4>
+        <h1>Audio Deadline</h1>
+        <h2>8 Time Grammy Award</h2>
+        <h3>Winner</h3>
+      </div>
+      <div class="txt2wrapper_us">
+        <div class="txt2wrapperheader_us">
+          <h1>USHER</h1>
+        </div>
+        <ul>
+          <li><span><label>American Music Awards Favorite Soul/R&B Male Artist!</label></span></li>
+          <li><span><label>BET Awards Best Male R&B Artist!</label></span></li>
+          <li><span><label>Billboard Music Awards Artist of the Year!</label></span></li>
+          <li><span><label>Blockbuster Entertainment Awards Best R&B Singer!</label></span></li>
+          <li><span><label>MTV Video Music Awards Best Male Video!</label></span></li>
+          <li><span><label>People's Choice Awards Favorite Male Performer, Favorite R&B Artist!</label></span></li>
+          </ul>
+      </div>
+      <div class="landingtxt4img1wrapper_us">
+        <img src="../../assets/images/landingtxt4img1_us.png">
+      </div>
+      <div class="txt3wrapper_us_top">
+        <div class="txt3wrapperheader_us">
+          <div class="txt3wrapperheader_us_wrapper">
+            <h1>Music History <span>is Made Here!</span></h1>
+          </div>
+        </div>
+        <p><span class="spanyellow">This is</span> a chance that most people only dream of. Audio Deadline allows you to actually go behind the scenes during a live recording session as <span class="spanpurple">USHER</span> creates a unique, original musical creation. You'll have a chance to influence the music from the first note played to the final take.<br><br>The new song will be available for you to download after the studio session, before anyone else gets their hands on it! You won't find this chance anywhere <br>else but on <span class="spanpurplecaptal">Audio Deadline.</span><button type="button" class="btnbuyticket_us">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button>
+        </p>
+      </div>
+      <div class="landingimg2wrapper_us">
+        <img src="../../assets/images/landingimg2_us.png">
+      </div>
+      <div class="txt3wrapper_us">
+        <div class="txt3wrapperheader_us">
+          <div class="txt3wrapperheader_us_wrapper">
+            <h1>This one of a kind social</h1>
+            <h2>music experience is only available on Audio Deadline</h2>
+          </div>
+        </div>
+        <p>The Audio Deadline portal is shaping up to be the premier destination for everyone who <span class="spanpurple">loves music</span>. Only here can you see a live-streamed event such as this. We have mainstream artists that you love come in to face the challenge of creating a complete single in only 8 hours. In this edition of Audio Deadline, Usher will take just an idea and turn it into a certain hit. Only by being on Audio Deadline can you be there and participating the entire time. Where else can you collaborate and participate with a world famous artist such as Usher?</p>
+        <div class="txt3wrapperheader_us">
+          <div class="txt3wrapperheader_us_wrapper">
+            <h1>Watch live as Usher</h1>
+            <h2>works his magic in our studio!</h2>
+          </div>
+        </div>
+        <p><span class="spanwhite">Usher has sold 23.8 million albums and 38.2 million digital songs in the United States.</span><br>To date, his worldwide sales stand at 43 million albums and 75 million records overall, making him one of the best-selling music artists of all time. Usher has won numerous awards and accolades including 18 Billboard Music Awards and 8 Grammy Awards. Usher was also a coach on NBC's The Voice in Season 4 and 6. Whether you are Usher's number one fan, or you are just getting to love him, you won't want to miss this once in a lifetime chance to watch him work live. This experience will certainly not disappoint.<br><br>Usher's music is generally R&B, but also dynamically incorporates pop amongst other genres. His artistry brings out <span class="spanpurple">"the best of pop music in R&B"</span>. Contextually, his narratives often have an autobiographical nature of emphasis on lifestyle, relationships and love, often personifying himself as "an R&B Casanova". His albums have been said to contain influences of soul and hip hop, touches of '80s rock guitar and the minimal rhythm of '80s hip hop, and displays extreme versatility. He has even took a country road when he covered <span class="spanyellow">"Neon Lights" by Blake Shelton, his rival coach on The Voice</span>. This just goes to show you that you never know what User will come up with, and you now have a chance to participate in a live creation. Get on Audio Deadline, or wish you had… for the rest of your life.</p>
+      </div>
+
+      <div class="landingtxt4img2wrapper_us">
+        <img src="../../assets/images/landingtxt4img2_us.png">
+      </div>
+      <div class="landingtxt5imgwrapper_us">
+        <img src="../../assets/images/landingtxt5img_us.png">
+      </div>
+      <div class="dialogbox">
+
+        <div class="commentbody">
+          <span class="pointer"></span>
+          <div class="message">
+               <span class="msg1">Music is emotional. Your job is to make people feel something. The best way to do that is to sing and speak from something they've personally been through. That's where I write from.<br><span class="msg2">“Every time you come out with an album or a song, you want to feel like you're growing a bit in what you are and giving people something that they can feel.”
+</span></span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="txt6wrapper_us">
+        <button type="button" class="btnbuyticket_us">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button>
+        <div class="landingcopyright_us">©2017 COPYRIGHT by Audio Deadline</div>
+      </div>
+
+    </div>
+  </div>
+</div>

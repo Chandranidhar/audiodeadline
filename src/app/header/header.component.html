@@ -1,0 +1,68 @@
+<div class="container-fluid topheaderblock">
+  <div class="row">
+    <div class="container topheaderblockwrapper">
+      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 topheaderblocklogo">
+        <div class="toplogo">
+          <a [routerLink]="['']"><img src="../../assets/images/logo.png" alt="logo"></a>
+        </div>
+      </div>
+      <!--<div class="videoimg_div"  (click)="showvideo(template)">
+       <img src="https://i.ytimg.com/vi/MROXcmq-zfM/hqdefault.jpg">
+        <img src="../../assets/images/video_play_icon.png" class="video_play_icon">
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 topheadercaptionblock">
+        <h2>JOIN US FOR THE OFFICIAL COMPANY LAUNCH WEBINAR!</h2>
+        <h3>President and host Flii Stylz, CEO Beto Paredes and more will be presenting. <span>Monday, August 27th at 5:00PM Pacific.</span></h3>
+        <div class="clearfix"></div>
+        <a href="https://registerforwebinar.audiodeadline.com" target="_blank" class="new_clicklink">Click here!</a>
+      </div>-->
+     <!-- <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 topheaderblockinfo">
+        <img src="../../assets/images/icon-microphone.png" alt="logo">
+        <div class="topheaderblockright">
+          <h2>Tentatively Launching August 15th !</h2>
+        </div>
+      </div>-->
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<div class="container-fluid topmenublock">
+  <div class="container-fluid topmenu">
+    <nav class="navbar navbar-default">
+      <div class="navbar-header">
+        <span class="responsivemenu">MENU</span>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" data-hover="dropdown" data-animations="fadeInDown">
+        <ul class="nav navbar-nav">
+          <li class="ssd lidiv0" *ngIf="isLoggedIn"><a class="dropdown-toggle" [routerLink]="['/dashboard']"> dashboard </a></li>
+          <li class="ssd lidiv0 active"><a class="dropdown-toggle" [routerLink]="['']"> home </a></li>
+          <li class="ssd lidiv1 "><a class="dropdown-toggle" [routerLink]="['/aboutaudiodeadline']" > About </a></li>
+          <li class="ssd lidiv2 "><a class="dropdown-toggle" [routerLink]="['/community']" > Community </a></li>
+          <li class="ssd lidiv3 "><a class="dropdown-toggle" [routerLink]="['/signup/']" > RSVP for Tickets</a></li>
+          <li class="ssd lidiv4 "><a class="dropdown-toggle" [routerLink]="['/affiliate']" > Affiliate </a></li>
+          <li class="ssd lidiv5 "><a class="dropdown-toggle" [routerLink]="['/host-flii-stylz']"> Host Flii Stylz </a></li>
+          <li class="ssd lidiv6 "><a class="dropdown-toggle" [routerLink]="['/contactus']" > Contact Us </a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="clearfix"></div>
+</div>
+<div class="border1"></div>
+
+<ng-template #template>
+
+  <div class="modal-body text-center videomodal">
+    <div class="closedideo" (click)="modalRef.hide()" style="cursor: pointer;"></div>
+    <div class="videoiframe-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/MROXcmq-zfM?rel=0&autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+</ng-template>

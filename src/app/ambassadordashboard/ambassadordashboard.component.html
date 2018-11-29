@@ -1,0 +1,66 @@
+<div class="container-fluid dashboard_body">
+  <div class="dashboard_wrappertop">
+    <div class="dashboradtoplogo">
+      <img src="../../assets/images/logo.png">
+    </div>
+  </div>
+  <div class="row rowmaindiv">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+      <app-adminleft></app-adminleft>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+      <div class="dashboard_right_wrapper">
+        <div class="dashboard1_div1">
+          <h4>Dashboard</h4>
+          <div class="dashboardwrapper">
+            <form method="post" action="">
+              <div class="row socialmediadiv">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 socialmedia socialmedia_left">
+                  <div class="dashboard1form">
+                    <h2 class="headersocialbroadcast">My Profile</h2>
+                    <div class="form-group" *ngIf="userdetails">
+                      <span><label>Name:</label> {{userdetails.firstname}} {{userdetails.lastname}}</span>
+                    </div>
+                    <div class="form-group" *ngIf="userdetails">
+                      <span><label>Email:</label> {{userdetails.email}}</span>
+                    </div>
+                    <div class="form-group" *ngIf="userdetails">
+                      <span><label>Joining Date:</label> {{(userdetails.added_time*1000) | date:'MM-dd-yyyy'}}</span>
+                    </div>
+                    <div class="form-group" *ngIf="userdetails">
+                      <span>
+                        <label>Share link:</label>
+                        <span class="linksharedivnew">
+                          <code style="padding-left: 0;">https://audiodeadline.com/signup/{{userdetails.username}}/backend_static_1</code>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="form-group" *ngIf="userdetails">
+                      <button type="button" class="copybtn" (click)="copyText('https://audiodeadline.com/signup/'+userdetails.username+'/backend_static_1')"><span>Copy To ClipBoard</span></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 socialmedia socialmedia_right">
+                  <div class="dashboard1form" *ngIf="enrollerdetails">
+                    <h2 class="headersocialbroadcast">Enrollment Information</h2>
+                    <div class="form-group">
+                      <span><label>Name:</label> {{enrollerdetails.firstname}} {{enrollerdetails.lastname}}</span>
+                    </div>
+                    <div class="form-group">
+                      <span><label>Email:</label> {{enrollerdetails.email}}</span>
+                    </div>
+                    <div class="form-group">
+                      <span><label>User Name:</label> {{enrollerdetails.username}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

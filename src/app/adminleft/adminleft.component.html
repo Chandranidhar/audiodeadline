@@ -1,0 +1,60 @@
+<h2>Welcome <span *ngIf="userdetails">{{userdetails.firstname}} {{userdetails.lastname}}</span></h2>
+<ul *ngIf="userdetails">
+  <li>
+    <a [routerLink]="['/']" target="_blank"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+  </li>
+  <li>
+    <a [routerLink]="['/dashboard']"><i class="fa fa-dashboard" aria-hidden="true"></i> Dashboard</a>
+  </li>
+  <li class="dropdown" *ngIf="userdetails.admin == 1">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-black-tie" aria-hidden="true"></i> Admin Management<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a [routerLink]="['/add-admin']"><i class="fa fa-plus" aria-hidden="true"></i> Add Admin</a></li>
+      <li><a [routerLink]="['/admin-list']"><i class="fa fa-list" aria-hidden="true"></i> Admin List</a></li>
+    </ul>
+  </li>
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/affiliate-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Affiliate List</a></li>
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/ambassador-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Ambassador List</a></li>
+  <!--<li *ngIf="userdetails.admin == 1"><a [routerLink]="['/musician-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Musician List</a></li>
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/dancer-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Dancer List</a></li>
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/model-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Model List</a></li>
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/fan-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Fan List</a></li>-->
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/user-list']"><i class="fa fa-users" aria-hidden="true"></i> User List</a></li>
+  <li *ngIf="userdetails.admin == 0"><a [routerLink]="['/affiliate-list']"><i class="fa fa-life-ring" aria-hidden="true"></i> Affiliate Under Me</a></li>
+  <!--<li *ngIf="userdetails.admin == 0"><a [routerLink]="['/user-list']"><i class="fa fa-users" aria-hidden="true"></i> User Under Me</a></li>-->
+  <li class="dropdown" *ngIf="userdetails.admin == 1">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Blog Management<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a [routerLink]="['/add-blog']"><i class="fa fa-plus" aria-hidden="true"></i> Add Blog</a></li>
+      <li><a [routerLink]="['/blog-list']"><i class="fa fa-list" aria-hidden="true"></i> Blog List</a></li>
+    </ul>
+  </li>
+  <li class="dropdown" *ngIf="userdetails.admin == 1">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Genre Management<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a [routerLink]="['/add-genre']"><i class="fa fa-plus" aria-hidden="true"></i> Add Genre</a></li>
+      <li><a [routerLink]="['/genre-list']"><i class="fa fa-list" aria-hidden="true"></i> Genre List</a></li>
+    </ul>
+  </li>
+  <li class="dropdown" *ngIf="userdetails.admin == 1">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Promocode Management<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a [routerLink]="['/add-promocode']"><i class="fa fa-plus" aria-hidden="true"></i> Add Promocode</a></li>
+      <li><a [routerLink]="['/promocode-list']"><i class="fa fa-list" aria-hidden="true"></i> Promocode List</a></li>
+    </ul>
+  </li>
+  <li class="dropdown" *ngIf="userdetails.admin == 1">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Product Management<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a [routerLink]="['/add-product']"><i class="fa fa-plus" aria-hidden="true"></i> Add Product</a></li>
+      <li><a [routerLink]="['/product-list']"><i class="fa fa-list" aria-hidden="true"></i> Product List</a></li>
+    </ul>
+  </li>
+  <li><a [routerLink]="['/sponsor-list']"><i class="fa fa-file" aria-hidden="true"></i> Sponsor List</a></li>
+  <li *ngIf="userdetails.admin == 1"><a [routerLink]="['/affiliate-report']"><i class="fa fa-file" aria-hidden="true"></i> Affiliate Report (On basis of Media)</a></li>
+  <li><a [routerLink]="['/my-account']"><i class="fa fa-user" aria-hidden="true"></i> My Account</a></li>
+  <li><a [routerLink]="['/change-password']"><i class="fa fa-lock" aria-hidden="true"></i> Change Password</a></li>
+  <li><a href="javascript:void(0)" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out </a></li>
+</ul>
+
+

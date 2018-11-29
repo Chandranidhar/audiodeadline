@@ -1,0 +1,91 @@
+<div class="container-fluid dashboard_body">
+  <div class="dashboard_wrappertop"><div class="dashboradtoplogo"><img src="../../assets/images/logo.png"></div></div>
+  <div class="row rowmaindiv">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+      <app-adminleft></app-adminleft>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+      <div class="dashboard_right_wrapper">
+        <div class="dashboard1_div1 adminlisttable">
+          <h4>Model List</h4>
+          <div class="tablediv">
+            <div class="tabletopbar">
+              <div class="pull-right">
+                <form id="filter">
+                  <ul>
+                    <!--<li>
+                      <div>
+                        <div class="input-group col-md-12">
+                          <input type="text" class="form-control input-lg" placeholder="Search by date range" autocomplete="off"/>
+                        </div>
+                      </div>
+                    </li>-->
+                    <li>
+                      <div>
+                        <div class="input-group col-md-12">
+                          <input type="text" class="form-control input-lg" placeholder="Search" autocomplete="off" [(ngModel)]="searchText" name="searchText" />
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+            <table>
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Enroller</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Added on</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of userlist | namefilter : searchText">
+                <td>{{item.fullname}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.parentname}}</td>
+                <td>{{item.phone}}</td>
+                <td style="text-transform: capitalize">{{item.gender}}</td>
+                <td data-label="Added on">{{(item.added_time*1000) | date :  "MM/dd/yyyy"}}</td>
+                <td data-label="Role">
+                  <div>
+                    <div><span><input type="checkbox" [checked]="item.musicians" (change)="cngChk($event,'musicians')"></span><label>Musician</label></div>
+                    <div><span><input type="checkbox" [checked]="item.dancer"></span><label>Dancer</label></div>
+                    <div><span><input type="checkbox" [checked]="item.model"></span><label>Model</label></div>
+                    <div><span><input type="checkbox" [checked]="item.signupaffiliate"></span><label>Affiliate</label></div>
+                    <div><span><input type="checkbox" [checked]="item.fan"></span><label>Fan</label></div>
+                  </div>
+                </td>
+                <td data-label="Status">
+                  <a *ngIf="item.status == 0" class="statusinactive" href="javascript:void(0)" (click)="cngstatus(item)">Inactive</a>
+                  <a *ngIf="item.status == 1" class="statusactive" href="javascript:void(0)" (click)="cngstatus(item)">Active</a>
+                </td>
+                <td data-label="Action">
+                  <a href="javascript:void(0)" class="loginbtn2 btndelete" (click)="openDelModal(template,item)"><i class="fa fa-close"></i><span>Delete</span></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center modalcls">
+    <p>Are you sure to delete this model?</p>
+    <div class="text-center">
+      <button type="button" class="btnedit" (click)="confirm()" >Yes</button>
+      <button type="button" class="btndelete" (click)="decline()" >No</button>
+    </div>
+
+  </div>
+</ng-template>

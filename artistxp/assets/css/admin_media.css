@@ -1,0 +1,137 @@
+@media screen and (max-width:1300px) {
+   .dashboard_left{ width:21%; }
+  .dashboard_right{   width:76.5%; }
+  .dbblog .fa{ font-size:36px;  color:#fff;}
+}
+
+@media screen and (max-width:1199px) {
+    .dropdown.open .dropdown-menu li {
+       text-align: center;
+    }
+.dashboard_left{ width:100%; float:none; min-height:inherit; text-align:center; height:auto;}
+.dashboard_left h2{ text-align:center;}
+.dashboard_wrappertop img{ width:250px; display:block; margin:0 auto;}
+  .dashboard_right{   width:90%; margin:0 auto; float:none; min-height:inherit; border:none; padding:10px 0;}
+  
+/*    .tablediv { overflow-x:auto; width:100%; margin:0 auto;}*/
+
+    .dbblog {
+        width: 48%;
+        margin: 1%;
+        float: left;
+        border-radius: 5px;
+    }
+    .dbblog span {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:991px){
+
+    .tablediv .btnedit, .tablediv .btndelete, .tablediv .btnedit:hover, .tablediv .btndelete:hover {
+        display: block;
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+.login_wrapper{ width:80%; padding-left:5%; padding-right:5%;}
+.login_formbox{ width:90%; margin:0 auto;}
+
+.dashboard1form{ width:96%;}
+
+.fpassword{ float:none; margin:10px auto;}
+.login_formbox .loginbtn{ float:none; margin:0 auto;}
+
+}
+
+@media screen and (max-width: 767px) {
+    .dbblog {
+        width: 98%;
+        margin: 1%;
+        float: left;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .dbblog span{font-size: 24px;}
+    .btnsocialsharenew {
+        width: 100%;
+    }
+
+    .tablediv .btnedit, .tablediv .btndelete, .tablediv .btnedit:hover, .tablediv .btndelete:hover {
+        display: inline-block;
+        float: none;
+        margin-left: 2px;
+    }
+    .dashboard1_div1 {
+        margin: 20px;
+    }
+
+    .tabletopbar ul {
+        justify-content: center;
+    }
+
+    .tablediv .btnedit, .tablediv .btndelete, .tablediv .btnedit:hover, .tablediv .btndelete:hover {
+        float: none;
+    }
+
+    .tablediv table {
+        border: 0;
+    }
+
+    .tablediv table caption {
+        font-size: 1.3em;
+    }
+
+    .tablediv table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .tablediv table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    .tablediv table td {
+        border-bottom: 1px solid #ddd;
+        display: inline-block;
+        width: 100%;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    .tablediv table td button, .tablediv table td button:hover{
+        float: right;
+    }
+
+    .tablediv table td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .tablediv table td:last-child {
+        border-bottom: 0;
+    }
+}
+
+
+@media screen and (max-width:540px) {
+    .dbblog{ margin:0 auto; float:none; border-radius:5px; margin-bottom:15px;}
+    .btnsocialsharenew {
+        font-size: 14px;
+    }
+}

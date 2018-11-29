@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+<div class="container-fluid contacttopbannerblock">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="bannercontent">
+        <h2>For questions,</h2>
+        <h3>comments, or for</h3>
+        <h2>more information</h2>
+        <a class="btn btncontactus" [routerLink]="['/signup']">Sign up</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="contactboxblock">
+  <div class="contactpagewrapper">
+    <h2><span>please</span> contact us at</h2>
+    <div class="envelopwrapper">
+      <img src="../../assets/images/contactusenvelop.png">
+    </div>
+    <div role="form" class="wpcf7" id="wpcf7-f53-p15-o1" lang="en-US" dir="ltr">
+      <div class="screen-reader-response"></div>
+      <form action="/contact-us/#wpcf7-f53-p15-o1" method="post" class="wpcf7-form" role="form" name="dataForm" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+        <div style="display: none;">
+          <input type="hidden" name="_wpcf7" value="53">
+          <input type="hidden" name="_wpcf7_version" value="4.7">
+          <input type="hidden" name="_wpcf7_locale" value="en_US">
+          <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f53-p15-o1">
+          <input type="hidden" name="_wpnonce" value="ffafa2c537">
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><span class="wpcf7-form-control-wrap full-name"><input type="text" name="full-name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="Full Name" [formControl]="dataForm.controls['fullname']"></span><span *ngIf ="dataForm.controls['fullname'].touched && !dataForm.controls['fullname'].valid" class="wpcf7-not-valid-tip">Name field cannot be blank!</span></div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><span class="wpcf7-form-control-wrap email-address"><input type="text" name="email-address" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email" aria-required="true" aria-invalid="false" placeholder="Email" [formControl]="dataForm.controls['email']"></span><span *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid" class="wpcf7-not-valid-tip">Please enter a valid email address.</span></div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"><span class="wpcf7-form-control-wrap phone-number"><input type="text" name="phone-number" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-required wpcf7-validates-as-tel" aria-required="true" aria-invalid="false" placeholder="Phone Number" [formControl]="dataForm.controls['phoneno']"></span><span *ngIf ="dataForm.controls['phoneno'].touched && !dataForm.controls['phoneno'].valid" class="wpcf7-not-valid-tip">Not a valid Phone Number</span></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><span class="wpcf7-form-control-wrap your-message"><textarea name="your-message" cols="40" rows="10" class="wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="Message" [formControl]="dataForm.controls['message']"></textarea></span><span *ngIf ="dataForm.controls['message'].touched && !dataForm.controls['message'].valid" class="wpcf7-not-valid-tip">Please enter your Message here.</span></div>
+          <div class="clearfix"></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+            <p class="text-center"><input type="submit" value="submit" class="wpcf7-form-control wpcf7-submit"></p>
+          </div>
+        </div>
+        <div class="wpcf7-response-output wpcf7-display-none"></div></form></div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

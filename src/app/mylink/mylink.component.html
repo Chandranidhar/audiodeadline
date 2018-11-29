@@ -1,0 +1,588 @@
+<app-artistheader></app-artistheader>
+
+<div class="container-fluid pageheaderblock">
+  <div class="row no-gutter">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h1>My Links</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid trendingartistblock1 mylinksblock">
+  <div class="row no-gutter">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 artistsexchangeleftdiv">
+      <div class="sectionbody">
+        <div class="row no-gutter sectionheaderinner col-container">
+
+          <div class="singlelink" *ngFor="let linkval of linkArray">
+            <div class="singlelinkleft">
+              <div class="imgwrapper">
+                <img src="{{linkval.image}}">
+              </div>
+            </div>
+            <div class="singlelinkright">
+              <!--<h2><span>Just For Laughs - 10 Funniest Pranks (10)</span></h2>
+              <p class="linkp"><span>Just For Laughs 10 Funniest Pranks (10) (Video Editing - Km Music) All Videos is from Just For Laughs Channel</span></p>-->
+              <h2 class="linkp"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><span>{{linkval.title}}</span></a><span class="pull-right hide"> Lorem ipsum dolor sit amet</span></h2>
+              <p class="linkp">{{linkval.desc}}</p>
+              <div class="feedslinks">
+                <span class="feedslinks5"><i class="fa fa-eye"></i>
+                  <!--Views: <span class="numbercls">389</span>-->
+                  <span class="numbercls" *ngIf="linkval.linkviews[0]!=null"> Views: {{linkval.linkviews[0].lcount}} </span>
+                  <span class="numbercls" *ngIf="linkval.linkviews[0]==null"> Views: 0 </span>
+                </span>
+                <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like: <span class="numbercls">40</span></span>-->
+                <span class="feedslinks6" (click)="showlinklike(linkval)" *ngIf="linkval.linklikes[0]!=null && !getlikeonstatus(linkval.userlinklikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{linkval.linklikes[0].vlike}}</span>
+                <span class="feedslinks6" (click)="showlinklike(linkval)" *ngIf="linkval.linklikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                <span class="feedslinks6" (click)="showlinkunlike(linkval)" *ngIf="linkval.linklikes[0]!=null && getlikeonstatus(linkval.userlinklikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like:{{linkval.linklikes[0].vlike}}</span>
+
+
+                <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share: <span class="numbercls"></span></span>
+                <span class="edit_buttons">
+                  <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-pencil-square-o" (click)="editLink(linkval)"></i></button>
+                  <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-trash-o" (click)="deleteVideo(0,linkval._id,2)"></i></button>
+                </span>
+              </div>
+              <span class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><button class="btn btn-dfalt">GO</button></a></span>
+            </div>
+          </div>
+
+          <!--<div class="singlelink">
+            <div class="singlelinkleft">
+              <div class="imgwrapper">
+                <img src="http://cache.umusic.com/_images/facebook/selenagomez/og.jpg?2" alt="mylinkimg1">
+              </div>
+            </div>
+            <div class="singlelinkright">
+              <h2><span>Selena Gomez</span></h2>
+              <p class="linkp"><span>Just For Laughs 10 Funniest Pranks (10) (Video Editing - Km Music) All Videos is from Just For Laughs Channel</span></p>
+              <div class="feedslinks">
+                <span class="feedslinks5"><i class="fa fa-eye"></i> Views: <span class="numbercls">389</span></span>
+                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like: <span class="numbercls">40</span></span>
+                <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share: <span class="numbercls">120</span></span>
+                <span class="edit_buttons">
+                  <button class="button"><i aria-hidden="true" class="fa fa-pencil-square-o"></i></button>
+                  <button class="button"><i aria-hidden="true" class="fa fa-trash-o"></i></button>
+                </span>
+              </div>
+              <span class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url=5bdfef24a8a9fbec7188bbd5&amp;user_id=5bbef848dfcab6c012c6f8a2"><button class="btn btn-dfalt">GO</button></a></span>
+            </div>
+          </div>
+
+          <div class="singlelink">
+            <div class="singlelinkleft">
+              <div class="imgwrapper">
+                <img src="https://media.pitchfork.com/photos/5bcb2f338ce56c3d2c656adf/2:1/w_790/Rhye.jpg" alt="mylinkimg1">
+              </div>
+            </div>
+            <div class="singlelinkright">
+              <h2><span>Rhye Announces Blood Remixed Album | Pitchfork</span></h2>
+              <p class="linkp"><span>Just For Laughs 10 Funniest Pranks (10) (Video Editing - Km Music) All Videos is from Just For Laughs Channel</span></p>
+              <div class="feedslinks">
+                <span class="feedslinks5"><i class="fa fa-eye"></i> Views: <span class="numbercls">389</span></span>
+                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like: <span class="numbercls">40</span></span>
+                <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share: <span class="numbercls">120</span></span>
+                <span class="edit_buttons">
+                  <button class="button"><i aria-hidden="true" class="fa fa-pencil-square-o"></i></button>
+                  <button class="button"><i aria-hidden="true" class="fa fa-trash-o"></i></button>
+                </span>
+              </div>
+              <span class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url=5bdfef24a8a9fbec7188bbd5&amp;user_id=5bbef848dfcab6c012c6f8a2"><button class="btn btn-dfalt">GO</button></a></span>
+            </div>
+          </div>
+
+          <div class="singlelink">
+            <div class="singlelinkleft">
+              <div class="imgwrapper">
+                <img src="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded" alt="mylinkimg1">
+              </div>
+            </div>
+            <div class="singlelinkright">
+              <h2><span>How can I limit ngFor repeat to some number of items in Angular?</span></h2>
+              <p class="linkp"><span>Just For Laughs 10 Funniest Pranks (10) (Video Editing - Km Music) All Videos is from Just For Laughs Channel</span></p>
+              <div class="feedslinks">
+                <span class="feedslinks5"><i class="fa fa-eye"></i> Views: <span class="numbercls">389</span></span>
+                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like: <span class="numbercls">40</span></span>
+                <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share: <span class="numbercls">120</span></span>
+                <span class="edit_buttons">
+                  <button class="button"><i aria-hidden="true" class="fa fa-pencil-square-o"></i></button>
+                  <button class="button"><i aria-hidden="true" class="fa fa-trash-o"></i></button>
+                </span>
+              </div>
+
+
+              &lt;!&ndash;edit&ndash;&gt;
+              <span class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url=5bdfef24a8a9fbec7188bbd5&amp;user_id=5bbef848dfcab6c012c6f8a2"><button class="btn btn-dfalt">GO</button></a></span>
+            </div>
+          </div>-->
+
+        </div>
+        <!--<div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
+          <nav class="paginationtab">
+            <div class="paginationwrapper">
+              <ul class="pagination pg-darkgrey pagination_list">
+                <li class="page-item">
+                  <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active"><a class="page-link">1</a></li>
+                <li class="page-item"><a class="page-link">2</a></li>
+                <li class="page-item"><a class="page-link">3</a></li>
+                <li class="page-item"><a class="page-link">4</a></li>
+                <li class="page-item"><a class="page-link">5</a></li>
+                <li class="page-item">
+                  <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>-->
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv competitionrightdivtop">
+      <!---Right Side Banner Start Block---->
+      <div class="rightbannerdivwrapper">
+        <div class="rightbannerdiv">
+          <div class="rightbannerdivimg">
+            <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen6.jpg" alt="rightbannerdiv screen6"></div>
+          </div>
+          <div class="rightbannerdivimg">
+            <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
+          </div>
+        </div>
+      </div>
+      <!---Right Side Banner End Block---->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<app-artistfooter></app-artistfooter>
+
+<!--link modal starts here-->
+<div *ngIf="isModalLinkShown"class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #lgModal="bs-modal" [config]="{show: 'true'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name1" class="modal-title demoModalHeader" >Add A Link</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isModalLinkShown=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup]="linkform" name="modalform"  (ngSubmit)="linkSubmit(linkform.value)">
+
+          <div>
+            <p>URL:</p>
+            <input type="text" name="linkUrl" value="" size="40" (change)="getlinkdata(0)" placeholder=""  [formControl]="linkform.controls['linkUrl']" >
+            <input type="hidden" name="_id" value="" size="40" (change)="getlinkdata(0)" placeholder=""  [formControl]="linkform.controls['_id']" >
+            <span *ngIf ="linkform.controls['linkUrl'].touched && !linkform.controls['linkUrl'].valid" class="has-error">URL is Required !</span>
+
+
+            <p>Privacy:</p>
+            <select name="privacy"  [formControl]="linkform.controls['privacy']">
+              <option value="">Select One</option>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+              <option value="friends">Friends Only</option>
+            </select>
+            <span class="has-error" *ngIf ="linkform.controls['privacy'].touched && !linkform.controls['privacy'].valid"> Privacy field can not be blank!</span>
+
+
+
+          </div>
+
+          <div class="avi_link_xp_tab_contant" *ngIf="showlinksscrap">
+
+            <div class="row">
+              <div class="video_link">
+                <div class="col-md-2 col-sm-2 col-xs-2">
+                  <div class="video_link_img_wrapper">
+                    <img src="{{scrapimage}}" alt="#">
+                  </div>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-10">
+                  <p><span>{{scraptitle}}</span> <span class="pull-right hide"> Lorem ipsum dolor sit amet</span></p>
+                  <p>{{scrapdesc}}</p>
+                  <p class="hide">
+                    <span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>
+                    <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                    <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                    <span class=""><button class="btn btn-dfalt">GO</button></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="av_button">
+            <button type="button" class=""  type="submit">Save</button>
+            <button type="button" (click)="getlinkdata(1)" class="">Preview</button>
+            <button type="button" class=" cancelvideomodal" (click)="isModalLinkShown=false">Cancel</button>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--link modal ends here-->
+
+<!--common modal start here-->
+
+<div *ngIf="iscommonmodal" class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header deletemodal" style="border: none">
+
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 class="modal-title pull-left demoModalHeader1" >{{commonmodalmessage}}</h4>
+        <img class="demoModalImg" src="../../assets/images/artistheaderlogo.png">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="iscommonconfirmmodal" class="modal fade modalVideoUpload" (onHidden)="onHidden()" data-backdrop="static" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header deletemodal" style="border: none">
+
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="demoModalImg" src="../../assets/images/artistheaderlogo.png">
+        <h4 class="modal-title pull-left demoModalHeader1" >{{commonconfirmmodalmessage}}</h4>
+        <div class="av_button">
+          <button type="button" class="" (click)="hideModal()" type="button">Cancel</button>
+          <button type="button" (click)="deleteVideo(1,tempval,deleteflag)" class="">Yes</button>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--common modal end here-->
+
+<!--
+
+&lt;!&ndash;picture detail modal starts here *ngIf="isModalPicDetail"&ndash;&gt;
+<div  class="modal fade modalVideoUpload modalVideoUploadgallery picture_modal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header deletemodal">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isModalPicDetail=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        &lt;!&ndash;<div>
+            <img src="{{siteurl}}nodeserver/uploads/pictures/{{user_id}}/{{selectedpicture.image_pic}}">
+
+
+            <div class="play_video_status">
+                <p>
+                    <span *ngIf="selectedpicture.picviews[0]!=null "><i class="fa fa-eye" aria-hidden="true"></i> Views: {{selectedpicture.picviews[0].piccount}}</span>
+                    <span *ngIf="selectedpicture.picviews[0]==null "><i class="fa fa-eye" aria-hidden="true"></i> Views: 0</span>
+                    <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                    <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>
+                </p>
+            </div>
+
+        </div>&ndash;&gt;
+        <div class="col-md-7 leftimage">
+          <div class="imgwrapper">
+            <img src="{{siteurl}}nodeserver/uploads/pictures/{{selectedpictureuserid}}/{{selectedpicture.image_pic}}">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="pic_modal_right">
+            <div class="picmodaltitle">
+              <div class="row no-gutter col-container bodybloc5bottom">
+                <div class="col">
+                  <div class="feedslinks">
+                                        <span class="feedslinks1 userimagetitle">
+                                            <div class="imgwrapper">
+                                                <img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">
+                                            </div>
+                                            <div class="usertitle">
+                                                 &lt;!&ndash;user name&ndash;&gt;
+                                                {{selectedpicture.userdata[0].firstname}}  {{selectedpicture.userdata[0].lastname}}
+                                              &lt;!&ndash;<span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>{{convertunixtotimeago(pvalue.added_time)}}</span>&ndash;&gt;
+                                            </div>
+                                        </span>
+                    <span class="feedslinks3 userrightmrnu">
+                                            &lt;!&ndash;<b>11/09/2018</b>&ndash;&gt;
+                                            {{convertunixtotimeago(selectedpicture.added_time)}}
+                                        </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="comment_description">
+              &lt;!&ndash; <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>&ndash;&gt;
+              <p>{{selectedpicture.desc_pic}}</p>
+            </div>
+            <div class="comment_so_icon">
+              <div class="play_video_status">
+                <p>
+
+                  <span *ngIf="selectedpicture.picviews[0]!=null "><i class="fa fa-eye" aria-hidden="true"></i> Views: {{selectedpicture.picviews[0].piccount}}</span>
+                  <span *ngIf="selectedpicture.picviews[0]==null "><i class="fa fa-eye" aria-hidden="true"></i> Views: 0</span>
+                  <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                  &lt;!&ndash;<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>&ndash;&gt;
+
+                  <span (click)="showpicturelike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]!=null && !getlikeonstatus(selectedpicture.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedpicture.picturelikes[0].vlike}}</span>
+                  <span (click)="showpicturelike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                  <span (click)="showpictureunlike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]!=null && getlikeonstatus(selectedpicture.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedpicture.picturelikes[0].vlike}}</span>
+
+
+                  <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>
+                </p>
+              </div>
+            </div>
+            <div class="pic_modal_right_wrapper" id="style-6">
+              <div class="comment_modal">
+
+                <div class="comment_container">
+
+                  <div class="comment_container">
+                    &lt;!&ndash;  <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col">
+                              <div class="feedslinks">
+              <span class="feedslinks1 comment_user_image">
+                  <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
+              </span>
+                                  <span class="feedslinks3 comment_user_text">
+                  <div class="row">
+                      <div class="row comment_box">
+                          <a href="#">User name</a>
+                          <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
+                      </div>
+                      <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col">
+                              <div class="feedslinks comment_text_reply">
+                                  <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                  <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                <div class="row">
+                      <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col">
+                              <div class="feedslinks">
+                                  <span class="feedslinks1 comment_user_image">
+                                      <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                  </span>
+                                  <span class="feedslinks3 comment_user_text">
+                                      <div class="row">
+                                          <div class="row comment_box">
+                                              <a href="#">User name</a>
+                                              <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
+                                          </div>
+                                          <div class="row no-gutter col-container bodybloc5bottom">
+                                              <div class="col">
+                                                  <div class="feedslinks comment_text_reply">
+                                                      <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                      <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col">
+                              <div class="feedslinks">
+                                  <span class="feedslinks1 comment_user_image">
+                                      <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                  </span>
+                                  <span class="feedslinks3 comment_user_text">
+                                      <div class="row">
+                                          <div class="row comment_input">
+                                              <input type="text" class="form-control" (keyup)="addcomment($event)">
+                                          </div>
+
+                                      </div>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col">
+                              <div class="feedslinks">
+              <span class="feedslinks1 comment_user_image">
+                  <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
+              </span>
+                                  <span class="feedslinks3 comment_user_text">
+                  <div class="row comment_box">
+                      <a href="#">User name</a>
+                      <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
+                  </div>
+                  <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                          <div class="feedslinks comment_text_reply">
+                              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                              <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                          </div>
+                      </div>
+                  </div>
+              </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row comment_input_se">
+                          <div class="row no-gutter col-container bodybloc5bottom">
+                              <div class="col">
+                                  <div class="feedslinks">
+                                  <span class="feedslinks1 comment_user_image">
+                                      <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                  </span>
+                                      <span class="feedslinks3 comment_user_text">
+                                      <div class="row">
+                                          <div class="row comment_input">
+                                              <input type="text" class="form-control">
+                                          </div>
+
+                                      </div>
+                                  </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>&ndash;&gt;
+                    <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedpicture.comments">
+                      <div class="col">
+                        <div class="feedslinks">
+                            <span class="feedslinks1 comment_user_image">
+                                <div class="imgwrapper">
+                                    &lt;!&ndash;<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">&ndash;&gt;
+                                     <span *ngIf="valc.userdata[0].images!=null" >
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                        <img src="{{siteurl}}nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                        </a>
+                                    </span>
+
+                                    <span *ngIf="valc.userdata[0].images==null">
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+                                            </a>
+                                    </span>
+                                </div>
+                            </span>
+                          <span class="feedslinks3 comment_user_text">
+                                <div class="row comment_box">
+                                    <span class="timespan">{{convertunixtotimeago(valc.added_time)}}</span>
+                                  &lt;!&ndash;<a href="#">User name</a>
+                                  <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>&ndash;&gt;
+
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                        <b>{{valc.comment}}</b>
+                                </div>
+                            &lt;!&ndash;<div class="row no-gutter col-container bodybloc5bottom">
+                                <div class="col">
+                                    <div class="feedslinks comment_text_reply">
+                                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                        <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                    </div>
+                                </div>
+                            </div>&ndash;&gt;
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row comment_input_se" *ngIf="isloggedin==1">
+                      <div class="row no-gutter col-container bodybloc5bottom">
+                        <div class="col">
+                          <div class="feedslinks">
+                                                <span class="feedslinks1 comment_user_image">
+                                                    <div class="imgwrapper">
+
+                                                        &lt;!&ndash;<img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5">&ndash;&gt;
+                                                         <span *ngIf="image==null">
+
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+
+                                        </span>
+                                        <span *ngIf="image!=null" >
+
+                                            <img src="{{siteurl}}nodeserver/uploads/{{image}}" >
+
+                                        </span>
+                                                    </div>
+                                                </span>
+                            <span class="feedslinks3 comment_user_text">
+                                                    <div class="row">
+                                                        <div class="row comment_input">
+                                                            <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                        </div>
+
+                                                    </div>
+                                                </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+&lt;!&ndash;picture detail modal ends here&ndash;&gt;
+-->
+
+
+<ng-template #commingsoontemplate>
+  <div class="modal-body text-center signupeamilbody">
+
+    <button type="button" class="close" (click)="closep()">&times;</button>
+    <img src="../../assets/images/artistheaderlogo.png" alt="logo">
+    <p><span>This is currently a concept page to give you and idea of what the ArtistXP Experience is going to be all about. When we launch you will have access to these incredible features. <br><br>Get the ArtistXP Experience NOW!  <a style="cursor: pointer; width: 360px;" (click)="gotoSignUp()">Get back to Pre Launch Sign Up</a></span></p>
+
+  </div>
+</ng-template>

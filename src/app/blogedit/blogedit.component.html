@@ -1,0 +1,58 @@
+<div class="container-fluid dashboard_body">
+    <div class="dashboard_wrappertop"><img src="../../assets/images/logo.png"></div>
+    <div class="row rowmaindiv">
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+            <app-adminleft></app-adminleft>
+        </div>
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+            <div class="dashboard_right_wrapper">
+                <div class="dashboard1_div1">
+                    <h4> Add Blog</h4>
+                    <div class="dashboard1form">
+                        <form name="dataForm" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+                            <div *ngIf="is_error" class="singleerror">{{is_error}}</div>
+                            <div class="form-group">
+                                <label>Blog Title*</label>
+                                <input type="text" class="form-control" name="title" [formControl]="dataForm.controls['title']">
+                                <span *ngIf ="dataForm.controls['title'].touched && !dataForm.controls['title'].valid" class="has-error">Blog Title field can not be blank</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Description*</label>
+                                <ck-editor name="description" [formControl]="dataForm.controls['description']" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+                                <span *ngIf ="dataForm.controls['description'].touched && !dataForm.controls['description'].valid" class="has-error">Blog Description field can not be blank</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Videos</label>
+                                <input type="text" class="form-control" name="videolink" [formControl]="dataForm.controls['videolink']" placeholder="Type/paste youtube URL" autocomplete="off">
+                                <input type="button" value="Add" (click)="addYTvideo()">
+                                <span *ngIf ="videolinkerror" class="has-error">Please type/paste valid youtube URL</span>
+                                <div>
+                                    <div class="col-md-4 embed-responsive embed-responsive-16by9" *ngFor="let item of videos">
+                                        <iframe class="embed-responsive-item" [src]="getYTURL(item)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Images</label>
+                                <input style="display: none"
+                                       type="file" (change)="onFileChanged($event)"
+                                       #fileInput>
+                                <input type="button" (click)="fileInput.click()" value="Select File">
+                                <span *ngIf ="imageserror" class="has-error">Please type/paste valid youtube URL</span>
+                                <div>
+                                    <div class="col-md-4" style="height: 200px; overflow: hidden;" *ngFor="let item of images">
+                                        <img style="width: 100%" src="{{siteurl}}nodeserver/uploads/{{item}}" >
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <input type="submit" name="submit" value="SUBMIT" class="loginbtn2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

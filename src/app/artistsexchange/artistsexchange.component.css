@@ -1,0 +1,124 @@
+
+.imgwrapper{
+
+    position: relative;
+
+}
+.overlayhover{
+
+    position: absolute;
+    display: none;
+    width: 100%;
+    bottom: 0px;
+    /*transform: translate3d(0,100%,0);*/
+    /*transition: transform 0.35s;*/
+    /*background: #150D0B;*/
+    /*color: #fff;*/
+
+
+    /*background: rgba(0, 0, 0, 0.5);*/
+
+}
+.imgwrapper:hover .overlayhover{
+
+    display: block;
+
+
+    /*overflow: hidden;*/
+
+}
+.colLink1{
+    background: #000000;
+    margin: auto;
+    height: auto;
+    width: 11%;
+    padding: 28px 21px 36px 21px;
+    display: block;
+    border: 1px solid #282C31;
+    /*padding-bottom: 55px;*/
+
+}
+.colLink2{
+    background: #000000;
+    margin: auto;
+    height: auto;
+
+    display: block;
+    width: 63%;
+    border: 1px solid #282C31;
+
+}
+.colLink3{
+    background: #000000;
+    margin: auto;
+    height: auto;
+    /*padding-bottom: 94px;*/
+
+}
+.headerLink{
+
+    color: #787879;
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 15px;
+
+}
+.paralink{
+    color: #787879;
+    padding-left: 15px;
+}
+.imageClass{
+
+    height: 48px;
+}
+.paraLink2{
+
+    text-align: end;
+}
+.btnGo{
+
+    background: #ff0049;
+    color: white;
+    font-family: 'RobotoBold';
+
+}
+/*Loader class starts here*/
+.loader {
+    border: 16px solid #3C4C59;
+    border-top: 16px solid #017EDA;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/*Loader class ends here*/
+
+.loaderShowClass{
+    width:100vw;
+    height: 100vh;
+    background: #000000;
+    position: absolute;
+    left:0;
+    top:0;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+
+}
+.demoVideoTab{
+
+    padding-left: 52vh;
+    padding-top: 23vh;
+}

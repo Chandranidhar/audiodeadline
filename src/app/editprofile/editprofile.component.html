@@ -1,0 +1,273 @@
+<!--<app-header></app-header>-->
+<app-artistheader></app-artistheader>
+<!--Landing Page Start--->
+
+
+<div *ngIf="this.showLoader!=0" class="loder_body">
+  <div class="loder_wrapper">
+    <div class="loader"></div>
+  </div>
+</div>
+
+
+
+
+<div class="container-fluid multi_bg_example_genuserlanpt">
+  <div class="row">
+    <div class="container landingwrapper_genuserlanpt">
+      <!--<div class="logowrapper_genuserlanpt"><img src="assets/images/landing-logo.png"></div>-->
+      <!--<h4 style="padding-top: 25px;">Basic membership to the Artist Exchange, the central social.</h4>-->
+      <!--<h4>experience for the <span>AudioDeadline.com</span> show and artists, is <span>FREE.</span></h4>-->
+      <div class="clearfix"></div>
+      <div class="landingformwrapper_genuserlanpt_outer">
+        <div class="landingformwrapper_genuserlanpt">
+          <div class="landingformheader_genuserlanpt newheaderclass">
+            <!--<h3>Edit Profile</h3>-->
+            <h1>Edit Profile</h1>
+          </div>
+          <div class="landingforminnerwrapper_genuserlanpt" *ngIf="userdetails">
+            <form class="formdiv" name="dancingform" novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+
+              <div class="form-group">
+                <label><span>First Name</span> </label>
+                <input name="firstname" class="form-control" type="text" [formControl]="dataForm.controls['firstname']">
+                <span class="has-error" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid"> First Name field can not be blank</span>
+              </div>
+
+              <div class="form-group">
+                <label><span>Last Name</span> </label>
+                <input name="lastname" class="form-control" type="text" [formControl]="dataForm.controls['lastname']">
+                <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid"> First Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Email</span></label>
+                <input name="email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['email']" disabled>
+                <span class="has-error" *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid"> Email field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>User Name</span> </label>
+                <input name="username" class="form-control" type="text" [formControl]="dataForm.controls['username']" disabled>
+                <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['username'].valid"> User Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Phone</span></label>
+                <input name="phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['phone']">
+                <span class="has-error" *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid"> Phone field can not be blank</span>
+              </div>
+
+
+
+              <div class="form-group">
+                <label><span>Real Name</span> </label>
+                <input name="realname" class="form-control" type="text" [formControl]="dataForm.controls['realname']">
+                <span class="has-error" *ngIf ="dataForm.controls['realname'].touched && !dataForm.controls['realname'].valid"> Real Name field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Aliases:</span> </label>
+                <input name="alias" class="form-control" type="text" [formControl]="dataForm.controls['alias']">
+                <span class="has-error" *ngIf ="dataForm.controls['alias'].touched && !dataForm.controls['alias'].valid"> Aliases field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Gender</span></label>
+                <select class="form-control classic"  name="gender"  [formControl]="dataForm.controls['gender']">
+                  <option value="">Select One</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <span class="has-error" *ngIf ="dataForm.controls['gender'].touched && !dataForm.controls['gender'].valid"> Gender field can not be blank</span>
+              </div>
+              <div class="form-group" *ngIf="userdetails.musicians == 1">
+                <label><span>Performance Category/ Genre (Music):</span></label>
+                <select class="form-control classic mselbox" multiple="multiple"  name="musicgenre"  [formControl]="dataForm.controls['musicgenre']">
+                  <option value="">Select Genre</option>
+                  <option *ngFor="let item of genrelist" value="{{item._id}}">{{item.genrename}}</option></select>
+                <span class="has-error" *ngIf ="dataForm.controls['musicgenre'].touched && !dataForm.controls['musicgenre'].valid"> Performance Category/Genre field can not be blank</span>
+              </div>
+              <div class="form-group" *ngIf="userdetails.dancer == 1">
+                <label><span>Performance Category/ Genre (Dancer):</span></label>
+                <select class="form-control classic mselbox"  name="dancergenre" multiple="multiple" [formControl]="dataForm.controls['dancergenre']">
+                  <option value="">Select Genre</option>
+                  <option *ngFor="let item of genrelist1" value="{{item._id}}">{{item.genrename}}</option></select>
+                <span class="has-error" *ngIf ="dataForm.controls['dancergenre'].touched && !dataForm.controls['dancergenre'].valid"> Performance Category/Genre field can not be blank</span>
+              </div>
+              <div class="form-group" *ngIf="userdetails.model == 1">
+                <label><span>Ethnicity:</span></label>
+                <h5>(Choose ONE ONLY) <span>Please select which best describes you</span> </h5>
+                <div class="funkyradio">
+                  <ul class="list-inline">
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="indigenousmaori" [value]="'Indigenous Maori'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="indigenousmaori">Indigenous Maori</label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="indigenousfirstnations" [value]="'Indigenous First Nations'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="indigenousfirstnations">Indigenous First Nations</label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="indigenousnativeamerican" [value]="'Indigenous Native American'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="indigenousnativeamerican">Indigenous Native American</label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="indigenousother" [value]="'Indigenous Other'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="indigenousother">Indigenous Other</label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="indigenouspacificnations" [value]="'Indigenous Pacific Nations'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="indigenouspacificnations">Indigenous Pacific Nations</label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="otherethnicity" [value]="'Other Ethnicity'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="otherethnicity">Other Ethnicity</label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ethnicity" id="indigenousaboriginalaus" [value]="'Indigenous Aboriginal - Aus'" [formControl]="dataForm.controls['ethnicity']" />
+                        <label for="indigenousaboriginalaus">Indigenous Aboriginal - Aus</label>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <span class="has-error" *ngIf ="dataForm.controls['ethnicity'].touched && !dataForm.controls['ethnicity'].valid"> Ethnicity field can not be blank</span>
+              </div>
+              <div class="form-group" *ngIf="userdetails.musicians == 1 || userdetails.dancer == 1">
+                <label><span>Ability:</span></label>
+                <h5>(Choose ONE ONLY) <span>Enter by the Most Experienced Dancer's Ability Level</span> </h5>
+                <div class="funkyradio funkyradio2">
+                  <ul class="list-inline">
+                    <li>
+                      <span>
+                        <input type="radio" name="ability" id="beginning" [value]="'Beginning'" [formControl]="dataForm.controls['ability']" />
+                        <label for="beginning">Beginning- <b>Less than  Two years in any  Studio environment</b></label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ability" id="elementary" [value]="'Elementary'" [formControl]="dataForm.controls['ability']" />
+                        <label for="elementary">Elementary- <b>Two, Three or Four years of study</b></label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ability" id="junior" [value]="'Junior'" [formControl]="dataForm.controls['ability']" />
+                        <label for="junior">Junior- <b>Five, Six or Seven years of study</b></label>
+                      </span>
+                    </li>
+                    <li>
+                      <span>
+                        <input type="radio" name="ability" id="senior" [value]="'Senior'" [formControl]="dataForm.controls['ability']" />
+                        <label for="senior">Senior- <b>MORE than seven years of study</b></label>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                <span class="has-error" *ngIf ="dataForm.controls['ability'].touched && !dataForm.controls['ability'].valid"> Ability field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Experiences:</span></label>
+                <div class="selectdiv" *ngFor="let item of experiences.controls; let i = index;">
+                  <input name="websites[]" class="form-control" type="url" [formControl]="item.controls['name']">
+                  <button type="button" class="addbtn" (click)="addExperience('')" style="right: 38px;"><i class="fa fa-plus"></i></button>
+                  <button type="button" class="addbtn" (click)="delExperience(i)"><i class="fa fa-minus"></i></button>
+                  <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid"> Experience field can not be blank</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label><span>Website:</span></label>
+                <div class="selectdiv" *ngFor="let item of websites.controls; let i = index;">
+                  <input name="websites[]" class="form-control" type="url" [formControl]="item.controls['name']">
+                  <button type="button" class="addbtn" (click)="addWebsite('')" style="right: 38px;"><i class="fa fa-plus"></i></button>
+                  <button type="button" class="addbtn" (click)="delWebsite(i)"><i class="fa fa-minus"></i></button>
+                  <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid"> Website field can not be blank</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label><span>Add Image:</span> </label>
+                <div class="imageuploaddiv">
+                  <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+                  <div class="file btn btnimageupload"  (click)="fileInput.click()"> Select File </div>
+                </div>
+                <div>
+                  <div class="col-md-4 imguploadsuccess" *ngIf="image">
+                      <img style="width: 100%" src="{{siteurl}}nodeserver/uploads/{{image}}" >
+                  </div>
+                </div>
+                <div class="clear"></div>
+                <span class="has-error" *ngIf ="imageserror"> Upload image here</span>
+              </div>
+              <div class="form-group">
+                <label><span>Bio:</span> </label>
+                <textarea name="bio" class="form-control" [formControl]="dataForm.controls['bio']"></textarea>
+                <span class="has-error" *ngIf ="dataForm.controls['bio'].touched && !dataForm.controls['bio'].valid"> Bio field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Hometown:</span> </label>
+                <input name="city" class="form-control" type="text" [formControl]="dataForm.controls['city']">
+                <span class="has-error" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid"> Hometown field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>State/Province:</span></label>
+                <select name="state" class="form-control classic" [formControl]="dataForm.controls['state']">
+                  <option value="">Select State</option>
+                  <option *ngFor="let item of state" value="{{item.abbreviation}}">{{item.name}}</option>
+                </select>
+                <span class="has-error" *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid"> State/Province field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>Address:</span> </label>
+                <input name="address" class="form-control" type="text" [formControl]="dataForm.controls['address']">
+                <span class="has-error" *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid"> Address field can not be blank</span>
+              </div>
+              <div class="form-group">
+                <label><span>ZipCode:</span> </label>
+                <input name="zip" class="form-control" type="text" [formControl]="dataForm.controls['zip']">
+                <span class="has-error" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid"> ZipCode field can not be blank</span>
+              </div>
+
+              <input class="btnbuyticket_genuserlanpt" value="UPDATE YOUR PROFILE" type="submit">
+              <button [routerLink]="['/profile']" class="btnbuyticket_genuserlanpt" value="CANCEL" >CANCEL</button>
+            </form>
+          </div>
+          <div class="landingformfooter_genuserlanpt"></div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="landingcopyright_genuserlanpt"> </div>
+    </div>
+  </div>
+</div>
+
+<!--Landing Page End--->
+
+<!--<app-footer></app-footer>-->
+<app-artistfooter></app-artistfooter>
+
+
+<div *ngIf="isupdatedatamodal" class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true,backdrop:'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header deletemodal" style="border: none">
+
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isupdatedatamodal=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 class="modal-title pull-left demoModalHeader1" >Your Profile has been updated successfully!</h4>
+        <img class="demoModalImg" src="../../assets/images/artistheaderlogo.png">
+      </div>
+    </div>
+  </div>
+</div>

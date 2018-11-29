@@ -1,0 +1,284 @@
+<app-artistheader></app-artistheader>
+
+<div class="container-fluid trendingartistblock1">
+    <div class="row no-gutter">
+
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 artistsexchangeleftdiv">
+            <div class="row">
+                <div class="post_bg">
+                    <img src="../assets/images/post_bg.jpg" alt="#">
+                </div>
+                <div class="post_blog">
+                    <div class="post-blog-content artistsexchangeblock1bodybloc5">
+                        <div class="row">
+                            <div class="sectionbody">
+                                <div class="row no-gutter sectionheaderinner col-container">
+                                    <div class="col-1-1 col">
+                                        <div class="bodybloc5singleblock">
+                                            <div class="bodybloc5singleblockwrapper">
+                                                <div class="row no-gutter col-container bodybloc5top">
+                                                    <div class="col-md-1 col bodybloc5topleft">
+                                                        <div class="imgwrapper">
+                                                            <!--<img src="assets/images/artistfeed-smlimg1.jpg" alt="RTP5">-->
+                                                            <img src="{{siteurl}}nodeserver/uploads/{{postuserimage}}" alt="RTP5">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-11 col bodybloc5topright">
+                                                        <div class="row no-gutter col-container">
+                                                            <div class="col-md-9 col">
+                                                                <h2>{{postusername}}</h2>
+                                                                <!--<h2>Toni Tillman</h2>-->
+                                                            </div>
+                                                            <div class="col-md-3 col datecolwrapper">
+                                                                <div class="input-group date" data-date-format="mm-dd-yyyy">
+                                                                    <!--<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>-->
+                                                                    <!--<input class="form-control" type="text" placeholder="March 13,2018" readonly />-->
+                                                                    <span class="form-control">{{convertunixtotimeago(musicarray.added_time)}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row no-gutter col-container bodybloc5bottom">
+                                                            <div class="col-md-12 col videoblocknew"  *ngIf="activeRoute.snapshot.params.type=='m'">
+                                                                <div class="imgwrapper">
+                                                                    <!--<video id="myVideo1" width="320" height="240" poster="assets/images/post_video_img.jpg" controls>
+                                                                      <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.mp4" type="video/mp4">
+                                                                      <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.ogg" type="video/ogg">
+                                                                      Your browser does not support the video tag.
+                                                                    </video>-->
+                                                                    <div class="audioinfo" *ngIf="musicarray.length!= 0"  >
+                                                                        <div class="audioinfologo">
+                                                                            <img src="../../assets/images/artistheaderlogo.png" alt="%">
+                                                                        </div>
+                                                                        <div class="audioinfotitle" >
+                                                                            {{musicarray.title_music}}
+                                                                        </div>
+                                                                        <!--<div class="audioinfousername">
+                                                                            By - <span>{{musicarray.userdata[0].firstname}} {{musicarray.userdata[0].lastname}}</span>
+                                                                        </div>-->
+
+                                                                    </div>
+                                                                    <img *ngIf="isaudioplay" src="../../assets/images/audio-play-image.gif" alt="RTR1">
+                                                                    <img *ngIf="!isaudioplay" src="../../assets/images/pause-gif-image.jpg" alt="RTR1">
+                                                                    <audio *ngIf="chosenaudiourl!='' " id="audioplayer1">
+                                                                        <source [attr.src]="chosenaudiourl" type="audio/mpeg">
+                                                                        Your browser does not support the audio tag.
+                                                                    </audio>
+
+                                                                    <!--for music player-->
+
+                                                                    <!--<div class="buttons">
+                                                                      <button class="button uk-button uk-button-primary first" onclick="playVid()" type="button">
+                                                                        <img src="assets/images/artistvideoplayicon.png" alt="videoplayicon" class="videoplay"/>
+                                                                      </button>
+                                                                      <button class="button uk-button uk-button-primary second" onclick="pauseVid()" type="button">
+                                                                        <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="videopause"/>
+                                                                      </button>
+                                                                    </div>-->
+                                                                    <!--<h2 class="blackheader">Lorem ipsum dolor sit amet</h2>-->
+                                                                </div>
+                                                                <div class="sectionheaderinnercontainer">
+                                                                    <div class="playsilider">
+                                                                        <ng5-slider [(value)]="value1" [options]="options1" (userChange)="changeaudioplayertimer()" (valueChange)="setval1()"></ng5-slider>
+                                                                    </div>
+                                                                    <div class="playericons">
+                                                                        <!--<blockquote>
+                                                                            <p class="mb-0">Total Audience 31,000 </p>
+                                                                            <p class="mb-1">Genre Hip Hop, Rap </p>
+                                                                            <p class="mb-2"><a href="javascript:void(0);">See Trade</a></p>
+                                                                        </blockquote>-->
+                                                                        <div class="audioicon_d audioicon1">
+                                                                            <!--<p>0:00:00/01:21:36</p>-->
+                                                                            <!--<p>{{value1.toFixed(0)}}/{{audioDuration.toFixed(0)}}</p>-->
+                                                                            <p>{{convertsecstoformat(value1)}}/{{convertsecstoformat(audioDuration)}}</p>
+
+                                                                        </div>
+                                                                        <div class="audioicon_d audioicon2">
+
+                                                                            <span *ngIf="!isaudioplay" class="icons2" (click)="playmusic()"><img src="assets/images/audio_playicon.png" alt="#"> </span>
+                                                                            <span *ngIf="isaudioplay" class="icons2" (click)="playmusic()"><img src="assets/images/audio_pauseicon.png" alt="#"> </span>
+
+                                                                        </div>
+                                                                        <div class="audioicon_d audioicon3">
+
+                                                                            <span *ngIf="!ismuteaudio" (click)="muteaudio()"  class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>
+                                                                            <span *ngIf="ismuteaudio" (click)="unmuteaudio()"  class="icons02"><img src="../../assets/images/audio_muteicon.png" alt="#"> </span>
+                                                                            <span class="icons03">
+                                                                            <ng5-slider [(value)]="value" [options]="options" (userChange)="changeaudioplayervolume()"></ng5-slider>
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-12 col videoblocknew" *ngIf="activeRoute.snapshot.params.type=='p'">
+                                                                <div class="imgwrapper">
+                                                                    <img src="{{siteurl}}nodeserver/uploads/pictures/{{musicarray.user_id}}/{{musicarray.image_pic}}">
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="col-md-12 col videoblocknew" *ngIf="activeRoute.snapshot.params.type=='v'">
+                                                                <div class="videoWrapper">
+                                                                    <div class="iframevideo">
+                                                                        <iframe width="100%" *ngIf="musicarray.type=='vimeo' && currentvideourl!='' " height="320" [attr.src]="currentvideourl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                                        <youtube-player *ngIf="musicarray.type=='youtube' && currentvideourl!='' " [videoId]="currentvideourl" [height]="320" (change)="onStateChange($event)"></youtube-player>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row no-gutter col-container bodybloc5bottom post-blockicons" >
+                                                    <div class="col col-md-12" *ngIf="musicarray.length!= 0 ">
+                                                        <div class="feedslinks" >
+                                                            <!--<span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>-->
+                                                            <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [{{musicarray.comments.length}}]</span>
+                                                            <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                                                            <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
+                                                            <!--music player-->
+                                                            <span class="feedslinks5" *ngIf="activeRoute.snapshot.params.type=='m' && musicarray.musicviews[0]!=null "><i class="fa fa-eye"></i> Views:{{musicarray.musicviews[0].musiccount}}</span>
+                                                            <span class="feedslinks5" *ngIf="activeRoute.snapshot.params.type=='m' && musicarray.musicviews[0]==null "><i class="fa fa-eye"></i> Views:0</span>
+
+
+                                                            <span class="feedslinks6" (click)="showmusiclike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='m' && musicarray.musiclikes[0]!=null && !getlikeonstatus(musicarray.usermusiclikes) "><i class="fa fa-thumbs-o-up"></i> Like:{{musicarray.musiclikes[0].vlike}}</span>
+
+                                                            <span  class="feedslinks6" (click)="showmusiclike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='m' && musicarray.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+
+                                                            <span  class="feedslinks6" (click)="showmusicunlike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='m' && musicarray.musiclikes[0]!=null && getlikeonstatus(musicarray.usermusiclikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{musicarray.musiclikes[0].vlike}}</span>
+
+                                                            <!---------------------music player--------------------->
+
+                                                            <!---------------------video player--------------------->
+
+                                                            <span class="feedslinks5" *ngIf="activeRoute.snapshot.params.type=='v' && musicarray.videoviews[0]!=null "><i class="fa fa-eye"></i> Views:{{musicarray.videoviews[0].vcount}}</span>
+                                                            <span class="feedslinks5" *ngIf="activeRoute.snapshot.params.type=='v' && musicarray.videoviews[0]==null "><i class="fa fa-eye"></i> Views:0</span>
+
+                                                            <span class="feedslinks6" (click)="showvideolike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='v' && musicarray.videolikes[0]!=null && !getlikeonstatus(musicarray.uservideolikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{musicarray.videolikes[0].vlike}}</span>
+                                                            <span class="feedslinks6" (click)="showvideolike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='v' && musicarray.videolikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                                            <span class="feedslinks6" (click)="showvideounlike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='v' && musicarray.videolikes[0]!=null && getlikeonstatus(musicarray.uservideolikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{musicarray.videolikes[0].vlike}}</span>
+
+                                                            <!--------------------video player--------------------------->
+                                                            <!--------------------Picture post--------------------------->
+                                                            <!--<span  *ngIf="activeRoute.snapshot.params.type=='p' && musicarray.picturelikes!=null "><i class="fa fa-thumbs-up"></i> Like:{{musicarray.picturelikes[0].vlike}}</span>-->
+                                                            <span class="feedslinks6" (click)="showpicturelike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='p'  && musicarray.picturelikes[0]!=null && !getlikeonstatus(musicarray.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{musicarray.picturelikes[0].vlike}}</span>
+                                                            <span class="feedslinks6" (click)="showpicturelike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='p'  &&musicarray.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                                            <span class="feedslinks6" (click)="showpictureunlike(musicarray)" *ngIf="activeRoute.snapshot.params.type=='p'  &&musicarray.picturelikes[0]!=null && getlikeonstatus(musicarray.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{musicarray.picturelikes[0].vlike}}</span>
+
+                                                            <span class="feedslinks5" *ngIf="activeRoute.snapshot.params.type=='p' && musicarray.picviews!=null "><i class="fa fa-eye"></i> Views:{{musicarray.picviews[0].piccount}}</span>
+                                                            <span class="feedslinks5" *ngIf="activeRoute.snapshot.params.type=='p' && musicarray.picviews==null "><i class="fa fa-eye"></i> Views:0</span>
+                                                            <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
+
+                                                            <!--------------------Picture post--------------------------->
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="postcon_border"></div>
+                        <div class="row" *ngFor="let val of musicarray.comments">
+
+                            <div class="user-title">
+                    <span>
+                    <div class="imgwrapper">
+                      <!--<img src="assets/images/postuser1.jpg" alt="#">-->
+                      <img src="{{siteurl}}nodeserver/uploads/{{val.userdata[0].images}}" alt="#">
+                    </div>
+                    </span>
+                                <span class="user_blogcontent">
+                         <span class="timespan"> {{convertunixtotimeago(val.added_time)}}</span>
+
+                        <span class="user_name_new">{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</span>
+
+                        <p>
+                            <!--<b class="leftquote"><img src="assets/images/quotelefticon.png" alt="#"> </b>-->
+                            <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.-->
+                          {{val.comment}}
+                            <!--<b class="righttquote"><img src="assets/images/quoterighticon.png" alt="#"> </b>-->
+                        </p>
+                    </span>
+                            </div>
+                            <!--<div class="user_blogcontent">
+
+
+                            </div>-->
+                            <!--<div class="post_icons">
+                              <div class="row no-gutter col-container bodybloc5bottom">
+                                <div class="col">
+                                  <div class="feedslinks">
+                                    <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                    <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>-->
+                        </div>
+                        <!--<div class="row">
+                          <div class="user-title">
+                                <span>
+                                <div class="imgwrapper">
+                                  <img src="assets/images/postuser2.jpg" alt="#">
+                                </div>
+                                </span>
+                            <span>
+                                    Lorem Ipsum
+                                </span>
+                          </div>
+                          <div class="user_blogcontent">
+                            <p><b class="leftquote"><img src="assets/images/quotelefticon.png" alt="#"> </b>
+                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                              <b class="righttquote"><img src="assets/images/quoterighticon.png" alt="#"> </b></p>
+
+                          </div>
+                          <div class="post_icons">
+                            <div class="row no-gutter col-container bodybloc5bottom">
+                              <div class="col">
+                                <div class="feedslinks">
+                                  <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                  <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="col col-md-12 rightpost-blockicon">
+                                <div class="feedslinks">
+                  <span class="feedslinks1"><div class="imgwrapper">
+                    <!--<img src="assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">  userimage-->
+                    <img src="{{siteurl}}nodeserver/uploads/{{userimage}}" alt="RTP5">
+                  </div></span>
+                                    <span class="feedslinks2"><input class="form-control" type="text" [(ngModel)]="commentval" (keyup)="addcomment($event)" placeholder=""></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv competitionrightdivtop">
+            <!---Right Side Banner Start Block---->
+            <div class="rightbannerdivwrapper">
+                <div class="rightbannerdiv">
+                    <div class="rightbannerdivimg">
+                        <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen1.jpg" alt="rightbannerdiv screen6"></div>
+                    </div>
+                    <div class="rightbannerdivimg">
+                        <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
+                    </div>
+                </div>
+            </div>
+            <!---Right Side Banner End Block---->
+
+        </div>
+    </div>
+</div>
+
+<app-artistfooter></app-artistfooter>

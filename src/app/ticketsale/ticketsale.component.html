@@ -1,0 +1,193 @@
+<app-header></app-header>
+<div class="container-fluid multi_bg_example_ticsale">
+  <div class="row">
+    <div class="container landingwrapper_ticsale">
+      <div class="logowrapper_ticsale">
+        <img src="../../assets/images/landing-logo.png">
+      </div>
+      <div class="landingformwrapper_ticsale">
+        <div class="landingformheader_ticsale"></div>
+        <div class="landingforminnerwrapper_ticsale" #destinationRef>
+          <h1>Get all access</h1>
+          <h3>for this Audio Deadline for <span>$14.95</span></h3>
+          <form name="ticsaleform" class="wpcf7-form"  novalidate [formGroup]="dataForm" (ngSubmit)="dosubmit(dataForm.value)">
+            <div class="form-group">
+              <span><input name="firstname" class="form-control" placeholder="First Name*" type="text" [formControl]="dataForm.controls['firstname']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid"> First Name field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <span><input name="lastname" class="form-control" placeholder="Last Name*" type="text" [formControl]="dataForm.controls['lastname']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid"> Last Name field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <span><input name="address" class="form-control" placeholder="Address*" type="text" [formControl]="dataForm.controls['address']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid"> Address field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <span><input name="city" class="form-control" placeholder="City*" type="text" [formControl]="dataForm.controls['city']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid"> City field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <select class="form-control classic" name="state" [formControl]="dataForm.controls['state']">
+                <option value="">Select State*</option>
+                <option *ngFor="let item of state" value="{{item.abbreviation}}">{{item.name}}</option>
+              </select>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid"> State/Province field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <span><input name="zip" class="form-control" placeholder="Zip" type="text" [formControl]="dataForm.controls['zip']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid"> Zip code can not be blank</span>
+            </div>
+            <div class="form-group">
+              <ul class="cardlist list-inline">
+                <li>We Accept</li>
+                <li>
+                  <a href="javascript:void(0);"><img src="../../assets/images/img-card1.png"></a>
+                  <a href="javascript:void(0);"><img src="../../assets/images/img-card2.png"></a>
+                  <a href="javascript:void(0);"><img src="../../assets/images/img-card3.png"></a>
+                  <a href="javascript:void(0);"><img src="../../assets/images/img-card4.png"></a>
+                </li>
+              </ul>
+            </div>
+            <!--<div class="form-group">
+              <select class="form-control classic" id="cardlist">
+                <option class="select-start">Select</option>
+                <option>Master Card</option>
+                <option>Visa</option>
+              </select>
+              <span class="wpcf7-not-valid-tip"> Card field can not be blank</span>
+            </div>-->
+            <div class="form-group">
+              <span><input name="cardnumber" class="form-control" placeholder="Card Number*" type="text" [formControl]="dataForm.controls['cardnumber']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['cardnumber'].touched && !dataForm.controls['cardnumber'].valid"> Card Number field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <ul class="list-inline ddyy">
+                <li>
+                  <select class="form-control classic" name="expmon" [formControl]="dataForm.controls['expmon']">
+                    <option value="">--MM--</option>
+                    <option *ngFor="let item of montharr" value="{{item.val}}">{{item.label}}</option>
+                  </select>
+                </li>
+                <li>
+                  <select class="form-control classic" name="expyear" [formControl]="dataForm.controls['expyear']">
+                    <option value="">--YYYY--</option>
+                    <option *ngFor="let item of yeararr" value="{{item.val}}">{{item.label}}</option>
+                  </select>
+                </li>
+              </ul>
+              <span class="wpcf7-not-valid-tip" *ngIf ="((dataForm.controls['expmon'].touched && !dataForm.controls['expmon'].valid) || (dataForm.controls['expyear'].touched && !dataForm.controls['expyear'].valid))"> Exp Month/year field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <span><input name="cvv" class="form-control" placeholder="CVV*" type="text" [formControl]="dataForm.controls['cvv']"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf ="dataForm.controls['cvv'].touched && !dataForm.controls['cvv'].valid"> CVV field can not be blank</span>
+            </div>
+            <div class="form-group">
+              <span><input name="promocode" class="form-control" placeholder="Do you have a promo code?" type="text" [formControl]="dataForm.controls['promocode']" (blur)="chkPromocode()"></span>
+              <span class="wpcf7-not-valid-tip" *ngIf="promoerror">{{promomsg}}</span>
+              <span class="wpcf7-not-valid-tip" style="color: #00ff00" *ngIf="promosuccess">{{promomsg}}</span>
+            </div>
+            <div class="form-group termsandconditioncls">
+              <label class="checkcontainer">
+                Accept Terms And Conditions
+                <input name="accept-tc" value="Accept Terms And Conditions" type="checkbox" [formControl]="dataForm.controls['accepttermscond']">
+                <span class="checkmark"></span>
+                <span class="wpcf7-not-valid-tip" *ngIf="chkerror"> You have to accept the Terms and Conditions !</span>
+              </label>
+            </div>
+            <p>
+              <button type="submit" class="btnbuyticket_ticsale">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button>
+            </p>
+          </form>
+        </div>
+        <div class="landingformfooter_ticsale"></div>
+      </div>
+      <div class="img1wrapper_ticsale">
+        <img src="../../assets/images/ticsale-landingimg1.png">
+      </div>
+      <div class="txt1wrapper_ticsale">
+        <h4>NEXT on</h4>
+        <h1>Audio Deadline</h1>
+        <h2>Streamed LIVE over the internet to millions across the globe</h2>
+        <h3>on January 19th 2019 starting at 1 p.m. (Pst)</h3>
+      </div>
+      <div class="landingtxt4img1wrapper_ticsale">
+        <img src="../../assets/images/landingtxt4img1_ticsale.png">
+      </div>
+      <div class="txt2wrapper_ticsale">
+        <div class="txt2wrapperheader_ticsale">
+          <h1>Artists</h1>
+        </div>
+        <ul>
+          <li><span><label>Lorem ipsum dolor sit amet, consectetur</label></span></li>
+          <li><span><label>Lorem ipsum dolor sit amet, consectetur adipiscing</label></span></li>
+          <li><span><label>Lorem ipsum dolor sit amet, consectetur adipiscing</label></span></li>
+          <li><span><label>Lorem ipsum dolor sit amet, consectetur</label></span></li>
+          <li><span><label>Lorem ipsum dolor sit amet, consectetur adipiscing</label></span></li>
+          <li><span><label>Lorem ipsum dolor sit amet, consectetur</label></span></li>
+        </ul>
+      </div>
+      <div class="landingimg2wrapper_ticsale">
+        <img src="../../assets/images/landingimg2_ticsale.png">
+      </div>
+      <div class="sponsor_block_ticsale" *ngIf="banner1 && banner2">
+        <div class="sponsor_block_ticsale_wrapper">
+          <div class="content-table">
+            <div class="content-row">
+              <div class="column content1">
+                <div class="videoWrapper">
+                  <img src="../../assets/images/{{banner1}}">
+                </div>
+              </div>
+              <div class="column sidebar">
+                <div class="videoWrapper">
+                  <img src="../../assets/images/{{banner2}}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="landingtxt6imgwrapper_ticsale">
+        <img src="../../assets/images/landingtxt6img_ticsale.png">
+      </div>
+      <div class="txt3wrapper_ticsale">
+        <div class="txt3wrapperheader_ticsale">
+          <div class="txt3wrapperheader_ticsale_wrapper">
+            <h1>Lorem ipsum dolor sit</h1>
+            <h2>Lorem ipsum, or lipsum as it is sometimes known</h2>
+          </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt <span class="spanpurple">mollit anim id est laborum</span>. Lorem ipsum dolor sit amet, consectetur adipiscing elit, <br><br> sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipiscing elit, <span class="spanpurple">sed do eiusmod tempor</span> incididunt ut labore et dolore magna aliqua.</p>
+        <div class="txt3wrapperheader_ticsale">
+          <div class="landingtxt4img2wrapper_ticsale">
+            <img src="../../assets/images/landingtxt4img2_ticsale.png">
+          </div>
+          <div class="txt3wrapperheader_ticsale_wrapper">
+            <h1>Lorem ipsum dolor sit</h1>
+            <h2>Lorem ipsum, or lipsum as it is sometimes known</h2>
+          </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:<br><br><span class="spangreen">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.”</span><br>The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout. A practice not without controversy, laying out pages with meaningless filler text can be very useful when the focus is meant to be on design, not content.<br><br>The passage experienced a surge in popularity during the 1960s when Letraset </p>
+      </div>
+      <div class="landingtxt5imgwrapper_ticsale">
+        <img src="../../assets/images/landingtxt5img_ticsale.png">
+      </div>
+      <div class="dialogbox">
+        <div class="commentbody">
+          <span class="pointer"></span>
+          <div class="message">
+            <span class="msg1">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th <br><span class="msg2">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a </span></span>
+          </div>
+        </div>
+        <div class="txt6wrapper_ticsale">
+          <button type="button" class="btnbuyticket_ticsale"  [ngx-scroll-to]="destinationRef">BUY MY TICKETS NOW !<img src="../../assets/images/iconarrow.png"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+
+
+

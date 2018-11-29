@@ -1,0 +1,83 @@
+<div class="container-fluid dashboard_body">
+  <div class="dashboard_wrappertop"><img src="../../assets/images/logo.png"></div>
+  <div class="row rowmaindiv">
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 dashboard_left">
+      <app-adminleft></app-adminleft>
+    </div>
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 dashboard_right">
+      <div class="dashboard_right_wrapper">
+        <div class="dashboard1_div1 adminlisttable">
+          <h4>Admin List</h4>
+          <div class="tablediv">
+            <div class="tabletopbar">
+              <div class="pull-right">
+                <form action="" method="get">
+                  <ul>
+                    <!--<li>
+                      <div>
+                        <div class="input-group col-md-12">
+                          <input type="text" class="form-control input-lg" placeholder="Search by date range" autocomplete="off"/>
+                        </div>
+                      </div>
+                    </li>-->
+                    <li>
+                      <div>
+                        <div class="input-group col-md-12">
+                          <input type="text" class="form-control input-lg" placeholder="Search" autocomplete="off" [(ngModel)]="searchText" name="searchText" />
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <a [routerLink]="['/add-admin']" class="loginbtn2"><i class="fa fa-plus"></i> Add Admin</a>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+            <table>
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Added on</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of userlist | namefilter : searchText">
+                <td>{{item.fullname}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.phone}}</td>
+                <td>{{item.fulladdress}}</td>
+                <td>{{(item.added_time*1000) | date :  "MM/dd/yyyy" }}</td>
+                <td>
+                  <a *ngIf="item.status == 0" class="statusinactive" href="javascript:void(0)" (click)="cngstatus(item)">Inactive</a>
+                  <a *ngIf="item.status == 1" class="statusactive" href="javascript:void(0)" (click)="cngstatus(item)">Active</a>
+                </td>
+                <td>
+                  <a class="loginbtn2 btnedit" [routerLink]="['/edit-admin',item._id]"><i class="fa fa-pencil"></i><span>Edit</span></a>
+                  <a href="javascript:void(0)" class="loginbtn2 btndelete" (click)="openDelModal(template,item)"><i class="fa fa-close"></i><span>Delete</span></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center modalcls">
+    <p>Are you sure to delete this admin?</p>
+    <div class="text-center">
+      <button type="button" class="btnedit" (click)="confirm()" >Yes</button>
+      <button type="button" class="btndelete" (click)="decline()" >No</button>
+    </div>
+
+  </div>
+</ng-template>
