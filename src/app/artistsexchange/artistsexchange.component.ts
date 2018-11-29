@@ -539,7 +539,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         console.log(this.selectedsharedpost._id);
 
 
-        if(type=='audio' || type=='trendingaudio'){
+        if(type=='audio'){
 
              options = {
                 method: 'share',
@@ -549,7 +549,27 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
         }
-        if(type=='video' || type=='trendingvideo'){
+        if( type=='trendingaudio'){
+
+             options = {
+                method: 'share',
+
+                href: 'http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+            };
+
+
+        }
+        if(type=='video'){
+
+             options = {
+                method: 'share',
+
+                href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+            };
+
+
+        }
+        if(type=='trendingvideo'){
 
              options = {
                 method: 'share',
@@ -3647,12 +3667,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 console.log("Hello world!");
                 console.log("Hello world!b66");
                 console.log(event);
+               
                 this.fbshare('audio',this.selectedsharedpost);
                 this.fbshare('trendingaudio',this.selectedsharedpost);
-                /*
                 this.fbshare('video',this.selectedsharedpost);
                 this.fbshare('trendingvideo',this.selectedsharedpost);
-                this.fbshare('picture',this.selectedsharedpost);*/
+                this.fbshare('picture',this.selectedsharedpost);
 
 
             });
