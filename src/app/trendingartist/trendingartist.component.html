@@ -36,7 +36,7 @@
             <div class="col"><button type="button" class="btn btntopformgray">Zip Code</button></div>
             <!--<div class="col"><button type="button" class="btn btntopformgray">Radius</button></div>-->
           </div>
-          <div class="btntopformredlists">
+          <div class="btntopformredlists" *ngIf="selectedgenrearray.length>0">
             <div class="col" *ngFor="let vals of selectedgenrearray" ><button type="button" class="btn btntopformred" (click)="removeselectedgenre(vals)"><i class="fa fa-close"></i> {{vals.genrename}}</button></div>
             <!--
             <div class="col" *ngFor="let vals of selectedgenrearray"><a (click)="removeselectedgenre(vals)" class="btntopformrednew"><i class="fa fa-close"></i>{{vals.genrename}}</a></div>

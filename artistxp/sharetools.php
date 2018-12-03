@@ -65,7 +65,7 @@ if($_REQUEST['type']=='p'){
     curl_setopt($curl2, CURLOPT_HTTPHEADER, $headers);
     $response1 = curl_exec($curl2);
 
-    echo "<pre>";
+//    echo "<pre>";
     /*print_r($response1);*/
     $res=json_decode($response1);
 //    print_r($res->item);
@@ -75,6 +75,9 @@ if($_REQUEST['type']=='p'){
 
     $title=$res->item[0]->title_pic;
     $description="By ".$res->item[0]->desc_pic;
+//    echo $title;
+//    echo $description;
+
 //    $image='https://artistxp.com/misc/fbimages/fbimg.jpg';
     $image='https://audiodeadline.com/nodeserver/uploads/pictures/'.$res->item[0]->user_id.'/'.$res->item[0]->image_pic;
 //    echo $image;
@@ -142,9 +145,12 @@ if($_REQUEST['type']=='v'){
 
         curl_setopt($curl21, CURLOPT_HTTPHEADER, $headers);
         $responsec = curl_exec($curl21);
-        print_r($responsec);
+//        print_r($responsec);
+//        echo $title;
+
         $vres=json_decode($responsec);
         $image=$vres[0]->thumbnail_large;
+//        $title=$res->item[0]->title;
 
     }
     if($res->item[0]->type=='youtube'){
@@ -164,7 +170,7 @@ if($_REQUEST['type']=='v'){
     ?>
     <script type="text/javascript">
         setTimeout(function () {
-            window.location.href=("https://demo.artistxp.com/postfeed/p/<?php echo $res->item[0]->_id; ?>");
+            window.location.href=("https://demo.artistxp.com/postfeed/v/<?php echo $res->item[0]->_id; ?>");
         },600);
     </script>
     <?php

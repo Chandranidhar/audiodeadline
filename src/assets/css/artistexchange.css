@@ -118,6 +118,8 @@
 
 *p{
     margin: 0px;
+    white-space: normal;
+    word-break: break-word;
 }
 
 *a, a, *a:hover, a:hover, *a:link, a:link{
@@ -1099,6 +1101,8 @@
 
 .deletemodal{padding: 0px !important;}
 
+.modalVideoUpload .modal-body form span.accept-tc span{font-weight: normal;}
+
 .modalVideoUpload .modal-body input{
     color: #bdbdbd;
     padding-left: 10px;
@@ -1146,6 +1150,11 @@
 }
 
 .modalVideoUpload .modal-content select{
+   /* -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;*/
+    -ms-word-break: normal;
+    word-break: normal;
     color: #bdbdbd;
     padding-left: 10px;
     font-size: 14px;
@@ -1157,7 +1166,25 @@
     margin-left: 0px;
     width: 100%;
     display: inherit;
+    position: relative;
 }
+
+.modalVideoUpload .modal-content select:after {
+    content: '\f078';
+    font: normal normal normal 17px/22px FontAwesome;
+    color: #dbdbdb;
+    right: 11px;
+    top: 6px;
+    padding: 15px 0px 0px 8px;
+    position: absolute;
+    pointer-events: none;
+}
+
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+    display: none;
+}
+
 
 .modalVideoUpload .modal-content .modal-header{
     background-color: transparent;
@@ -1173,12 +1200,13 @@
 .modalVideoUpload .modal-body p{
     color: #efefef;
     display: inline-block;
-    padding: 4px 5px 4px !important;
+    padding: 4px 5px 4px;
     width: 100%;
     text-align: left;
-    margin-top: 10px !important;
-    margin-right: 0px !important;
+    margin-top: 10px;
+    margin-right: 0px;
 }
+
 .modalVideoUpload .modal-body input{
     background-color:#0e0e0e;
     border: none;
@@ -1203,8 +1231,8 @@
     opacity: 100;
     border-radius: 50%;
 }
-
-
+.modalVideoUpload .modal-header .close:focus{display: none;}
+.modalVideoUpload .modal-body .form-group label{font-weight: normal;}
 .av_xp_tab_contant{
     text-align: center;
     color: #fff;
@@ -1361,7 +1389,9 @@
     font-size: 12px;
     clear: both;
     display: table;
-    width: 100%;
+    width: 94%;
+    position: absolute;
+    bottom: 24px;
 }
 .video_list .col-md-8 p:nth-child(2) span{
     width:50%;
@@ -1509,7 +1539,9 @@ img.playicon{
 
 #tabVideos .scrollbar {
     width: 100%;
-    overflow-y: scroll;
+    /*overflow-y: scroll;
+    overflow-x: hidden;*/
+    overflow-y: auto;
     overflow-x: hidden;
     height: 329px;
     margin-bottom: 6px;
@@ -1595,8 +1627,10 @@ img.playicon{
 {
     height: 300px;
     width: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;/*
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*overflow-y: scroll;
+    overflow-x: hidden;*//*
     display: inline;*/
 }
 
@@ -1837,8 +1871,14 @@ img.playicon{
 .avi_link_xp_tab_contant .col-md-10 p:nth-child(3) span{
     color: #828b91;
     font-size: 16px;
-    margin-right: 8px;
+    margin-right: 18px;
 }
+
+.avi_link_xp_tab_contant .col-md-10 p:nth-child(3) span span{
+    margin-right: 0px;
+}
+
+
 .avi_link_xp_tab_contant .col-md-10 p:nth-child(3) span i{
     margin-right: 2px;
 }
@@ -1864,7 +1904,7 @@ img.playicon{
 }
 .avi_link_xp_tab_contant .col-md-10{
     padding: 0px 10px 10px !important;
-    border-left: 1px solid #222324;
+    /*border-left: 1px solid #222324;*/
 }
 .avi_link_xp_tab_contant .col-md-2 img{
     width: 100% !important;
@@ -2310,7 +2350,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .imgwrapper .buttons img{border: 0px solid #4d4e4f !important;}
 
 .feedslinks{display: table;width: 100%;}
-.feedslinks span{display: table-cell;vertical-align: middle;padding: 4px;color: #fff;font-size: 12px;cursor: pointer;}
+.feedslinks span{display: table-cell;vertical-align: middle;padding: 4px;color: #fff;font-size: 12px;cursor: pointer; text-align: center;}
 .feedslinks input.form-control{width: 100%;height: 26px;display: block;border-radius: 100px;background-color: #464b4d;border: 0px !important; color: #bdbdbd;}
 .feedslinks .imgwrapper{width: 35px; height: 35px; border: 0px !important; border-radius: 100px; display: inline-block;}
 .feedslinks .imgwrapper img{width: 100%;}
@@ -2348,7 +2388,14 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .bodybloc7bottom{width: 100%; }
 .bodybloc7bottom .imgwrapper{width: 109px; height: 97px;border:1px solid #020202 !important;}
 .bodybloc7bottom .imgwrapper img{width: 100%;}
-.bodybloc7bottom h2{padding: 0px 5px; margin: 0; font-family: 'RobotoMedium'; font-size: 14px; color:#6ed2fc; text-align: left; font-weight: normal; line-height: 16px; text-transform: inherit; white-space: normal;    overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; min-height: 32px;}
+.bodybloc7bottom h2{padding: 0px 5px; margin: 0; font-family: 'RobotoMedium'; font-size: 14px; color:#6ed2fc; text-align: left; font-weight: normal; line-height: 16px; text-transform: inherit; white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 32px;
+}
 .bodybloc7bottom p{padding: 0px 5px; margin: 7px 0px; font-family: 'RobotoMedium'; font-size: 11px; color: #d4d6d7; text-align: left; font-weight: normal;  line-height: 14px; text-transform: uppercase; margin-left: auto!important;
     display: inline-block; width: 100%;  float: left;}
 .bodybloc7bottom p span{display: inline-block; width: auto; text-align: right;float: right;}
@@ -2537,6 +2584,10 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     display: table;
 }
 
+.sectionbody .pic_title_con .col-container .col {
+    vertical-align: middle;
+}
+
 
 .avi_pic_css .artistsexchangeblock1bodybloc1{border-left: 0px solid #1c3349;}
 /*
@@ -2563,20 +2614,29 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 
 .bodybloc5bottom .pic_fa_icon span{
-    font-size: 10px;
-    padding: 2px;
+    font-size: 12px;
+    padding: 4px !important;
 }
 
 .bodybloc5bottom .pic_fa_icon .fa {
-    font-size: 10px;
+    font-size: 12px;
 }
 .bodybloc5bottom{display: inline-block; width: 100%;}
 .bodybloc5bottom .col{display: inline-block; width: 100%;}
 .bodybloc5bottom .col .feedslinks{/*display: inline-block;*/ width: 100%;}
-.bodybloc5bottom .col .feedslinks .comment_user_image{display: table-cell; width: 40px;}
+.bodybloc5bottom .col .feedslinks .comment_user_image{display: table-cell; width: 40px; padding: 4px;}
 .bodybloc5bottom .col .feedslinks .comment_user_text{display: table-cell; padding: 4px;}
 .picture_modal .modal-body .pic_modal_right{height: auto !important;}
-.picture_modal .modal-body .pic_modal_right .pic_modal_right_wrapper {height: 400px;}
+.picture_modal .modal-body .pic_modal_right .pic_modal_right_wrapper { max-height: 400px; height: auto;}
+.picture_modal .modal-body .col-md-5 .pic_modal_right .pic_modal_right_wrapper { max-height: 400px; height: 400px;}
+.picture_modal .modal-body .col-md-12{padding-left: 0; padding-right: 0px;}
+.picture_modal .modal-body .col-md-12 .pic_modal_right .comment_input_se{position: relative; bottom: 0; background: #353535; width: 100%;}
+.picture_modal .modal-body .col-md-12 .pic_modal_right .comment_input_se.comment_input_se_new{position: absolute; bottom: 0; background: #353535; width: 100%;}
+.picture_modal .modal-body .col-md-12 .pic_modal_right .pic_modal_right_wrapper {padding-bottom: 0px !important;}
+
+.comment_user_text, .bodybloc5bottom .col .feedslinks .comment_user_text {
+    padding: 4px 4px 4px 0px !important;
+}
 
 .pic_arrow p{
     float: left;
@@ -2826,8 +2886,8 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 /*---Pagination css----*/
 .paginationtabwrapper{
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 .paginationtabwrapper .paginationtab{
     background-image: linear-gradient(#2B3238, #060606) !important;
@@ -2882,16 +2942,13 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     text-transform: capitalize;
     line-height: 16px;
     height: 39px;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    -ms-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-
+    display: -webkit-box;
+    max-height: 39px;
+    font-size: 16px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .trending_video_list .video_list p:nth-child(2){
     font-size: 15px;
@@ -2934,7 +2991,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     margin-bottom: 0;
 }
 .video_list .tranding_blogp p:nth-child(3) {
-    width: 100%;
+    width: 96%;
     display: table;
     margin-top: 10px;
     position: absolute;
@@ -2960,6 +3017,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     margin-bottom: 0;
     color: #ccc;
     display: table-cell;
+    text-align: center;
 }
 /*.video_list div:nth-child(1) img:nth-child(1){
     width: 100%;
@@ -3016,7 +3074,6 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     width: 96%;
     text-transform: capitalize;
     line-height: 16px;
-    height: 39px;
     display: -webkit-box;
     display: -moz-box;
     display: -ms-box;
@@ -3032,8 +3089,10 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .scrollbar4 {
     float: left;
     height: 481px;
-    width: 100%;
+    width: 100%;/*
     overflow-y: scroll;
+    overflow-x: hidden;*/
+    overflow-y: auto;
     overflow-x: hidden;
 }
 .tranding_videoandlisting{
@@ -3160,6 +3219,13 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 
 /*-----Favoriteartists---*/
+.trendingartistblock1.favoriteartistsblock1 h2 {
+    margin-right: auto;
+    margin-bottom: 0px;
+    display: block;
+    font-size: 16px;
+    text-align: left !important;
+}
 .favoriteartistsblock1{}
 .favoriteartistsblock1 .sectionbody .col-1-6 .imgwrapper {
     height: 210px;
@@ -3245,7 +3311,11 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 .singlelinkright .feedslinks span {
     font-size: 16px;
+    padding: 4px 8px;
 }
+
+
+.singlelinkright .feedslinks span i.fa{font-size: 16px; display: inline-block;}
 
 .trendingartistblock1.mylinksblock h2 {
     padding: 0;
@@ -3275,6 +3345,8 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     line-height: 24px;
     color:#838383;
     min-height: 1px;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .singlelinkright .linkpgobtn{
@@ -3519,7 +3591,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     margin-left: 35px;
 }
 .post_blog .videoblocknew .imgwrapper{
-    height: 460px;
+    height: 460px !important;
     border: 1px solid #37393a;
     max-width: 94%;
 }
@@ -3552,6 +3624,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .rightpost-blockicon .feedslinks span .fa, .post-blockicons .feedslinks span .fa {
     margin-right: 2px;
     font-size: 16px;
+    display: inline-block;
 }
 
 .post-blockicons  .rightpost-blockicon .feedslinks{
@@ -3584,7 +3657,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     padding: 0 0px 0 !important;*/
     position: relative;
     display: block;
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
     padding: 0 0px 0 !important;
 }
@@ -3596,6 +3669,12 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .comment_modal .modal-header{
     border-bottom: 0 !important;
 }
+
+.picture_modal .comment_modal .comment_container .row.no-gutter.col-container.bodybloc5bottom:last-child{margin-bottom: 30px;}
+
+.picture_modal .comment_modal .comment_container .comment_input_se.comment_input_se_new .bodybloc5bottom{margin-bottom: 0px !important;}
+
+
 .comment_modal .feedslinks .comment_user_image{
    /* width: 6%;*/
     text-align: left;
@@ -3636,7 +3715,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 }
 
 .comment_modal .feedslinks span:nth-child(2) a{
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 500;
     color: #15c6fb;
     margin-right: 10px;
@@ -3834,6 +3913,23 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 }
 
 /*-------------- modal css -----------*/
+
+.modalVideoUpload .modal-body form .form-group:nth-child(1) p {
+    color: #efefef;
+    display: inline-block;
+    padding: 0px 0px 4px !important;
+    width: 100%;
+    text-align: left;
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+}
+.modalVideoUpload .modal-body form .form-group p{font-size: 16px; padding: 0px 0px 4px !important;}
+
+.modalVideoUpload .modal-body form .form-group:nth-child(1){margin-top: -5px !important;}
+
+
+
+
 .modalVideoUpload .modal-body .form-group label{
     color: #c1c1c1;
     vertical-align: middle;
@@ -3847,6 +3943,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 }
 .modalVideoUpload .imageuploaddiv{
     padding-bottom: 12px;
+    margin-top: -28px;
 }
 .modalVideoUpload .modal-body audio{
     width: 100%;
@@ -3874,8 +3971,8 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     overflow: hidden;
 }
 .pic_modal_right_wrapper{
-    overflow-x:hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 412px;
 }
 /*.picmodaltitle .feedslinks span{
@@ -3887,9 +3984,10 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 .feedslinks span .timespan{
     float: right;
-    color: #f1a124;
+    color: #f1a124 !important;
     width: auto;
-    text-align: right;
+    text-align: right !important;
+    padding: 4px !important;
 }
 
 .userimagetitle div{
@@ -3900,11 +3998,15 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     color: #fff;
 }
 .picmodaltitle .userimagetitle{
-    text-align: left;
+    text-align: left !important;
+    vertical-align: middle !important;
 }
 .userrightmrnu i{
-    text-align: right;
+    text-align: right !important;
+    vertical-align: middle !important;
 }
+
+.userimagetitle{padding: 4px !important;}
 
 /*.pic_modal_right .comment_modal .feedslinks .comment_user_image {
     width: 14%;
@@ -3925,7 +4027,9 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     background: #353535;
 }
 .picmodaltitle .userrightmrnu{
-    text-align: right;
+    text-align: right !important;
+    vertical-align: middle !important;
+    padding: 4px !important;
 }
 /*.pic_modal_right{
     background: #464545;
@@ -4176,12 +4280,13 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     width: 46px;
     border-radius: 100px;
     border: 0;
-    float: left;
-    margin-right: 15px;
+    margin-right: 0px;
     margin-bottom: 0px;
     background: url(../images/instagramprofilebg.png) no-repeat;
     background-size: cover;
     overflow: hidden;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 #myinstagramModal .instatop .imgwrapper img{
@@ -4190,13 +4295,15 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 }
 
 #myinstagramModal .instatop h2 {
-    padding: 6px 5px 0px;
+    padding: 0px 5px 0px;
     margin: 0 !important;
     font-family: 'RobotoMedium';
     font-size: 20px !important;
     color: #000000;
     line-height: 14px;
     text-transform: capitalize;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 
@@ -4237,7 +4344,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     cursor: pointer;
 }
 #myinstagramModal .instafooter{
-    padding: 5px;
+    padding: 12px;
 }
 #myinstagramModal .instafooter p{
     color: #484848;
@@ -4246,6 +4353,10 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     line-height: 16px;
     margin-bottom: 10px;
 }
+#myinstagramModal .instafooter span{margin-bottom: 10px; display: inline-block; width: 100%;}
+#myinstagramModal .instafooter p:last-child{margin-bottom: 0px; display: inline-block; width: 100%;}
+#myinstagramModal .instafooter p span:last-child{margin-bottom: 0px !important; display: inline-block; width: 100%;}
+/*#myinstagramModal .instafooter span:last-of-type{margin-bottom: 0px !important; display: inline-block; width: 100%;}*/
 
 #myinstagramModal .instafooter p span .fa{color: #585858; cursor: pointer;}
 
@@ -4285,6 +4396,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     margin-bottom: 0px;
     vertical-align: middle;
 }
+#myinstagramModal .instatop .col-1-2 .leftinstagramdiv{display: table; vertical-align: middle;}
 
 .followusinstagram{
     position: absolute;
@@ -4661,8 +4773,8 @@ MY
 }
 
 .comment_input_se .bodybloc5bottom .feedslinks{display:table;}
-.comment_input_se .bodybloc5bottom .feedslinks .comment_user_image{display:table-cell; vertical-align:middle;}
-.comment_input_se .bodybloc5bottom .feedslinks .comment_user_text{display:table-cell; vertical-align:middle;}
+.comment_input_se .bodybloc5bottom .feedslinks .comment_user_image{display: table-cell; vertical-align: middle; padding: 4px 4px 0px;}
+.comment_input_se .bodybloc5bottom .feedslinks .comment_user_text{display:table-cell; vertical-align:middle; padding: 4px;}
 
 .modalVideoUpload.modalVideoUploadgallery.picture_modal .modal-dialog {
     position: absolute;
@@ -4841,7 +4953,37 @@ MY
 
 
 
-#tabLinks .video_link_img_wrapper {padding: 10px;}
+#tabLinks .video_link_img_wrapper {
+    padding: 10px;
+    height: 140px;
+    overflow: hidden;
+    display: inline-flex;
+    border-right: 1px solid #222324;
+}
+
+#tabLinks .video_link .col-md-10.col-sm-10.col-xs-12{position:relative;}
+
+#tabLinks .video_link .col-md-10.col-sm-10.col-xs-12 .edit_buttons{
+    position: absolute;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    top: 4px;
+    right: 4px;
+}
+#tabLinks .video_link .col-md-10.col-sm-10.col-xs-12:hover .edit_buttons{
+    opacity: 1;
+}
+
+#tabLinks .video_link .col-md-10.col-sm-10.col-xs-12 .edit_buttons .button{
+    padding: 0px 3px !important;
+    margin: 0px 2px;
+}
+
+#tabLinks .video_link .col-md-10.col-sm-10.col-xs-12 .edit_buttons .button:first-child{
+    margin-left: 0px !important;
+}
+
 
 .tranding_videoandlisting .trendingvideoscrollbar {height: 900px;}
 .trendingmusic-contaioner .trendingmusicscrollbar {height: 900px;}
@@ -4862,11 +5004,12 @@ MY
 #tabVideos .avi_xp_tab_contant .container1 .iframevideo{height: 90%;}
 #tabVideos .avi_xp_tab_contant .videoWrapper {height: 100%;}
 #tabVideos .video_list .col-md-8 p:nth-child(3){
-    width: 100%;
+    width: 96%;
     display: table;
     margin-top: 10px;
     position: absolute;
     bottom: 0px;
+    text-align: center;
 }
 #tabVideos .avi_xp_tab_contant .play_video_status{padding-top:7px;}
 
@@ -4889,6 +5032,15 @@ MY
 .trendingvideoandlistingwrapper .col-1-1.col.videoblocknew {padding-right: 5px !important; padding-left: 0px !important; margin-bottom: 5px;}
 
 
+.trendingartistblock1.photogalleryblock1.photogallery .artistsexchangeleftdiv {
+    padding: 22px 10px 0px !important;
+}
+
+
+
+
+
+
 #tabPlayerFan .feedpostwrapperinner {height: 420px;}
 #tabPlayerFan .player_con .scrollbar4 {height: 320px;}
 #tabVideosFan .iframevideo {padding-right: 5px;}
@@ -4902,7 +5054,14 @@ MY
 #tabVideosFan .avi_xp_tab_contant .videoWrapper {height: 100%; margin-right: 0px !important;}
 #tabLinksFan .av_xp_tab_contant {min-height: 100%;}
 .artistsexchangeblock1bodybloc6.photogallery .sectionbody .sectionheaderinnercontainer {height: 45px; min-height: inherit; padding: 10px;}
-.tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {height: 50px; text-overflow: ellipsis;}
+.tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {height: 50px; overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 18px;
+    font-size: 16px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
 .tranding_videoandlisting .trending_video_list .imgwrapper {width: 100%;}
 .tranding_videoandlisting .trending_video_list .video_list {margin-bottom: 6px;}
 .tranding_videoandlistingnew .feedslinks span{font-size: 14px;}
@@ -4966,7 +5125,21 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 .postgallery .postgallerysingle .imgwrapper{height: 210px; border: 0px solid #000; position: relative; z-index:9;}
 .postgallery .imgwrapperhoverblock .imgwrapperhoverpg .feedslinks {display: inline-block; width: 100%; text-align: center;}
 .postgallery .imgwrapperhoverpg span, .postgallery .imgwrapperhoverpg p{display: inline-block;}
-.postgallery .imgwrapperhoverpg p{display: inline-block; width:100%;}
+.postgallery .imgwrapperhoverpg p{
+    display: inline-block;
+    width: 96%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 18px;
+    max-height: 60px;
+    font-size: 16px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+}
 .postgallery .imgwrapperhoverpg .captionbg p{ margin-top: 38px;}
 .postgallery .col-1-4.col.postgallerysingle .playicon {z-index: 99;}
 
@@ -5000,9 +5173,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 .trendingmedia .artistsexchangeleftdiv .sectionbody .tranding_videoandlisting .scrollbar4 {height: 725px;}
 .trendingmedia .artistsexchangeleftdiv .sectionbody:nth-child(2) .tranding_videoandlisting .scrollbar4{height: 651px;}
-
-
-
+.artistsexchangeblock1bodybloc7 .sectionbody .sectionheaderinnercontainer {padding: 15px 10px;}
 
 
 
@@ -5081,6 +5252,26 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 
 
+
+.myphotos .feedslinks span {font-size: 14px;}
+.myphotos .feedslinks .fa {font-size: 14px;}
+.myphotosdiv{margin-top: 24px;}
+
+
+#tabVideos .avi_xp_tab_contant .play_video_status {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.trendingmusic-contaioner .sectionbody .audioplayer_play .sectionheaderinnercontainer .playsilider {
+    margin-top: -60px;
+}
+
+
+#tabPictures .scrollbar {
+    height: 420px;
+}
+
 /*---Media Css Start Here----*/
 
 @media (min-width: 1199px) {
@@ -5094,7 +5285,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 @media only screen and (max-width: 1866px) and (min-width: 1024px) {
     .pic_fa_icon span {
-        font-size: 10px !important;
+        font-size: 12px !important;
         padding: 0px;
     }
 
@@ -5110,7 +5301,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
 
     .avi_pic_css .col-1-5 {
-        width: 22.5%;
+        width: 29.5%;
     }
 
     .pic_arrow .rightarrow {
@@ -5152,6 +5343,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1900px) {
+    .trendingmusic-contaioner .tranding_videoandlisting .trendingvideoscrollbar {
+        height: 880px;
+    }
+
     .viewmorediv h1 {
         font-family: "RobotoBlack";
         font-size: 22px;
@@ -5172,7 +5367,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1800px) {
-
+    .trendingmusic-contaioner .tranding_videoandlisting .trendingvideoscrollbar {
+        height: 800px;
+    }
     .trendingmedia .artistsexchangeleftdiv .sectionbody:nth-child(2) .tranding_videoandlisting .scrollbar4 {height: 618px;}
     .competitionblocknew .compnewblock2content h2 {
         font-size: 48px;
@@ -5233,7 +5430,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
 
     .avi_pic_css .sectionbody .col-1-5 .imgwrapper {
-        height: 130px;
+        height: 200px;
     }
     .photogallery .scrolling-wrapper {width: 100%;}
 
@@ -5340,11 +5537,11 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .sectionheaderinnercontainer {padding: 15px 10px;}
     blockquote {padding: 0px 4px;}
     .sectionbody .mb-0, .sectionbody .mb-1, .sectionbody .mb-2 {font-size: 12px;}
-    .feedslinks span {font-size: 10px;}
-    .feedslinks .fa {font-size: 10px;}
-    .video_list .tranding_blogp p:nth-child(3) span:nth-child(1) i{font-size: 10px;}
-    .avi_trandingmedia .trending_video_list .video_list p:nth-child(3) span{font-size: 10px;}
-    .bodybloc7bottom .feedslinks span {font-size: 11px;}
+    .feedslinks span {font-size: 12px;}
+    .feedslinks .fa {font-size: 12px;}
+    .video_list .tranding_blogp p:nth-child(3) span:nth-child(1) i{font-size: 12px;}
+    .avi_trandingmedia .trending_video_list .video_list p:nth-child(3) span{font-size: 12px;}
+    .bodybloc7bottom .feedslinks span {font-size: 12px;}
     .bodybloc7bottom .feedslinks .fa {font-size: 12px;}
 
     /*    .bodybloc7bottom .imgwrapper {width: 80px; height: 80px;}*/
@@ -5404,6 +5601,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1600px) {
+    .trendingmusic-contaioner .tranding_videoandlisting .trendingvideoscrollbar {
+        height: 680px;
+    }
+
     .axplandingformwrapper_signup {
         right:10%;
     }
@@ -5414,7 +5615,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .competitionblockbottom .feedslinks span.feedslinks2 {font-size: 18px;}
     .competitionblockbottom .feedslinks span.feedslinks2 .fa {font-size: 18px;}
     .bodybloc5bottom .feedslinks .fa {
-        font-size: 10px;
+        font-size: 12px;
         display: block;
     }
 
@@ -5440,7 +5641,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         width: 92%;
     }
     .trending_video_list .video_list p:nth-child(2) {
-        font-size: 9px;
+        font-size: 11px;
     }
 }
 
@@ -5451,6 +5652,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1500px) {
+    .trendingmusic-contaioner .tranding_videoandlisting .trendingvideoscrollbar {
+        height: 680px;
+    }
+
     .trendingmedia .artistsexchangeleftdiv .sectionbody:nth-child(2) .tranding_videoandlisting .scrollbar4 {
         height: 520px;
     }
@@ -5544,7 +5749,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
     .feedslinks .fa {
         font-size: 11px;
-        display: block;
+        /*display: block;*/
         text-align: center;
     }
 }
@@ -5631,6 +5836,8 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         width: 100%;
         text-align: center;
     }
+
+
 
     #tabPictures .bodybloc5bottom .pic_fa_icon span {
         text-align: center;
@@ -5737,6 +5944,11 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1300px) {
+    #tabVideos .play_video_status p {
+        padding-top: 7px;
+        font-size: 11px;
+    }
+
     .trendingmedia .artistsexchangeleftdiv .sectionbody:nth-child(2) .tranding_videoandlisting .scrollbar4 {
         height: 440px;
     }
@@ -5799,10 +6011,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .viewmorediv h1 {font-size: 14px; line-height: 16px;}
     .competitionblock2 .sectionbody .haveenteredblock .rankdiv {background-size: 100%; height: auto;padding: 10px 5px; margin: 0px; width: 42px;}
     .competitionblock2 .sectionbody .haveenteredblock .rankdiv h1 {font-size: 12px;}
-    .feedslinks span {font-size: 9px;}
-    .feedslinks .fa {font-size: 9px;}
-    .video_list .tranding_blogp p:nth-child(3) span:nth-child(1) i{font-size: 9px;}
-    .avi_trandingmedia .trending_video_list .video_list p:nth-child(3) span{font-size: 9px;}
+    .feedslinks span {font-size: 12px;}
+    .feedslinks .fa {font-size: 12px;}
+    .video_list .tranding_blogp p:nth-child(3) span:nth-child(1) i{font-size: 12px;}
+    .avi_trandingmedia .trending_video_list .video_list p:nth-child(3) span{font-size: 12px;}
     .competitionblocknew .compnewblock2content h4 {
         font-size: 16px;
         line-height: 20px;
@@ -5813,6 +6025,8 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
     .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
         height: 29px;
+        line-height: 14px;
+        font-size: 13px;
     }
 }
 
@@ -5898,12 +6112,22 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 
     .trending_video_list .video_list p:nth-child(2) {
-        font-size: 9px;
+        font-size: 11px;
+        padding-bottom: 3px;
+        position: absolute;
+        bottom: 20px;
     }
 
     .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
         height: 40px;
+        overflow: hidden;
         text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 16px;
+        max-height: 40px;
+        font-size: 14px;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 
 
@@ -6077,6 +6301,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1199px) {
+    .trendingmedia .competitionrightdivtop .rightbannerdivwrapper{padding-top: 0px;padding-bottom: 20px;}
     .sectionbody {
         padding: 0px;
         padding-bottom: 20px;
@@ -6413,7 +6638,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .friendsblock { border-right: 0px solid #1c3349; border-bottom: 7px solid #1c3349;}
     .col-1-5 {width: 24%; padding-right: .5% !important; padding-left: .5% !important;}
     .btngraygradient, .btngraygradient:hover {padding: 10px; width: 110px;}
-    .col-1-2{width: 99%;position: relative;min-height: 1px; padding-right: 1% !important;padding-left: 1% !important; word-wrap: break-word; display: inline-block; margin-top: .5%; margin-bottom: 1%;vertical-align: top;}
+    /*.col-1-2{width: 99%;position: relative;min-height: 1px; padding-right: 1% !important;padding-left: 1% !important; word-wrap: break-word; display: inline-block; margin-top: .5%; margin-bottom: 1%;vertical-align: top;}*/
     .bodybloc7bottom .col-1-2{width: 49%;}
     .headercol3 li {
         padding: 0px 7px;
@@ -6430,6 +6655,23 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 991px){
+    .picture_modal .modal-body .col-md-5 .pic_modal_right .pic_modal_right_wrapper {
+        max-height: 400px;
+        height: auto;
+    }
+
+    .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .pic_arrow .leftarrow {
+        left: 7px;
+    }
+    .pic_arrow .rightarrow {
+        right: 7px;
+    }
+
     .trendingmedia .artistsexchangeleftdiv .sectionbody:nth-child(2) .tranding_videoandlisting .scrollbar4 {
         height: 370px;
     }
@@ -6775,8 +7017,8 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         height: 255px !important;
     }
     .pic_arrow p i {
-        font-size: 24px;
-        padding: 0px 8px;
+        font-size: 35px;
+        padding: 0px 11px;
     }
     .buttonviewallwrapper {
         display: inline-block;
@@ -6805,6 +7047,31 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 
 @media (max-width: 767px){
+    #myinstagramModal .instatop .col-1-2 {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+
+    #tabLinks .video_link .col-md-10.col-sm-10.col-xs-12:hover .edit_buttons {
+        position: inherit;
+        text-align: center;
+        opacity: 1;
+        transition: opacity .35s ease;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    #tabLinks .video_link_img_wrapper {
+        height: auto;
+        display: inline-block;
+        width: 100%;
+    }
+
+
+
     .trendingmedia .artistsexchangeleftdiv .sectionbody .tranding_videoandlisting .scrollbar4 .col-md-4.col-sm-4.col-xs-3{width: 100%;}
     .trendingmedia .artistsexchangeleftdiv .sectionbody .tranding_videoandlisting .scrollbar4 .col-md-8.col-sm-8.col-xs-9{width: 100%;}
     .trendingmedia .artistsexchangeleftdiv .sectionbody .tranding_videoandlisting .scrollbar4 .trending_video_list{margin-top: 10px;}
@@ -6818,9 +7085,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .trendingartistblock1 .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
         height: 30px;
     }
-    .popover.top {
+    /*.popover.top {
         margin-top: -10px;
-    }
+    }*/
     popover-container.popover {
         width: auto;
     }
@@ -6840,7 +7107,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         border-bottom: 2px solid #333;
         border-right: 0px solid #333;
         padding-bottom: 20px;
-        padding: 20px 0px;
+        padding: 10px 0px 20px;
     }
 
     .singlelinkleft .imgwrapper {
@@ -6968,13 +7235,28 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         position: inherit;
         bottom: 0;
     }
+
+    .video_list .tranding_blogp p:nth-child(3) {
+        width: 96%;
+        display: table;
+        margin-top: 10px;
+        position: inherit;
+        bottom: 0px;
+    }
     .competitionrightdivtop .rightbannerdivwrapper {
         padding-top: 15px;
     }
 
     .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
         height: 30px;
+        overflow: hidden;
         text-overflow: ellipsis;
+        display: -webkit-box;
+        line-height: 14px;
+        max-height: 30px;
+        font-size: 14px;
+        -webkit-line-clamp:2;
+        -webkit-box-orient: vertical;
     }
     .avi_trandingmedia .videoblocknew .imgwrapper {
         max-height: 277px;
@@ -7002,9 +7284,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 767px) {
-    .popover.top {
+    /*.popover.top {
         margin-top: -20px;
-    }
+    }*/
     .photogallery .sectionbody .col-container {
         width: 92.5%;
         margin: 0 auto;
@@ -7227,6 +7509,11 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 640px) {
+    .pic_arrow p i {
+        font-size: 26px;
+        padding: 0px 9px;
+    }
+
     .bodybloc7bottom h2 {
         font-size: 14px !important;
     }
@@ -7450,9 +7737,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .artistsexchangeblock1 h2 {
         line-height: normal;
     }
-    .popover.top {
+    /*.popover.top {
         margin-top: -40px;
-    }
+    }*/
     .trending_video_list .video_list .col-md-9.col-sm-9.col-xs-12.tranding_blogp {
         width: 100% !important;
         text-align: center;
@@ -7594,8 +7881,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
 
     .avi_pic_css .col-1-5 {
-        width: 96%;
+        width: 86%;
     }
+
     .avi_facebook_con .col-1-5{
         margin-bottom: 2%;
     }
@@ -7765,6 +8053,13 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 480px){
+    .trendingmusic-contaioner .playericons .audioicon_d {
+        width: 33%;
+    }
+
+    .paginationtabwrapper .pagination>li>a, .pagination>li>span {
+        padding: 6px 8px;
+    }
     .play_video_status p span {
         vertical-align: top;
     }
@@ -7846,13 +8141,23 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         padding-left: 0px !important;
     }
     #tabPlayer .play_video_status p span {
-        margin-right: 9px;
+        margin-right: 15px;
         font-size: 12px;
+        display: inline-block;
+        margin-bottom: 10px;
     }
+    #tabPlayer .play_video_status p span:last-child{
+        margin-bottom: 0px;
+    }
+
     #tabVideos .play_video_status p span {
-        margin-right: 6px;
-        font-size: 10px;
+        margin-right: 16px;
+        font-size: 14px;
+        display: inline-block;
     }
+
+    #tabVideos .play_video_status p span i.fa{display: inline-block !important;}
+
     #tabVideos .feedpostwrapperinner img{
         height: 100%;
     }
@@ -7863,6 +8168,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
     #tabVideos .video_list .col-md-8 p:nth-child(3){
         text-align: center;
+        margin-top: 6px;
+        position: inherit;
+        bottom: 0px;
     }
     #tabVideos .video_list .col-md-8 p:nth-child(2) span{
         width: 100%;
@@ -7927,6 +8235,37 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 480px) {
+    .video_list .col-md-8 p:nth-child(2) {
+        color: #d4d6d7;
+        border-bottom: 1px solid #000;
+        padding-bottom: 6px;
+        font-size: 12px;
+        clear: both;
+        display: table;
+        width: 100%;
+        position: relative;
+        bottom: 0;
+    }
+
+    .artistsexchangeblock1bodybloc1.artistsexchangeblock1bodybloc5 .sectionbody .sectionheaderinner {
+        padding: 0px 4px 0px;
+    }
+    .play_video_status p span {
+        display: inline-block;
+        margin-right: 12px;
+    }
+    .artistsexchangeblock1bodybloc1.artistsexchangeblock1bodybloc7 .sectionbody .sectionheaderinner {
+        padding: 0px 2px 0px;
+    }
+    .col-1-2.friendsblock {
+        padding: 0px 2px 14px !important;
+    }
+    .col-1-2.communitiesblock {
+        padding: 0px 2px 14px !important;
+    }
+    .artistsexchangeblock1bodybloc1:nth-child(2) .sectionheaderinner {
+        padding: 0px 2px 0px;
+    }
     #myinstagramModal .instatop .col-1-2.col.colgen{width: 100% !important;}
     .sectionbody .mb-0, .sectionbody .mb-1, .sectionbody .mb-2 {
         font-size: 14px;
@@ -8165,10 +8504,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
     .video_list .col-md-8 p:nth-child(3) span {
         display: inline-block;
-    }
-
-    .video_list .col-md-8 p:nth-child(2) {
-        font-size: 10px;
+        margin-right: 15px;
     }
 
     .col-1-4 {

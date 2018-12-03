@@ -162,7 +162,7 @@
                                                                     <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && !getlikeonstatus(selectedaudio.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedaudio.musiclikes[0].vlike}}</span>
                                         <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                         <span (click)="showmusicunlike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && getlikeonstatus(selectedaudio.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedaudio.musiclikes[0].vlike}}</span>
-                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comment: {{selectedaudio.comments.length}}</span>
+                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comments: {{selectedaudio.comments.length}}</span>
                                                                 </p>
 
 
@@ -367,7 +367,7 @@
 
 
           <!--<span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>-->
-          <span (click)="showcommentmodal(selectedvideo)"><i class="fa fa-comment"></i> Comment: {{selectedvideo.comments.length}}</span>
+          <span (click)="showcommentmodal(selectedvideo)"><i class="fa fa-comment"></i> Comments: {{selectedvideo.comments.length}}</span>
       </p>
      </div>
      </div>
@@ -667,7 +667,7 @@
                                                                     <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && !getlikeonstatus(selectedaudio.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedaudio.musiclikes[0].vlike}}</span>
                                         <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                         <span (click)="showmusicunlike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && getlikeonstatus(selectedaudio.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedaudio.musiclikes[0].vlike}}</span>
-                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comment: {{selectedaudio.comments.length}}</span>
+                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comments: {{selectedaudio.comments.length}}</span>
 
                                                                      <ng-template *ngIf="html1!='' " #popTemplateAdd class="CellComment"><div [innerHtml]="html1"></div></ng-template>
                                                                     <span *ngIf="html1!='' " [popover]="popTemplateAdd"  [outsideClick]="true"><i class="fa fa-plus" aria-hidden="true"></i> Add To</span>
@@ -702,8 +702,6 @@
                                                                 <!--<span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>-->
                                                                   <span class="feedslinks5" *ngIf="valMusic.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{valMusic.musicviews[0].musiccount}}</span>
                                         <span class="feedslinks5" *ngIf="valMusic.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
-                                                                <!--<ng-template #popTemplate><div [innerHtml]="html"></div></ng-template>
-                                                                    <span [popover]="popTemplate"   [outsideClick]="true" (mouseenter)="setshareflag('audio',selectedaudio)" ><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
                                                                   <ng-template #popTemplate2><div [innerHtml]="html"></div></ng-template>
                                                                   <span [popover]="popTemplate2"   [outsideClick]="true" (mouseenter)="setshareflag('audio',valMusic)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
                                                                 <span (click)="showmusiclike(valMusic)" *ngIf="valMusic.musiclikes[0]!=null && !getlikeonstatus(valMusic.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{valMusic.musiclikes[0].vlike}}</span>
@@ -874,7 +872,7 @@
 
 
           <!--<span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>-->
-          <span (click)="showcommentmodal(selectedvideo)"><i class="fa fa-comment"></i> Comment: {{selectedvideo.comments.length}}</span>
+          <span (click)="showcommentmodal(selectedvideo)"><i class="fa fa-comment"></i> Comments:  {{selectedvideo.comments.length}}</span>
 
           <ng-template #popTemplateAdd2 class="CellComment"><div [innerHtml]="html2"></div></ng-template>
                                                                     <span [popover]="popTemplateAdd2"  [outsideClick]="true"><i class="fa fa-plus" aria-hidden="true"></i> Add To</span>
@@ -968,7 +966,7 @@
                                     </div>
                                 </tab>
 
-                                <tab heading="LINKS" id="tabLinks">
+                                    <tab heading="LINKS" id="tabLinks">
                                     <div class="feedpostwrapper">
                                         <div class="feedpostwrapperinner">
 
@@ -1014,14 +1012,12 @@
                                <span (click)="showlinkunlike(linkval)" *ngIf="linkval.linklikes[0]!=null && getlikeonstatus(linkval.userlinklikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like:{{linkval.linklikes[0].vlike}}</span>
 
                                                                                 <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
-                                                                                <span class="edit_buttons">
+                                                                            </p>
+                                                                            <p class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><button class="btn btn-dfalt">GO</button></a></p>
+<span class="edit_buttons">
                                                                                     <button class="button" *ngIf="isuserprofile == 0"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="editLink(linkval)" ></i> </button>
                                                                                     <button class="button" *ngIf="isuserprofile == 0"><i class="fa fa-trash-o" aria-hidden="true" (click)="deleteVideo(0,linkval._id,2)"></i> </button>
                                                                                 </span>
-
-                                                                            </p>
-                                                                            <p class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><button class="btn btn-dfalt">GO</button></a></p>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1082,12 +1078,12 @@
                                             </div>
 
 
-
+<div class="scrollbar style-3" id="style-3">
                                             <div class="row no-gutter artistsexchangeblock1bodybloc1" *ngIf="picArray.length!=0">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pic_arrow">
-                                            <p class="leftarrow" (click)="scrollleft()"><i class="fa fa-angle-left" aria-hidden="true" ></i></p>
-                                            <p class="rightarrow" (click)="scrollright()"><i class="fa fa-angle-right" aria-hidden="true"></i></p>
+                                            <p *ngIf="piclimitstart!= 0" class="leftarrow" (click)="scrollleft()"><i class="fa fa-angle-left" aria-hidden="true" ></i></p>
+                                            <p *ngIf="piclimitend < picArray.length" class="rightarrow" (click)="scrollright()"><i class="fa fa-angle-right" aria-hidden="true"></i></p>
 
                                             </div>
                                             <div class="sectionbody">
@@ -1112,7 +1108,7 @@
                                                                     <div class="col">
                                                                         <div class="feedslinks trndingaudiosharetools pic_fa_icon">
                                                                             <!--<span class="feedslinks3"><i class="fa fa-comment"></i> Comments</span>-->
-                                                                            <span class="feedslinks3" (click)="showcommentmodal(pvalue)"><i class="fa fa-comment"></i> Comment: {{pvalue.comments.length}}</span>
+                                                                            <span class="feedslinks3" (click)="showcommentmodal(pvalue)"><i class="fa fa-comment"></i> Comments: {{pvalue.comments.length}}</span>
                                                                             <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
                <ng-template #popTemplate5 ><div [innerHtml]="html"></div></ng-template>
                <span class="feedslinks4" [popover]="popTemplate5" [outsideClick]="true"  (mouseenter)="setshareflag('picture',pvalue)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
@@ -1268,7 +1264,7 @@
                                             </div>
 
                                             </div>
-
+</div>
                                         </div>
                                         <div class="av_xp_tab_contant av_xp_tab_contant_new" *ngIf="picArray.length!=0">
                                             <button (click)="showpicturemodal()" *ngIf="isuserprofile == 0">Add more picture now</button>
@@ -1339,9 +1335,9 @@
                                                 <a class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' ">Add your Twitter feed</a>
                                             </div>
 
-                                            <div class="scrollbar twitterscroll">
-                                                <div class="twitterdivwrapper">
-                                                    <!--*ngFor="let val of instafeedarray;let i=index;"-->
+                                            <!--<div class="scrollbar twitterscroll">
+                                                &lt;!&ndash;<div class="twitterdivwrapper">
+                                                    &lt;!&ndash;*ngFor="let val of instafeedarray;let i=index;"&ndash;&gt;
                                                     <div class="row no-gutter twitterlists" *ngFor="let tval of twitterresultarr;let i=index;">
                                                         <div class="col-1-2 singledivtwitter" *ngIf="tval[0]!=null ">
                                                             <div class="imgwrapper">
@@ -1354,7 +1350,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="captionpg">
-                                                                    <a href="javascript:void(0);" class="caplink"><i aria-hidden="true" class="fa fa-heart-o"></i> <!--US Department of the Interior  ✔ @Interior--></a>
+                                                                    <a href="javascript:void(0);" class="caplink"><i aria-hidden="true" class="fa fa-heart-o"></i> &lt;!&ndash;US Department of the Interior  ✔ @Interior&ndash;&gt;</a>
 {{tval[0].text}}
                                                                 </div>
                                                             </div>
@@ -1398,7 +1394,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!--<div class="row no-gutter twitterlists">
+                                                    &lt;!&ndash;<div class="row no-gutter twitterlists">
                                                         <div class="col-1-2 singledivtwitter">
                                                             <div class="imgwrapper">
                                                                         <img src="https://scontent.cdninstagram.com/vp/c9292159e24d5313820ff80a336c18ae/5C8D59CF/t51.2885-15/sh0.08/e35/s640x640/44762781_735100493517543_2406071299304865590_n.jpg">
@@ -1448,9 +1444,9 @@ Relax & read this #BearCam story from @Buzzfeed (you won't regret it): http://on
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>-->
-                                                </div>
-                                            </div>
+                                                    </div>&ndash;&gt;
+                                                </div>&ndash;&gt;
+                                            </div>-->
                                             <div class="scrollbar twitterscroll" id="twitterfeeddiv">
                                             </div>
                                         </div>
@@ -2635,7 +2631,7 @@ Your browser does not support the video tag.
                     <div class="sectionheader">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 col">
-                                <h2>Trending Videos</h2>  <a class="btnpink" [routerLink]="['/trendingvideos']">View All</a>s
+                                <h2>Trending Videos</h2>  <a class="btnpink" [routerLink]="['/trendingvideos']">View All</a>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 col">
                                 <h3>...</h3>
@@ -2683,7 +2679,7 @@ Your browser does not support the video tag.
 
 
                                 <!--<span><i aria-hidden="true" class="fa fa-commenting-o"></i> Comment</span>-->
-                                <span (click)="showcommentmodal(selectedvideotrending)"><i class="fa fa-comment"></i> Comment: {{selectedvideotrending.comments.length}}</span>
+                                <span (click)="showcommentmodal(selectedvideotrending)"><i class="fa fa-comment"></i> Comments: {{selectedvideotrending.comments.length}}</span>
 
                             </p></div>
                         <div class="row no-gutter sectionheaderinner col-container bodybloc7bottom">
@@ -2858,7 +2854,7 @@ Your browser does not support the video tag.
                                     <span (click)="showmusiclike(selectedmusictrending)" *ngIf="selectedmusictrending.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                     <span (click)="showmusicunlike(selectedmusictrending)" *ngIf="selectedmusictrending.musiclikes[0]!=null && getlikeonstatus(selectedmusictrending.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedmusictrending.musiclikes[0].vlike}}</span>
                                     <!--<span><i aria-hidden="true" class="fa fa-commenting-o"></i> Comment</span>-->
-                                    <span (click)="showcommentmodal(selectedmusictrending)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comment: {{selectedmusictrending.comments.length}}</span>
+                                    <span (click)="showcommentmodal(selectedmusictrending)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comments: {{selectedmusictrending.comments.length}}</span>
 
                                     </p></div>
 
@@ -3074,12 +3070,14 @@ Your browser does not support the video tag.
             <div class="modal-body">
                 <form novalidate [formGroup]="linkform" name="modalform"  (ngSubmit)="linkSubmit(linkform.value)">
 
-                    <div>
+                    <div class="form-group">
                         <p>URL:</p>
                         <input type="text" name="linkUrl" value="" size="40" (change)="getlinkdata(0)" placeholder=""  [formControl]="linkform.controls['linkUrl']" >
                         <input type="hidden" name="_id" value="" size="40" (change)="getlinkdata(0)" placeholder=""  [formControl]="linkform.controls['_id']" >
                         <span *ngIf ="linkform.controls['linkUrl'].touched && !linkform.controls['linkUrl'].valid" class="has-error">URL is Required !</span>
 
+                        </div>
+                    <div class="form-group">
 
                         <p>Privacy:</p>
                         <select name="privacy"  [formControl]="linkform.controls['privacy']">
@@ -3089,8 +3087,6 @@ Your browser does not support the video tag.
                             <option value="friends">Friends Only</option>
                         </select>
                         <span class="has-error" *ngIf ="linkform.controls['privacy'].touched && !linkform.controls['privacy'].valid"> Privacy field can not be blank!</span>
-
-
 
                     </div>
 
@@ -3334,11 +3330,11 @@ Your browser does not support the video tag.
                                     <span (click)="showpictureunlike(selectedpost)" *ngIf="selectedpost.picturelikes[0]!=null && getlikeonstatus(selectedpost.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedpost.picturelikes[0].vlike}}</span>
 
 
-                                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment:{{selectedpost.comments.length}}</span>
+                                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comments: {{selectedpost.comments.length}}</span>
                                 </p>
                             </div>
                         </div>
-                        <div class="pic_modal_right_wrapper" id="style-7">
+                        <div class="pic_modal_right_wrapper" id="style-6">
                             <div class="comment_modal">
 
                                 <div class="comment_container">
@@ -3677,21 +3673,20 @@ Your browser does not support the video tag.
                                     <!-- <span class="timespan">{{valc.added_time}}</span>-->
 
                                 </div>
-                                <div class="row no-gutter col-container bodybloc5bottom">
+                                <!--<div class="row no-gutter col-container bodybloc5bottom">
                                     <div class="col">
-                                        <!--<div class="feedslinks comment_text_reply">
+                                        <div class="feedslinks comment_text_reply">
                                             <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
                                             <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                                        </div>-->
+                                        </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </span>
                                             </div>
                                         </div>
 
                                     </div>
-
-                                    <div class="row comment_input_se" >
+                                    <div class="row comment_input_se comment_input_se_new" >
                                         <div class="row no-gutter col-container bodybloc5bottom" *ngIf="isloggedin == 1">
                                             <div class="col">
                                                 <div class="feedslinks">
@@ -3873,13 +3868,17 @@ Your browser does not support the video tag.
                             <div class="instatop">
                                 <div class="row no-gutter" >
                                     <div class="col-1-2 col colgen" >
-                                        <div class="imgwrapper" >
-                                            <!--<img alt="RTP5" src="https://audiodeadline.com/nodeserver/uploads/pictures/5bf50f4560c4416209c032e4/picture2-1542867716.jpg">-->
-                                            <img alt="RTP5" src="{{selectedinstapost.user.profile_picture}}">
+                                        <div class="leftinstagramdiv">
+                                            <div class="imgwrapper" >
+                                                <!--<img alt="RTP5" src="https://audiodeadline.com/nodeserver/uploads/pictures/5bf50f4560c4416209c032e4/picture2-1542867716.jpg">-->
+                                                <img alt="RTP5" src="{{selectedinstapost.user.profile_picture}}">
+                                            </div>
+                                            <h2>{{selectedinstapost.user.username}}
+                                                <span *ngIf="selectedinstapost.location!=null">{{selectedinstapost.location.name}}</span>
+                                            </h2>
+                                            <!--<h3>Lorem Ipsum has</h3>-->
+
                                         </div>
-                                        <h2>{{selectedinstapost.user.username}}</h2>
-                                        <!--<h3>Lorem Ipsum has</h3>-->
-                                        <h3 *ngIf="selectedinstapost.location!=null">{{selectedinstapost.location.name}}</h3>
                                     </div>
                                     <div class="col-1-2 col colgen">
                                         <ul class="list-inline followusinstagram">
@@ -3915,13 +3914,13 @@ Your browser does not support the video tag.
                                 </div>-->
                                 <span *ngIf="selectedinstapost.likes.count!=0"><p>{{selectedinstapost.likes.count}} likes</p></span>
                                 <span *ngIf="selectedinstapost.caption!=null"><p>{{selectedinstapost.user.username}} {{selectedinstapost.caption.text}}</p></span>
-                               <!-- <p>instagramPhoto by @ilkinkaracan <span><i class="fa fa-heart-o" aria-hidden="true"></i></span></p>-->
+                                <!-- <p>instagramPhoto by @ilkinkaracan <span><i class="fa fa-heart-o" aria-hidden="true"></i></span></p>-->
                                 <!--<p><button class="btnloadmorecomment" type="button">Load more comments</button></p>-->
                                 <span *ngFor="let val of instacommentarray">
                                 <p><a target="_blank" href="https://www.instagram.com/{{val.from.username}}">{{val.from.username}}</a> {{val.text}}</p>
-                                <!--<p>i_adeeelWow <span><i class="fa fa-heart-o" aria-hidden="true"></i></span></p>
-                                <p> timoha5461Прикольно) <span><i class="fa fa-heart-o" aria-hidden="true"></i></span></p>
-                                <p>oulukayaCongrats @ilkinkaracan </p>-->
+                                    <!--<p>i_adeeelWow <span><i class="fa fa-heart-o" aria-hidden="true"></i></span></p>
+                                    <p> timoha5461Прикольно) <span><i class="fa fa-heart-o" aria-hidden="true"></i></span></p>
+                                    <p>oulukayaCongrats @ilkinkaracan </p>-->
                                     </span>
                                 <p>{{convertunixtotimeago(selectedinstapost.created_time)}} </p>
                             </div>
@@ -4014,6 +4013,7 @@ Your browser does not support the video tag.
         </div>
     </div>
 </div>
+
 <!--playlist modal ends here-->
 
 

@@ -1,204 +1,204 @@
 <app-artistheader></app-artistheader>
 
 <div class="container-fluid pageheaderblock">
-  <div class="row no-gutter">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <h1>PHOTO GALLERY</h1>
+    <div class="row no-gutter">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h1>PHOTO GALLERY</h1>
+        </div>
     </div>
-  </div>
 </div>
 
-<div class="container-fluid trendingartistblock1 photogalleryblock1">
-  <div class="row no-gutter">
-    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 artistsexchangeleftdiv">
-      <div class="sectionheader">
-        <div class="row no-gutter sectionheaderinner col-container">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col">
-            <h2>PHOTOS</h2>
-          </div>
-        </div>
-      </div>
-      <div class="sectionbody">
-        <div class="row no-gutter sectionheaderinner col-container">
-          <div class="col-1-5 col colcolor" *ngFor="let pvalue of picturedetailArray">
-            <div class="imgwrapper">
-                                              <!--<img src="assets/images/artistimg-photogal2.jpg" alt="photogal2">-->
-                <img src="{{siteurl}}nodeserver/uploads/pictures/{{pvalue.user_id}}/{{pvalue.image_pic}}" alt="RTR1" (click)="showpicturedetail(pvalue)">
-                                          </div>
-            <div class="sectionheaderinnercontainer">
-                                              <blockquote>
-                                                  <!--<p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>-->
-                                                  <p class="mb-0"><span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>{{convertunixtotimeago(pvalue.added_time)}}</span></p>
-                                              </blockquote>
-                                          </div>
-            <div class="feedslinks">
-                                              <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
-                <span class="feedslinks5"  *ngIf="pvalue.picviews[0]!=null" ><i class="fa fa-eye"></i> Views: {{pvalue.picviews[0].piccount}}</span>
-                <span class="feedslinks5"  *ngIf="pvalue.picviews[0]==null" ><i class="fa fa-eye"></i> Views: 0</span>
-                                              <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
-                <ng-template #popTemplate5 ><div [innerHtml]="html"></div></ng-template>
-                <span class="feedslinks4" [popover]="popTemplate5" [outsideClick]="true"  (mouseenter)="setshareflag('trendingpicture',pvalue)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
-
-                                              <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
-                <span (click)="showpicturelike(pvalue)" *ngIf="pvalue.picturelikes[0]!=null && !getlikeonstatus(pvalue.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{pvalue.picturelikes[0].vlike}}</span>
-                <span (click)="showpicturelike(pvalue)" *ngIf="pvalue.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
-                <span (click)="showpictureunlike(pvalue)" *ngIf="pvalue.picturelikes[0]!=null && getlikeonstatus(pvalue.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{pvalue.picturelikes[0].vlike}}</span>
-                                          </div>
-          </div>
-
-          <!--<div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-                                              <img src="assets/images/artistimg-photogal3.jpg" alt="photogal3">
-                                          </div>
-            <div class="sectionheaderinnercontainer">
-                                              <blockquote>
-                                                  <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-                                              </blockquote>
-                                          </div>
-            <div class="feedslinks">
-                                              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                                              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                                              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                                          </div>
-          </div>
-          <div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-                                              <img src="assets/images/artistimg-photogal4.jpg" alt="photogal4">
-                                          </div>
-            <div class="sectionheaderinnercontainer">
-                                              <blockquote>
-                                                  <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-                                              </blockquote>
-                                          </div>
-            <div class="feedslinks">
-                                              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                                              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                                              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                                          </div>
-          </div>
-          <div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-                                              <img src="assets/images/artistimg-photogal5.jpg" alt="photogal5">
-                                          </div>
-            <div class="sectionheaderinnercontainer">
-                                              <blockquote>
-                                                  <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-                                              </blockquote>
-                                          </div>
-            <div class="feedslinks">
-                                              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                                              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                                              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                                          </div>
-          </div>
-          <div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-              <img src="assets/images/artistimg-photogal2.jpg" alt="photogal2">
-            </div>
-            <div class="sectionheaderinnercontainer">
-              <blockquote>
-                <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-              </blockquote>
-            </div>
-            <div class="feedslinks">
-              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-            </div>
-          </div>
-          <div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-              <img src="assets/images/artistimg-photogal3.jpg" alt="photogal3">
-            </div>
-            <div class="sectionheaderinnercontainer">
-              <blockquote>
-                <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-              </blockquote>
-            </div>
-            <div class="feedslinks">
-              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-            </div>
-          </div>
-          <div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-              <img src="assets/images/artistimg-photogal4.jpg" alt="photogal4">
-            </div>
-            <div class="sectionheaderinnercontainer">
-              <blockquote>
-                <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-              </blockquote>
-            </div>
-            <div class="feedslinks">
-              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-            </div>
-          </div>
-          <div class="col-1-5 col colcolor">
-            <div class="imgwrapper">
-              <img src="assets/images/artistimg-photogal5.jpg" alt="photogal5">
-            </div>
-            <div class="sectionheaderinnercontainer">
-              <blockquote>
-                <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
-              </blockquote>
-            </div>
-            <div class="feedslinks">
-              <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-              <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-            </div>
-          </div>-->
-        </div>
-      </div>
-      <!--<div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
-            <nav class="paginationtab">
-                <div class="paginationwrapper">
-                    <ul class="pagination pg-darkgrey pagination_list">
-                        <li class="page-item">
-                            <a class="page-link" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link">1</a></li>
-                        <li class="page-item"><a class="page-link">2</a></li>
-                        <li class="page-item"><a class="page-link">3</a></li>
-                        <li class="page-item"><a class="page-link">4</a></li>
-                        <li class="page-item"><a class="page-link">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
+<div class="container-fluid trendingartistblock1 photogalleryblock1 photogallery">
+    <div class="row no-gutter">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 artistsexchangeleftdiv">
+            <!--<div class="sectionheader">
+              <div class="row no-gutter sectionheaderinner col-container">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col">
+                  <h2>PHOTOS</h2>
                 </div>
-            </nav>
-        </div>-->
+              </div>
+            </div>-->
+            <div class="sectionbody myphotosdiv">
+                <div class="row no-gutter sectionheaderinner col-container">
+                    <div class="col-1-5 col colcolor" *ngFor="let pvalue of picturedetailArray">
+                        <div class="imgwrapper">
+                            <!--<img src="assets/images/artistimg-photogal2.jpg" alt="photogal2">-->
+                            <img src="{{siteurl}}nodeserver/uploads/pictures/{{pvalue.user_id}}/{{pvalue.image_pic}}" alt="RTR1" (click)="showpicturedetail(pvalue)">
+                        </div>
+                        <div class="sectionheaderinnercontainer">
+                            <blockquote>
+                                <!--<p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>-->
+                                <p class="mb-0"><span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>{{convertunixtotimeago(pvalue.added_time)}}</span></p>
+                            </blockquote>
+                        </div>
+                        <div class="feedslinks">
+                            <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
+                            <span class="feedslinks5"  *ngIf="pvalue.picviews[0]!=null" ><i class="fa fa-eye"></i> Views: {{pvalue.picviews[0].piccount}}</span>
+                            <span class="feedslinks5"  *ngIf="pvalue.picviews[0]==null" ><i class="fa fa-eye"></i> Views: 0</span>
+                            <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
+                            <ng-template #popTemplate5 ><div [innerHtml]="html"></div></ng-template>
+                            <span class="feedslinks4" [popover]="popTemplate5" [outsideClick]="true"  (mouseenter)="setshareflag('trendingpicture',pvalue)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
 
-    </div>
+                            <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+                            <span (click)="showpicturelike(pvalue)" *ngIf="pvalue.picturelikes[0]!=null && !getlikeonstatus(pvalue.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{pvalue.picturelikes[0].vlike}}</span>
+                            <span (click)="showpicturelike(pvalue)" *ngIf="pvalue.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                            <span (click)="showpictureunlike(pvalue)" *ngIf="pvalue.picturelikes[0]!=null && getlikeonstatus(pvalue.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{pvalue.picturelikes[0].vlike}}</span>
+                        </div>
+                    </div>
 
+                    <!--<div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                                                        <img src="assets/images/artistimg-photogal3.jpg" alt="photogal3">
+                                                    </div>
+                      <div class="sectionheaderinnercontainer">
+                                                        <blockquote>
+                                                            <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                                                        </blockquote>
+                                                    </div>
+                      <div class="feedslinks">
+                                                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                                                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                                                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                    </div>
+                    </div>
+                    <div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                                                        <img src="assets/images/artistimg-photogal4.jpg" alt="photogal4">
+                                                    </div>
+                      <div class="sectionheaderinnercontainer">
+                                                        <blockquote>
+                                                            <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                                                        </blockquote>
+                                                    </div>
+                      <div class="feedslinks">
+                                                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                                                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                                                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                    </div>
+                    </div>
+                    <div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                                                        <img src="assets/images/artistimg-photogal5.jpg" alt="photogal5">
+                                                    </div>
+                      <div class="sectionheaderinnercontainer">
+                                                        <blockquote>
+                                                            <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                                                        </blockquote>
+                                                    </div>
+                      <div class="feedslinks">
+                                                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                                                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                                                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                    </div>
+                    </div>
+                    <div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                        <img src="assets/images/artistimg-photogal2.jpg" alt="photogal2">
+                      </div>
+                      <div class="sectionheaderinnercontainer">
+                        <blockquote>
+                          <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                        </blockquote>
+                      </div>
+                      <div class="feedslinks">
+                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                      </div>
+                    </div>
+                    <div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                        <img src="assets/images/artistimg-photogal3.jpg" alt="photogal3">
+                      </div>
+                      <div class="sectionheaderinnercontainer">
+                        <blockquote>
+                          <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                        </blockquote>
+                      </div>
+                      <div class="feedslinks">
+                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                      </div>
+                    </div>
+                    <div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                        <img src="assets/images/artistimg-photogal4.jpg" alt="photogal4">
+                      </div>
+                      <div class="sectionheaderinnercontainer">
+                        <blockquote>
+                          <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                        </blockquote>
+                      </div>
+                      <div class="feedslinks">
+                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                      </div>
+                    </div>
+                    <div class="col-1-5 col colcolor">
+                      <div class="imgwrapper">
+                        <img src="assets/images/artistimg-photogal5.jpg" alt="photogal5">
+                      </div>
+                      <div class="sectionheaderinnercontainer">
+                        <blockquote>
+                          <p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>
+                        </blockquote>
+                      </div>
+                      <div class="feedslinks">
+                        <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
+                        <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                        <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                      </div>
+                    </div>-->
+                </div>
+            </div>
+            <!--<div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
+                  <nav class="paginationtab">
+                      <div class="paginationwrapper">
+                          <ul class="pagination pg-darkgrey pagination_list">
+                              <li class="page-item">
+                                  <a class="page-link" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                      <span class="sr-only">Previous</span>
+                                  </a>
+                              </li>
+                              <li class="page-item active"><a class="page-link">1</a></li>
+                              <li class="page-item"><a class="page-link">2</a></li>
+                              <li class="page-item"><a class="page-link">3</a></li>
+                              <li class="page-item"><a class="page-link">4</a></li>
+                              <li class="page-item"><a class="page-link">5</a></li>
+                              <li class="page-item">
+                                  <a class="page-link" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                      <span class="sr-only">Next</span>
+                                  </a>
+                              </li>
+                          </ul>
+                      </div>
+                  </nav>
+              </div>-->
 
-    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv competitionrightdivtop">
-
-      <!---Right Side Banner Start Block---->
-      <div class="rightbannerdivwrapper">
-        <div class="rightbannerdiv">
-          <div class="rightbannerdivimg">
-            <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen6.jpg" alt="rightbannerdiv screen6"></div>
-          </div>
-          <div class="rightbannerdivimg">
-            <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
-          </div>
         </div>
-      </div>
-      <!---Right Side Banner End Block---->
 
+
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv competitionrightdivtop">
+
+            <!---Right Side Banner Start Block---->
+            <div class="rightbannerdivwrapper">
+                <div class="rightbannerdiv">
+                    <div class="rightbannerdivimg">
+                        <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen6.jpg" alt="rightbannerdiv screen6"></div>
+                    </div>
+                    <div class="rightbannerdivimg">
+                        <div class="rightbannerdivimgwrapper"><img src="../../assets/images/artistrightbannerdiv_screen3.jpg" alt="rightbannerdiv screen3"></div>
+                    </div>
+                </div>
+            </div>
+            <!---Right Side Banner End Block---->
+
+        </div>
     </div>
-  </div>
 </div>
 
 
@@ -285,7 +285,7 @@
                                     <span (click)="showpictureunlike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]!=null && getlikeonstatus(selectedpicture.userpicturelikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedpicture.picturelikes[0].vlike}}</span>
 
 
-                                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>
+                                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comments: {{selectedpicture.comments.length}}</span>
                                 </p>
                             </div>
                         </div>
@@ -293,119 +293,119 @@
                             <div class="comment_modal">
 
                                 <div class="comment_container">
-                                  <!--  <div class="row no-gutter col-container bodybloc5bottom">
-                                        <div class="col">
-                                            <div class="feedslinks">
-                            <span class="feedslinks1 comment_user_image">
-                                <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
-                            </span>
-                                                <span class="feedslinks3 comment_user_text">
+                                    <!--  <div class="row no-gutter col-container bodybloc5bottom">
+                                          <div class="col">
+                                              <div class="feedslinks">
+                              <span class="feedslinks1 comment_user_image">
+                                  <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
+                              </span>
+                                                  <span class="feedslinks3 comment_user_text">
+                                  <div class="row">
+                                      <div class="row comment_box">
+                                          <a href="#">User name</a>
+                                          <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
+                                      </div>
+                                      <div class="row no-gutter col-container bodybloc5bottom">
+                                          <div class="col">
+                                              <div class="feedslinks comment_text_reply">
+                                                  <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                  <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
                                 <div class="row">
-                                    <div class="row comment_box">
-                                        <a href="#">User name</a>
-                                        <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
-                                    </div>
-                                    <div class="row no-gutter col-container bodybloc5bottom">
-                                        <div class="col">
-                                            <div class="feedslinks comment_text_reply">
-                                                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                                                <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                              <div class="row">
-                                    <div class="row no-gutter col-container bodybloc5bottom">
-                                        <div class="col">
-                                            <div class="feedslinks">
-                                                <span class="feedslinks1 comment_user_image">
-                                                    <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
-                                                </span>
-                                                <span class="feedslinks3 comment_user_text">
-                                                    <div class="row">
-                                                        <div class="row comment_box">
-                                                            <a href="#">User name</a>
-                                                            <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
-                                                        </div>
-                                                        <div class="row no-gutter col-container bodybloc5bottom">
-                                                            <div class="col">
-                                                                <div class="feedslinks comment_text_reply">
-                                                                    <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                                                                    <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="row no-gutter col-container bodybloc5bottom">
-                                        <div class="col">
-                                            <div class="feedslinks">
-                                                <span class="feedslinks1 comment_user_image">
-                                                    <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
-                                                </span>
-                                                <span class="feedslinks3 comment_user_text">
-                                                    <div class="row">
-                                                        <div class="row comment_input">
-                                                            <input type="text" class="form-control" (keyup)="addcomment($event)">
-                                                        </div>
+                                      <div class="row no-gutter col-container bodybloc5bottom">
+                                          <div class="col">
+                                              <div class="feedslinks">
+                                                  <span class="feedslinks1 comment_user_image">
+                                                      <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                  </span>
+                                                  <span class="feedslinks3 comment_user_text">
+                                                      <div class="row">
+                                                          <div class="row comment_box">
+                                                              <a href="#">User name</a>
+                                                              <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
+                                                          </div>
+                                                          <div class="row no-gutter col-container bodybloc5bottom">
+                                                              <div class="col">
+                                                                  <div class="feedslinks comment_text_reply">
+                                                                      <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                                      <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="row no-gutter col-container bodybloc5bottom">
+                                          <div class="col">
+                                              <div class="feedslinks">
+                                                  <span class="feedslinks1 comment_user_image">
+                                                      <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                  </span>
+                                                  <span class="feedslinks3 comment_user_text">
+                                                      <div class="row">
+                                                          <div class="row comment_input">
+                                                              <input type="text" class="form-control" (keyup)="addcomment($event)">
+                                                          </div>
 
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row no-gutter col-container bodybloc5bottom">
-                                        <div class="col">
-                                            <div class="feedslinks">
-                            <span class="feedslinks1 comment_user_image">
-                                <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
-                            </span>
-                                                <span class="feedslinks3 comment_user_text">
-                                <div class="row comment_box">
-                                    <a href="#">User name</a>
-                                    <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
-                                </div>
-                                <div class="row no-gutter col-container bodybloc5bottom">
-                                    <div class="col">
-                                        <div class="feedslinks comment_text_reply">
-                                            <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                                            <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row comment_input_se">
-                                        <div class="row no-gutter col-container bodybloc5bottom">
-                                            <div class="col">
-                                                <div class="feedslinks">
-                                                <span class="feedslinks1 comment_user_image">
-                                                    <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
-                                                </span>
-                                                    <span class="feedslinks3 comment_user_text">
-                                                    <div class="row">
-                                                        <div class="row comment_input">
-                                                            <input type="text" class="form-control">
-                                                        </div>
+                                                      </div>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="row no-gutter col-container bodybloc5bottom">
+                                          <div class="col">
+                                              <div class="feedslinks">
+                              <span class="feedslinks1 comment_user_image">
+                                  <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
+                              </span>
+                                                  <span class="feedslinks3 comment_user_text">
+                                  <div class="row comment_box">
+                                      <a href="#">User name</a>
+                                      <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
+                                  </div>
+                                  <div class="row no-gutter col-container bodybloc5bottom">
+                                      <div class="col">
+                                          <div class="feedslinks comment_text_reply">
+                                              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                              <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="row comment_input_se">
+                                          <div class="row no-gutter col-container bodybloc5bottom">
+                                              <div class="col">
+                                                  <div class="feedslinks">
+                                                  <span class="feedslinks1 comment_user_image">
+                                                      <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                  </span>
+                                                      <span class="feedslinks3 comment_user_text">
+                                                      <div class="row">
+                                                          <div class="row comment_input">
+                                                              <input type="text" class="form-control">
+                                                          </div>
 
-                                                    </div>
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
+                                                      </div>
+                                                  </span>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>-->
                                     <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedpicture.comments">
                                         <div class="col">
                                             <div class="feedslinks">
@@ -497,12 +497,12 @@
 
 
 <ng-template #commingsoontemplate>
-  <div class="modal-body text-center signupeamilbody">
+    <div class="modal-body text-center signupeamilbody">
 
-    <button type="button" class="close" (click)="closep()">&times;</button>
-    <img src="../../assets/images/artistheaderlogo.png" alt="logo">
-    <p><span>This is currently a concept page to give you and idea of what the ArtistXP Experience is going to be all about. When we launch you will have access to these incredible features. <br><br>Get the ArtistXP Experience NOW!  <a style="cursor: pointer; width: 360px;" (click)="gotoSignUp()">Get back to Pre Launch Sign Up</a></span></p>
+        <button type="button" class="close" (click)="closep()">&times;</button>
+        <img src="../../assets/images/artistheaderlogo.png" alt="logo">
+        <p><span>This is currently a concept page to give you and idea of what the ArtistXP Experience is going to be all about. When we launch you will have access to these incredible features. <br><br>Get the ArtistXP Experience NOW!  <a style="cursor: pointer; width: 360px;" (click)="gotoSignUp()">Get back to Pre Launch Sign Up</a></span></p>
 
-  </div>
+    </div>
 </ng-template>
 <a style="display: none;" #gsharelink [attr.href]="generalshareurl" class="gsharelink" target="_blank">Share</a>
