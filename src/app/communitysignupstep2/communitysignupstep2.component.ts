@@ -37,6 +37,7 @@ export class Communitysignupstep2Component implements OnInit {
     public image;
     public exparr;
     public webarr;
+    public fan;
 
   constructor(fb: FormBuilder,private _http: Http,private router: Router, private _commonservices : Commonservices,private route:ActivatedRoute, userdata: CookieService) {
     this.userdatanew = userdata;
@@ -66,7 +67,7 @@ export class Communitysignupstep2Component implements OnInit {
 
           this.dataForm = this.fb.group({
               realname: ["",Validators.required],
-              alias: ["",Validators.required],
+              alias: [""],
               gender: ["",Validators.required],
               musicgenre: [""],
               dancergenre: [""],
@@ -95,6 +96,7 @@ export class Communitysignupstep2Component implements OnInit {
                       this.musicians = userdata2.musicians;
                       this.model = userdata2.model;
                       this.dancer = userdata2.dancer;
+                      this.fan = userdata2.fan;
 
                       if(this.musicians == 1){
                           let link=this.serverurl+'genrelist';
@@ -124,6 +126,9 @@ export class Communitysignupstep2Component implements OnInit {
 
                       if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
                           this.dataForm.controls['ability'].setValidators(Validators.required);
+                      }
+                      if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1 || this.userdetails.model == 1){
+                          this.dataForm.controls['alias'].setValidators(Validators.required);
                       }
                       if(this.userdetails.musicians == 1){
                           this.dataForm.controls['musicgenre'].setValidators(Validators.required);
@@ -222,7 +227,13 @@ export class Communitysignupstep2Component implements OnInit {
   }
 
     createWebsite(defaultVal): FormGroup {
-        return this.fb.group({ name: [defaultVal,Validators.required] });
+        if (this.fan == 0) {
+
+            return this.fb.group({name: [defaultVal, Validators.required]});
+        }
+        else {
+            return this.fb.group({name: ['']});
+        }
     }
 
     get websites(): FormGroup {
@@ -240,8 +251,15 @@ export class Communitysignupstep2Component implements OnInit {
     }
 
 
+
     createExp(defaultVal): FormGroup {
-        return this.fb.group({ name: [defaultVal,Validators.required] });
+        if(this.fan==0) {
+
+
+            return this.fb.group({name: [defaultVal, Validators.required]});
+        } else {
+            return this.fb.group({name: ['']});
+        }
     }
 
     get experiences(): FormGroup {
@@ -293,12 +311,39 @@ export class Communitysignupstep2Component implements OnInit {
     }
 
   dosubmit(formval){
+
+
       this.markFormGroupTouched(this.dataForm);
       this.exparr = [];
       this.webarr = [];
 
     console.log('formval');
     console.log(formval);
+    console.log('this.dataForm.valid');
+    console.log( this.dataForm.controls['ethnicity'].valid);
+    console.log( this.dataForm.controls['ability'].valid);
+    console.log( this.dataForm.controls['bio'].valid);
+    console.log( this.dataForm.controls['city'].valid);
+    console.log( this.dataForm.controls['address'].valid);
+    console.log( this.dataForm.controls['state'].valid);
+    console.log( this.dataForm.controls['zip'].valid);
+    console.log( this.dataForm.controls['experience'].valid);
+    console.log( this.dataForm.controls['website'].valid);
+
+      /* realname: ["",Validators.required],
+       alias: [""],
+       gender: ["",Validators.required],
+       musicgenre: [""],
+       dancergenre: [""],
+       ethnicity: [""],
+       ability: [""],
+       bio: ["",Validators.required],
+       city: ["",Validators.required],
+       address: ["",Validators.required],
+       state: ["",Validators.required],
+       zip: ["",Validators.required],
+       experience: this.fb.array([this.createExp('')]),
+       website: this.fb.array([this.createWebsite('')]),*/
 
     if (this.dataForm.valid ) {
 
@@ -333,6 +378,7 @@ export class Communitysignupstep2Component implements OnInit {
             .subscribe(res => {
                 var result = res.json();
                 if(result.status=='success'){
+                    console.log('success block--');
                     this.userdatanew.delete('affiliatename');
                     this.userdatanew.delete('mediaid');
                     this.userdatanew.delete('signupuserdata');
@@ -340,6 +386,7 @@ export class Communitysignupstep2Component implements OnInit {
                         this.router.navigateByUrl('/agreement/'+this.userdetails._id);
                     }else{
                         this.router.navigateByUrl('/');
+                        console.log('else success block--');
                     }
                 }
             }, error => {

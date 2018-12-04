@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {Commonservices} from "../app.commonservices";
 import {Http} from "@angular/http";
 import {ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
 import { DomSanitizer} from '@angular/platform-browser';
+import { FacebookService, InitParams,UIParams, UIResponse } from 'ngx-facebook';
+
+declare var FB: any;
+declare var $:any;
 
 @Component({
   selector: 'app-mylink',
@@ -12,7 +16,20 @@ import { DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./mylink.component.css'],
   providers: [Commonservices]
 })
-export class MylinkComponent implements OnInit {
+export class MylinkComponent implements OnInit,AfterViewInit {
+
+  @ViewChild('gsharelink') gsharelink: ElementRef;
+
+  /*for share popover*/
+  html: string = `
+<div class="socialmediaicons socialmediaicons2">
+                <a class="fa fa-facebook fbsharelink slink"></a>
+              <a href="javascript:void(0)" class="fa fa-twitter twittersharelink slink"></a>
+              <a href="javascript:void(0)" class="fa fa-google googlesharelink slink"></a>
+              <a href="javascript:void(0)" class="fa fa-linkedin linkedinsharelink slink"></a> 
+             <a href="javascript:void(0)" class="fa fa-tumblr tumblrsharelink slink"></a>
+             </div>
+`;
 
   public userdata: CookieService;
   public isuserprofile = 1;
@@ -40,11 +57,17 @@ export class MylinkComponent implements OnInit {
   public isloggedin:any=0;
   public currentlinklikecount:any=0;
   public cookie_user_id:any;
+  public generalshareurlold:any='0';
+  public generalshareurloldtype:any='0';
+  public generalshareurl:any='';
+  public shareflag:any;
+  public selectedsharedpost:any;
+  public lastsharetime:any=0;
 
 
 
 
-  constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,fb:FormBuilder,private sanitizer: DomSanitizer) {
+  constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,fb:FormBuilder,private sanitizer: DomSanitizer,public FBS: FacebookService) {
 
     this.userdata = userdata;
     this.serverurl=_commonservices.url;
@@ -76,6 +99,18 @@ export class MylinkComponent implements OnInit {
 
        this.isuserprofile = 1;
     }
+
+    let initParams: InitParams = {
+      appId: '2034821446556410',
+      xfbml: true,
+      version: 'v2.8'
+    };
+
+    FBS.init(initParams);
+  }
+
+  ngAfterViewInit(){
+
   }
 
   ngOnInit() {
@@ -90,6 +125,54 @@ export class MylinkComponent implements OnInit {
 
     });
 
+  }
+
+  fbshare(type:any,item:any) {
+    /*let options: any = {};
+     var type;
+
+     if(typeof (item.music) != 'undefined'){
+     type = 'audio';
+     }
+
+     console.log(item);
+     console.log(type);*/
+    let currenttime =new Date().getTime();
+
+    //this.currenttime
+
+    let options: any = {};
+
+    if(type=='link'){
+
+      options = {
+        method: 'share',
+        // href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
+        href: 'http://artistxp.com/sharetools.php?type=l&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+      //console.log('picture');
+      //console.log('selectedsharedpost');
+      //console.log(this.selectedsharedpost);
+
+
+    }
+
+    console.log(options.href);
+    setTimeout(()=> {
+      //alert(currenttime - this.lastsharetime);
+      //console.log('currenttime - this.lastsharetime');
+      //console.log(currenttime - this.lastsharetime);
+
+      if (currenttime - this.lastsharetime > 5000) {
+        this.FBS.ui(options)
+            .then((res: UIResponse) => {
+              console.log('Got the users profile', res);
+            })
+            .catch(this.handleError);
+        this.lastsharetime = currenttime;
+      }
+
+    },700);
   }
 
   getLinkDetails(){
@@ -298,6 +381,143 @@ export class MylinkComponent implements OnInit {
       this.getlinkdata(3);
     }
 
+  }
+
+  private handleError(error) {
+    console.error('Error processing action', error);
+  }
+
+  ngAfterViewChecked(){
+
+    let children = document.getElementsByClassName("fbsharelink");
+
+    for (let i = 0; i < children.length; i++) {
+      children[i].addEventListener("click", (event: Event) => {
+        //alert("Hello world!");
+        /*
+         console.log(event);
+         console.log("Hello world!b66");*/
+
+        //this.shareflag = type;
+        //this.selectedsharedpost=selectedpost;
+
+        this.fbshare(this.shareflag,this.selectedsharedpost);
+
+
+
+      });
+    }
+
+    let children1 = document.getElementsByClassName("twittersharelink");
+
+    for (let i1 = 0; i1 < children1.length; i1++) {
+      children1[i1].addEventListener("click", (event: Event) => {
+        //alert("Hello 112!");
+        /*  console.log("Hello 11!");
+         console.log("Hello world!11");
+         console.log(event);*/
+        this.generalshare(this.shareflag,'twitter');
+      });
+    }
+
+    let children2 = document.getElementsByClassName("googlesharelink");
+
+    for (let i2 = 0; i2 < children2.length; i2++) {
+      children2[i2].addEventListener("click", (event: Event) => {
+        //alert("Hello 112!");
+        /* console.log("Hello 11!");
+         console.log("Hello world!11");
+         console.log(event);*/
+        this.generalshare(this.shareflag,'google');
+      });
+    }
+
+    let children3 = document.getElementsByClassName("linkedinsharelink");
+
+    for (let i3 = 0; i3 < children3.length; i3++) {
+      children3[i3].addEventListener("click", (event: Event) => {
+        //alert("Hello 112!");
+        /* console.log("Hello 11!");
+         console.log("Hello world!11");
+         console.log(event);*/
+        this.generalshare(this.shareflag,'linkedin');
+      });
+    }
+
+    let children4 = document.getElementsByClassName("tumblrsharelink");
+
+    for (let i4 = 0; i4 < children4.length; i4++) {
+      /*console.log('getEventListeners--- for chil4');
+       console.log($._data(children4[i4], "events"));*/
+      //children4[i4].removeEventListener("click");
+
+      children4[i4].addEventListener("click", (event: Event) => {
+        //alert("Hello 69!");
+        /*console.log("Hello 11!");
+         console.log("Hello world!11");
+         console.log(event);*/
+        this.generalshare(this.shareflag,'tumblr');
+      });
+      children4[i4].removeEventListener("click", (event: Event) => {
+        // alert("Hello 77!");
+
+      });
+    }
+
+
+  }
+
+  generalshare(type:any,stype:any){
+    if(this.generalshareurlold!=this.generalshareurl || this.generalshareurloldtype!=stype) {
+
+      if (stype == 'twitter' && type == 'link') {
+        /* console.log('this.selectedaudio');
+         console.log(this.selectedsharedpost._id);*/
+        this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+      }
+
+      if (stype == 'google' && type == 'link') {
+        /* console.log('this.selectedaudio');
+         console.log(this.selectedaudio);*/
+        this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+      }
+
+      if (stype == 'linkedin' && type == 'link') {
+        /*console.log('this.selectedaudio');
+         console.log(this.selectedaudio);*/
+        this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+      }
+
+
+      if(stype=='tumblr' && type=='link') {
+
+        this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
+
+
+      }
+
+      let gsharelink: any;
+      gsharelink = document.getElementsByClassName("gsharelink");
+      //gsharelink.click();
+      //$('.gsharelink').click();
+      this.generalshareurlold = this.generalshareurl;
+      this.generalshareurloldtype = stype;
+      setTimeout(()=> {
+        this.gsharelink.nativeElement.click();
+      }, 500);
+    }
+
+  }
+
+  setshareflag(type:any,selectedpost:any){
+
+    this.shareflag = type;
+    this.selectedsharedpost=selectedpost;
+    /*console.log('in setshareflag');
+     console.log(type);*/
   }
 
   onHidden(){

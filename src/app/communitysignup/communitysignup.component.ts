@@ -200,7 +200,7 @@ export class CommunitysignupComponent implements OnInit {
 
                             var udetails = result.result.ops[0];
 
-                            if(udetails.musicians == 1 || udetails.dancer == 1 || udetails.model == 1){
+                            if(udetails.musicians == 1 || udetails.dancer == 1 || udetails.model == 1 || udetails.fan == 1){
                                 this.userdata.set('signupuserdata',JSON.stringify(udetails));
                                 this.router.navigateByUrl('/community-signup-step-2/'+udetails._id);
                             }else if(udetails.signupaffiliate == 1){

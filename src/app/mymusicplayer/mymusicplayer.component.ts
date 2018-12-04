@@ -81,6 +81,9 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
   public generalshareurl:any='';
   public shareflag:any;
   public selectedsharedpost:any;
+  public generalshareurlold:any='0';
+  public generalshareurloldtype:any='0';
+  public lastsharetime:any=0;
 
   constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,private sanitizer: DomSanitizer,fb:FormBuilder,public FBS: FacebookService) {
 
@@ -106,8 +109,8 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     this.serverurl=_commonservices.url;
     this.siteurl=_commonservices.siteurl;
     this.shuffleflag = false;
-    console.log('routes');
-    console.log(this.activeRoute.snapshot.params);
+   /* console.log('routes');
+    console.log(this.activeRoute.snapshot.params);*/
 
 
     if(this.userdata.get('user_id')!=null && this.userdata.get('user_id')!='')
@@ -120,31 +123,31 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     this.real_name = this.userdata.get('real_name');
 
     if(this.activeRoute.snapshot.params.id==null || typeof(this.activeRoute.snapshot.params.id)=='undefined') {
-      console.log('in profile ...');
+     /* console.log('in profile ...');
 
       console.log('this.image');
       console.log(this.image);
       console.log('this.real_name');
       console.log(this.real_name);
-      console.log(this.user_id);
+      console.log(this.user_id);*/
       this.isuserprofile = 0;
     }else
       {
       this.user_name = this.activeRoute.snapshot.params.name;
       this.user_id = this.activeRoute.snapshot.params.id;
-      console.log('this.user_id');
+      /*console.log('this.user_id');
       console.log(this.user_id);
       console.log('this.user_name');
       console.log(this.user_name);
         console.log('this.real_name');
         console.log(this.real_name);
         console.log('this.image');
-        console.log(this.image);
+        console.log(this.image);*/
        this.isuserprofile = 1;
     }
 
     let initParams: InitParams = {
-      appId: '906815096194208',
+      appId: '2034821446556410',
       xfbml: true,
       version: 'v2.8'
     };
@@ -172,21 +175,44 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
 
   }
 
-  fbshare(type:any) {
+  fbshare(type:any,item:any) {
 
-    console.log('fbshare');
-    console.log(type);
+    /*console.log('fbshare');
+    console.log(type);*/
 
-    const options: UIParams = {
-      method: 'share',
-      href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
-    };
+    let currenttime =new Date().getTime();
 
-    this.FBS.ui(options)
-        .then((res: UIResponse) => {
-          console.log('Got the users profile', res);
-        })
-        .catch(this.handleError);
+    let options: any = {};
+    if(type=='audio'){
+
+      options = {
+        method: 'share',
+
+        href: 'http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+
+     /* console.log('audio');
+      console.log('selectedsharedpost');
+      console.log(this.selectedsharedpost);*/
+
+
+    }
+
+    setTimeout(()=> {
+      //alert(currenttime - this.lastsharetime);
+      //console.log('currenttime - this.lastsharetime');
+      //console.log(currenttime - this.lastsharetime);
+
+      if (currenttime - this.lastsharetime > 5000) {
+        this.FBS.ui(options)
+            .then((res: UIResponse) => {
+              console.log('Got the users profile', res);
+            })
+            .catch(this.handleError);
+        this.lastsharetime = currenttime;
+      }
+
+    },700);
 
   }
 
@@ -265,15 +291,15 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     myAudio.volume = this.oldvolume;
     this.ismuteaudio = false;
     this.value = this.oldvolume*100;
-    console.log(this.value);
+   /* console.log(this.value);
     console.log(this.oldvolume);
-    console.log(myAudio.volume);
+    console.log(myAudio.volume);*/
 
 
 
   }
   setval1(){
-    console.log('value  1 chaged .......');
+    // console.log('value  1 chaged .......');
   }
 
   changeaudioplayervolume(){
@@ -309,12 +335,12 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
       myAudio.play();
       myAudio.volume=this.value/100;
       this.playstate = setInterval(() => {
-        console.log('in onplay interval ....');
-        console.log(myAudio.currentTime);
+      /*  console.log('in onplay interval ....');
+        console.log(myAudio.currentTime);*/
         this.value1 = (myAudio.currentTime.toFixed(0));
-        console.log(this.value1);
+        // console.log(this.value1);
         //this.setaudiotimer(Math.ceil(myAudio.currentTime));
-        console.log(this.value);
+        // console.log(this.value);
 
 
       }, 1000);
@@ -329,8 +355,8 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
   }
 
   playaudio(val:any){
-    console.log('val');
-    console.log(val);
+    /*console.log('val');
+    console.log(val);*/
     this.selectedaudio = val;
 
     /*   console.log('val.indexOf(this.musicdetailArray)');
@@ -342,8 +368,8 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     this.audiousername = this.musicArray[0].userdata[0].firstname+' '+this.musicArray[0].userdata[0].lastname;
     if(this.audioplayerindex==this.musicArray.indexOf(val))
     {
-      console.log('equal index ......');
-      console.log('equal index ......');
+     /* console.log('equal index ......');
+      console.log('equal index ......');*/
       if(this.isaudioplay==false){
         this.playmusic();
       }
@@ -383,13 +409,13 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
 
               let result:any = {};
               result = res.json();
-              console.log('result view');
-              console.log(result);
+            /*  console.log('result view');
+              console.log(result);*/
               if(result.status=='success'){
 
                 this.getmusicdetails();
 
-                console.log('suceess view');
+                // console.log('suceess view');
               }
             });
 
@@ -472,12 +498,12 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
 
               this.getmusicdetails();
-              console.log('suceess like');
+              // console.log('suceess like');
             }
           })
 
@@ -508,11 +534,11 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
               this.getmusicdetails();
-              console.log('suceess unlike');
+              // console.log('suceess unlike');
             }
           })
     }
@@ -522,24 +548,24 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
 
     // this.selectedpost = val;
 
-    console.log('val');
-    console.log(val);
+  /*  console.log('val');
+    console.log(val);*/
     // this.selectedvideo=val;
-    console.log('this.musicArray');
-    console.log(this.musicArray);
+    // console.log('this.musicArray');
+    // console.log(this.musicArray);
 
     // this.currentvideoidtrending=this.selectedvideo._id;
 
 
-    console.log(val.keyCode);
-    console.log(val.shiftKey);
+    /*console.log(val.keyCode);
+    console.log(val.shiftKey);*/
     if(val.keyCode==13 && !val.shiftKey && this.commentval.length>0){
 
-      console.log('submit comment here ....');
+      // console.log('submit comment here ....');
       let link = this.serverurl+'addcomment';
       let data = {'post_id': this.selectedaudio._id,'user_id':this.user_id, 'comment':this.commentval};
-      console.log('data');
-      console.log(data);
+     /* console.log('data');
+      console.log(data);*/
       this._http.post(link, data)
           .subscribe(val =>{
 
@@ -580,12 +606,12 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
              console.log(result);
              console.log(result.item);*/
             this.musicArray = result.item;
-            console.log('this.musicArray');
+          /*  console.log('this.musicArray');
             console.log(this.musicArray);
             console.log('this.musicArray[0].user_id');
             console.log(this.musicArray[0].user_id);
             console.log('this.user_id');
-            console.log(this.user_id);
+            console.log(this.user_id);*/
             if(this.musicArray.length>0  && !this.isaudioplay){
 
               this.selectedaudio = this.musicArray[0];
@@ -883,14 +909,10 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     for (let i = 0; i < children.length; i++) {
       children[i].addEventListener("click", (event: Event) => {
         //alert("Hello world!");
-        console.log("Hello world!");
+       /* console.log("Hello world!");
         console.log("Hello world!b66");
-        console.log(event);
-        this.fbshare('audio');
-        /*this.fbshare('trendingaudio');
-         this.fbshare('video');
-         this.fbshare('picture');
-         this.fbshare('trendingpicture');*/
+        console.log(event);*/
+        this.fbshare(this.shareflag,this.selectedsharedpost);
       });
     }
 
@@ -899,9 +921,9 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     for (let i1 = 0; i1 < children1.length; i1++) {
       children1[i1].addEventListener("click", (event: Event) => {
         //alert("Hello 112!");
-        console.log("Hello 11!");
+        /*console.log("Hello 11!");
         console.log("Hello world!11");
-        console.log(event);
+        console.log(event);*/
         this.generalshare(this.shareflag,'twitter');
       });
     }
@@ -911,9 +933,9 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     for (let i2 = 0; i2 < children2.length; i2++) {
       children2[i2].addEventListener("click", (event: Event) => {
         //alert("Hello 112!");
-        console.log("Hello 11!");
+       /* console.log("Hello 11!");
         console.log("Hello world!11");
-        console.log(event);
+        console.log(event);*/
         this.generalshare(this.shareflag,'google');
       });
     }
@@ -923,9 +945,9 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     for (let i3 = 0; i3 < children3.length; i3++) {
       children3[i3].addEventListener("click", (event: Event) => {
         //alert("Hello 112!");
-        console.log("Hello 11!");
+       /* console.log("Hello 11!");
         console.log("Hello world!11");
-        console.log(event);
+        console.log(event);*/
         this.generalshare(this.shareflag,'linkedin');
       });
     }
@@ -935,9 +957,9 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     for (let i4 = 0; i4 < children4.length; i4++) {
       children4[i4].addEventListener("click", (event: Event) => {
         //alert("Hello 112!");
-        console.log("Hello 11!");
+       /* console.log("Hello 11!");
         console.log("Hello world!11");
-        console.log(event);
+        console.log(event);*/
         this.generalshare(this.shareflag,'tumblr');
       });
     }
@@ -945,9 +967,10 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
   }
 
   generalshare(type:any,stype:any){
+    if(this.generalshareurlold!=this.generalshareurl || this.generalshareurloldtype!=stype){
     if(stype=='twitter' && type=='audio') {
-      console.log('this.selectedaudio');
-      console.log(this.selectedaudio._id);
+      /*console.log('this.selectedaudio');
+      console.log(this.selectedaudio._id);*/
       this.generalshareurl = 'https://twitter.com/intent/tweet?url='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
 
@@ -955,24 +978,24 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
 
 
     if(stype=='google' && type=='audio') {
-      console.log('this.selectedaudio');
-      console.log(this.selectedaudio);
+     /* console.log('this.selectedaudio');
+      console.log(this.selectedaudio);*/
       this.generalshareurl = 'https://plus.google.com/share?url='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
     }
 
 
     if(stype=='linkedin' && type=='audio') {
-      console.log('this.selectedaudio');
-      console.log(this.selectedaudio);
+      /*console.log('this.selectedaudio');
+      console.log(this.selectedaudio);*/
       this.generalshareurl = 'https://www.linkedin.com/shareArticle?url='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
     }
 
 
     if(stype=='tumblr' && type=='audio') {
-      console.log('this.selectedaudio');
-      console.log(this.selectedaudio);
+     /* console.log('this.selectedaudio');
+      console.log(this.selectedaudio);*/
       this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
       /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
 
@@ -982,22 +1005,25 @@ export class MymusicplayerComponent implements OnInit,AfterViewInit {
     console.log(this.generalshareurl);
 
 
-    let gsharelink:any;
-    gsharelink = document.getElementsByClassName("gsharelink");
-    //gsharelink.click();
-    //$('.gsharelink').click();
-    setTimeout(()=> {
-      this.gsharelink.nativeElement.click();
-    },500);
+      let gsharelink: any;
+      gsharelink = document.getElementsByClassName("gsharelink");
+      //gsharelink.click();
+      //$('.gsharelink').click();
+      this.generalshareurlold = this.generalshareurl;
+      this.generalshareurloldtype = stype;
+      setTimeout(()=> {
+        this.gsharelink.nativeElement.click();
+      }, 500);
 
+  }
   }
 
   setshareflag(type:any,selectedpost:any){
 
     this.shareflag = type;
     this.selectedsharedpost=selectedpost;
-    console.log('in setshareflag');
-    console.log(type);
+   /* console.log('in setshareflag');
+    console.log(type);*/
   }
 
 }

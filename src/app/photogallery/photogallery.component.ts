@@ -46,6 +46,9 @@ export class PhotogalleryComponent implements OnInit,AfterViewInit  {
   public generalshareurl:any='';
   public shareflag:any;
   public selectedsharedpost:any;
+  public generalshareurlold:any='0';
+  public generalshareurloldtype:any='0';
+  public lastsharetime:any=0;
 
   constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,private sanitizer: DomSanitizer,public FBS: FacebookService) {
 
@@ -91,7 +94,7 @@ export class PhotogalleryComponent implements OnInit,AfterViewInit  {
     }
 
     let initParams: InitParams = {
-      appId: '906815096194208',
+      appId: '2034821446556410',
       xfbml: true,
       version: 'v2.8'
     };
@@ -340,21 +343,39 @@ export class PhotogalleryComponent implements OnInit,AfterViewInit  {
     this.isModalPicDetail = false;
   }
 
-  fbshare(type:any) {
+  fbshare(type:any,item:any) {
 
-    console.log('fbshare');
-    console.log(type);
+    let currenttime =new Date().getTime();
 
-    const options: UIParams = {
-      method: 'share',
-      href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
-    };
+    //this.currenttime
 
-    this.FBS.ui(options)
-        .then((res: UIResponse) => {
-          console.log('Got the users profile', res);
-        })
-        .catch(this.handleError);
+    let options: any = {};
+
+    if(type=='trendingpicture'){
+
+      options = {
+        method: 'share',
+        // href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
+        href: 'http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+      //console.log('picture');
+      //console.log('selectedsharedpost');
+      //console.log(this.selectedsharedpost);
+
+
+    }
+    setTimeout(()=> {
+
+      if (currenttime - this.lastsharetime > 5000) {
+        this.FBS.ui(options)
+            .then((res: UIResponse) => {
+              console.log('Got the users profile', res);
+            })
+            .catch(this.handleError);
+        this.lastsharetime = currenttime;
+      }
+
+    },700);
 
   }
 
@@ -369,14 +390,10 @@ export class PhotogalleryComponent implements OnInit,AfterViewInit  {
     for (let i = 0; i < children.length; i++) {
       children[i].addEventListener("click", (event: Event) => {
         //alert("Hello world!");
-        console.log("Hello world!");
+        /*console.log("Hello world!");
         console.log("Hello world!b66");
-        console.log(event);
-        this.fbshare('audio');
-        /*this.fbshare('trendingaudio');
-         this.fbshare('video');
-         this.fbshare('picture');
-         this.fbshare('trendingpicture');*/
+        console.log(event);*/
+        this.fbshare(this.shareflag,this.selectedsharedpost);
       });
     }
 
@@ -431,36 +448,32 @@ export class PhotogalleryComponent implements OnInit,AfterViewInit  {
   }
 
   generalshare(type:any,stype:any){
+    if(this.generalshareurlold!=this.generalshareurl || this.generalshareurloldtype!=stype) {
 
     if(stype=='twitter' && type=='trendingpicture') {
-      console.log('this.selectedaudio');
-      console.log(this.selectedsharedpost._id);
-      console.log(this.selectedsharedpost.user_id);
+
       this.generalshareurl = 'https://twitter.com/intent/tweet?url='+encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
     }
 
 
     if(stype=='google' && type=='trendingpicture') {
-      console.log('this.selectedaudio');
-      // console.log(this.selectedaudio);
+
       this.generalshareurl = 'https://plus.google.com/share?url='+encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
     }
 
 
     if(stype=='linkedin' && type=='trendingpicture') {
-      console.log('this.selectedaudio');
-      // console.log(this.selectedaudio);
+
       this.generalshareurl = 'https://www.linkedin.com/shareArticle?url='+encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
     }
 
     if(stype=='tumblr' && type=='trendingpicture') {
-      console.log('this.selectedaudio');
-      // console.log(this.selectedaudio);
+
       this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
-      /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
+
 
     }
 
@@ -472,10 +485,13 @@ export class PhotogalleryComponent implements OnInit,AfterViewInit  {
     gsharelink = document.getElementsByClassName("gsharelink");
     //gsharelink.click();
     //$('.gsharelink').click();
+      this.generalshareurlold = this.generalshareurl;
+      this.generalshareurloldtype = stype;
     setTimeout(()=> {
       this.gsharelink.nativeElement.click();
     },500);
 
+  }
   }
 
   setshareflag(type:any,selectedpost:any){

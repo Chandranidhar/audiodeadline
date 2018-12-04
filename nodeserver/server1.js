@@ -2282,6 +2282,22 @@ app.get('/getpicturedetailsbyid',function (req,resp) {
     });
 });
 
+app.get('/getlinkdetailsbyid',function (req,resp) {
+
+    var collection = db.collection('userlinklistView');
+    var link_id = new mongodb.ObjectID(req.query.link_id);
+    collection.find({_id:link_id}).toArray(function (err,items) {
+
+        if(err){
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        }
+        else {
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
+
 
 
 var server = app.listen(port,'audiodeadline.com', function () {

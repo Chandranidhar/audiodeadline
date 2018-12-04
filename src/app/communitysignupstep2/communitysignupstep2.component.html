@@ -22,7 +22,7 @@
                 <input name="realname" class="form-control" type="text" [formControl]="dataForm.controls['realname']">
                 <span class="has-error" *ngIf ="dataForm.controls['realname'].touched && !dataForm.controls['realname'].valid"> Real Name field can not be blank</span>
               </div>
-              <div class="form-group">
+              <div class="form-group" *ngIf="userdetails.fan != 1">
                 <label><span>Aliases:</span> </label>
                 <input name="alias" class="form-control" type="text" [formControl]="dataForm.controls['alias']">
                 <span class="has-error" *ngIf ="dataForm.controls['alias'].touched && !dataForm.controls['alias'].valid"> Aliases field can not be blank</span>
@@ -134,7 +134,7 @@
                 </div>
                 <span class="has-error" *ngIf ="dataForm.controls['ability'].touched && !dataForm.controls['ability'].valid"> Ability field can not be blank</span>
               </div>
-              <div class="form-group">
+              <div class="form-group" *ngIf="userdetails.musicians == 1 || userdetails.dancer == 1 || userdetails.model == 1 ">
                 <label><span>Experiences:</span></label>
                 <div class="selectdiv" *ngFor="let item of experiences.controls; let i = index;">
                   <input name="websites[]" class="form-control" type="url" [formControl]="item.controls['name']">
@@ -143,7 +143,7 @@
                   <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid"> Experience field can not be blank</span>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" *ngIf="userdetails.musicians == 1 || userdetails.dancer == 1 || userdetails.model == 1">
                 <label><span>Website:</span></label>
                 <div class="selectdiv" *ngFor="let item of websites.controls; let i = index;">
                   <input name="websites[]" class="form-control" type="url" [formControl]="item.controls['name']">

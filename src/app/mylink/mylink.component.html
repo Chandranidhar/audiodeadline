@@ -37,7 +37,11 @@
                 <span class="feedslinks6" (click)="showlinkunlike(linkval)" *ngIf="linkval.linklikes[0]!=null && getlikeonstatus(linkval.userlinklikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like:{{linkval.linklikes[0].vlike}}</span>
 
 
-                <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share: <span class="numbercls"></span></span>
+                <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share <span class="numbercls"></span></span>-->
+                <ng-template #popTemplatel1><div [innerHtml]="html"></div></ng-template>
+
+                <span [popover]="popTemplatel1" [outsideClick]="true"><i class="fa fa-share-alt" aria-hidden="true" (mouseenter)="setshareflag('link',linkval)"></i> Share</span>
+
                 <span class="edit_buttons">
                   <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-pencil-square-o" (click)="editLink(linkval)"></i></button>
                   <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-trash-o" (click)="deleteVideo(0,linkval._id,2)"></i></button>
@@ -586,3 +590,5 @@
 
   </div>
 </ng-template>
+
+<a style="display: none;" #gsharelink [attr.href]="generalshareurl" class="gsharelink" target="_blank">Share</a>

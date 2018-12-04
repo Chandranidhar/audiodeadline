@@ -246,7 +246,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public isPlaylistVideoModalShown:any= false;
     public musicplaylistarray:any=[];
     public playlistarray:any=[];
-    private lastsharetime:any=0;
+    public lastsharetime:any=0;
     //public FBS:any;
 
 
@@ -552,9 +552,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 href: 'http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
             };
 
-            console.log('audio');
+            /*console.log('audio');
             console.log('selectedsharedpost');
-            console.log(this.selectedsharedpost);
+            console.log(this.selectedsharedpost);*/
 
 
         }
@@ -566,9 +566,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 href: 'http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
             };
 
-            console.log('trending audio');
+            /*console.log('trending audio');
             console.log('selectedsharedpost');
-            console.log(this.selectedsharedpost);
+            console.log(this.selectedsharedpost);*/
         }
         if(type=='video'){
 
@@ -578,9 +578,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
             };
 
-            console.log('video');
+           /* console.log('video');
             console.log('selectedsharedpost');
-            console.log(this.selectedsharedpost);
+            console.log(this.selectedsharedpost);*/
 
         }
         if(type=='trendingvideo'){
@@ -591,9 +591,6 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
             };
 
-            console.log('trending video');
-            console.log('selectedsharedpost');
-            console.log(this.selectedsharedpost);
 
         }
         if(type=='picture'){
@@ -609,8 +606,21 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
         }
+        if(type=='link'){
 
-         console.log(options.href);
+             options = {
+                method: 'share',
+                // href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
+                href: 'http://artistxp.com/sharetools.php?type=l&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+            };
+            //console.log('picture');
+            //console.log('selectedsharedpost');
+            //console.log(this.selectedsharedpost);
+
+
+        }
+
+         // console.log(options.href);
         setTimeout(()=> {
             //alert(currenttime - this.lastsharetime);
             //console.log('currenttime - this.lastsharetime');
@@ -3589,7 +3599,6 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             if(this.musicArray.length==1 && this.selectedaudio.length==0){
                                 this.audiousername = this.musicArray[0].userdata[0].firstname+" "+this.musicArray[0].userdata[0].lastname;
                                 this.chosenaudiotitle = this.musicArray[0].title_music;
-                                //alert(7);
                                 this.chosenaudiourl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.musicArray[0].user_id+'/'+ this.musicArray[0].music);
                                 this.selectedaudiourl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.musicArray[0].user_id+'/'+ this.musicArray[0].music);
                                 this.selectedaudio=this.musicArray[0];
@@ -3880,6 +3889,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
             }
+            if (stype == 'twitter' && type == 'link') {
+               /* console.log('this.selectedaudio');
+                console.log(this.selectedsharedpost._id);*/
+                this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+            }
 
             if (stype == 'google' && type == 'audio') {
                /* console.log('this.selectedaudio');
@@ -3915,6 +3930,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                /* console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
                 this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+            }
+            if (stype == 'google' && type == 'link') {
+               /* console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
             }
 
@@ -3956,6 +3977,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
             }
+            if (stype == 'linkedin' && type == 'link') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+            }
 
             if (stype == 'tumblr' && type == 'audio') {
                 /*console.log('this.selectedaudio');
@@ -3986,13 +4013,13 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
 
             }
-            /* if(stype=='tumblr' && type=='trendingpicture') {
+             if(stype=='tumblr' && type=='link') {
              console.log('this.selectedaudio');
              console.log(this.selectedaudio);
-             this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
-             /!* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*!/
+             this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=l&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id);
 
-             }*/
+
+             }
             if (stype == 'tumblr' && type == 'trendingaudio') {
                 /*console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/

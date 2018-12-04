@@ -83,7 +83,6 @@
                                                 </div>
                                                 <img src="../../assets/images/logo-xp.png" alt="#">
                                                 <br>
-                                                <button *ngIf="isuserprofile == 0" (click)="showmusicmodal()">Add your first music now</button>
                                             </div>
 
                                             <!---->
@@ -498,7 +497,9 @@
                                                                         </div>
 
                                                                         <div class="col-md-10 col-sm-10 col-xs-12">
-                                                                            <p class="linkp"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval.links[0]._id}}&user_id={{user_id}}"><span>{{linkval.links[0].title}}</span></a> By-{{linkval.links[0].userdata[0].firstname}} {{linkval.links[0].userdata[0].lastname}} <span class="pull-right hide"> Lorem ipsum dolor sit amet</span>
+                                                                            <p class="linkp"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval.links[0]._id}}&user_id={{user_id}}"><span>{{linkval.links[0].title}}</span></a>
+                               <span>By-{{linkval.links[0].userdata[0].firstname}} {{linkval.links[0].userdata[0].lastname}} </span>
+                                                                            <span class="pull-right hide"> Lorem ipsum dolor sit amet</span>
                                                                            <!--<span class="pull-right">{{linkval.links[0].userdata[0].firstname}} {{linkval.links[0].userdata[0].lastname}}</span>-->
                                                                             </p>
                                                                       <!-- <p>{{linkval.links[0].userdata[0].firstname}} {{linkval.userdata[0].lastname}}</p>-->
@@ -815,8 +816,8 @@
                                               </div>
 
                                         </div>
-<div class="av_xp_tab_contant av_xp_tab_contant_new"  >
-                                     <button *ngIf="musicArray.length>0 && isuserprofile == 0" (click)="showmusicmodal()">Add more music now</button>
+<div class="av_xp_tab_contant av_xp_tab_contant_new" *ngIf="musicArray.length>0 && isuserprofile == 0" >
+                                     <button  (click)="showmusicmodal()">Add more music now</button>
                                      <button [routerLink]="['/myaudioplayer',user_id,user_name]" >View All</button>
 
                                 </div>
@@ -1011,7 +1012,10 @@
                               <span (click)="showlinklike(linkval)" *ngIf="linkval.linklikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                <span (click)="showlinkunlike(linkval)" *ngIf="linkval.linklikes[0]!=null && getlikeonstatus(linkval.userlinklikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like:{{linkval.linklikes[0].vlike}}</span>
 
-                                                                                <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                               <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                                <ng-template #popTemplatel1><div [innerHtml]="html"></div></ng-template>
+
+                                    <span [popover]="popTemplatel1"   [outsideClick]="true"><i class="fa fa-share-alt" aria-hidden="true" (mouseenter)="setshareflag('link',linkval)"></i> Share</span>
                                                                             </p>
                                                                             <p class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><button class="btn btn-dfalt">GO</button></a></p>
 <span class="edit_buttons">
@@ -1329,7 +1333,7 @@
                                             <!--<img src="assets/images/artistsimg-feedpost.jpg">-->
                                             <!-- <a class="btnpink"  *ngIf="isuserprofile == 0 && twitter_oauth_token=='' && twitter_oauth_token_secret=='' " target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}"(click)="gettwitterfeed()">Add your Twitter feed</a>-->
 
-                                            <div class="instagramblankdiv twitterdivadd">
+                                            <div class="instagramblankdiv twitterdivadd" *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' ">
                                                 <span *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' "><i class="fa fa-twitter"></i></span>
                                                 <!--<a class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" *ngIf="twitterresult=='' ">Add your Twitter feed</a>-->
                                                 <a class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' ">Add your Twitter feed</a>

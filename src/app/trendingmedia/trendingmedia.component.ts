@@ -81,6 +81,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
   public isModalPicDetail:boolean= false;
   public selectedpictureuserid:any='';
   public ismodalcomment:any = 0;
+  public lastsharetime:any=0;
 
   constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,private sanitizer: DomSanitizer,public FBS: FacebookService) {
 
@@ -164,9 +165,9 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
           let result = res.json();
           if(result.status=='success'){
-
+/*
             console.log('video result 12');
-            console.log(result);
+            console.log(result);*/
             let oldvideodetailarray=this.videodetailArray;
             this.videodetailArray=result.item;
 
@@ -175,16 +176,16 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
             if( this.videodetailArray.length>0 && !this.videoplayfag){
               this.currentvideoidtrending=this.videodetailArray[0]._id;
               //this.selectedvideotrending=this.videodetailArray[0];
-              console.log('this.selectedvideotrending.comments');
-              console.log(this.selectedvideotrending.comments);
+             /* console.log('this.selectedvideotrending.comments');
+              console.log(this.selectedvideotrending.comments);*/
 
 
               if(this.videodetailArray[0].type=='vimeo'){
                 let tempvurl=this.videodetailArray[0].videoUrl;
                 let vimeourl = tempvurl.split('/');
                 let videoid = vimeourl[vimeourl.length - 1];
-                console.log('videoid ......');
-                console.log(videoid);
+                /*console.log('videoid ......');
+                console.log(videoid);*/
 
                 if((this.selectedvideotrending.comments)==null){
                   this.currentvideotypetrending='vimeo';
@@ -210,13 +211,13 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
 
               if((this.selectedvideotrending.comments)==null) {
-                console.log('in null block ...');
+                // console.log('in null block ...');
                 this.selectedvideotrending = this.videodetailArray[0];
               }
               else{
 
-                console.log('this.selectedvideotrending');
-                console.log(this.selectedvideotrending);
+                /*console.log('this.selectedvideotrending');
+                console.log(this.selectedvideotrending);*/
                 for(let c1 in this.videodetailArray){
                   if(this.videodetailArray[c1]._id==this.selectedvideotrending._id){
                     this.selectedvideotrending=this.videodetailArray[c1];
@@ -242,13 +243,13 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
                 this._http.get('https://vimeo.com/api/v2/video/'+videoid+'.json')
                     .subscribe(res => {
                       var result = res.json();
-                      console.log('vimeo json result ....');
+                    /*  console.log('vimeo json result ....');
                       console.log(result);
-                      console.log(result[0].thumbnail_large);
+                      console.log(result[0].thumbnail_large);*/
                       this.videodetailArray[x1].thumbnail=result[0].thumbnail_large;
 
                     }, error => {
-                      console.log("Oooops!");
+                      // console.log("Oooops!");
                     });
               }
             }
@@ -267,8 +268,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
       let vimeourl = item.videoUrl.split('/');
       let videoid = vimeourl[vimeourl.length - 1];
-      console.log('videoid ......');
-      console.log(videoid);
+     /* console.log('videoid ......');
+      console.log(videoid);*/
       this.currentvideotypetrending='vimeo';
       this.choosenvideourlfortrending = this.sanitizer.bypassSecurityTrustResourceUrl("https://player.vimeo.com/video/" + videoid);
 
@@ -278,9 +279,9 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
         let videourl = item.videoUrl.split('v=');
         let videoid = videourl[videourl.length - 1];
         this.choosenvideourlfortrending=videoid;
-        console.log('videoid');
+      /*  console.log('videoid');*/
         this.currentvideotypetrending='youtube';
-        console.log(videoid);
+       /* console.log(videoid);*/
       }, 50);
       //let url = item.videoUrl.replace('watch?v=', 'embed/');
 
@@ -320,13 +321,13 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
   }
 
   onStateChangetrending(event){
-    console.log('event ....');
-    console.log(event);
+    /*console.log('event ....');
+    console.log(event);*/
     this.videoplayfag=true;
     if(event.data == -1){
       var link2= this.serverurl+'addvideoviews';
       var data = {'user_id':this.user_id,videoid:this.currentvideoidtrending};
-      console.log('username');
+      // console.log('username');
       //console.log(data.username);
       this._http.post(link2, data)
           .subscribe(res => {
@@ -381,12 +382,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
 
               this.getallvideo();
-              console.log('suceess like');
+              // console.log('suceess like');
             }
           })
 
@@ -403,12 +404,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
 
               this.getallvideo();
-              console.log('suceess unlike');
+              // console.log('suceess unlike');
             }
           })
     }
@@ -430,25 +431,22 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
   addcomment(val:any){
 
-    console.log('val');
+    /*console.log('val');
     console.log(val);
 
     console.log(val.keyCode);
-    console.log(val.shiftKey);
+    console.log(val.shiftKey);*/
     if(val.keyCode==13 && !val.shiftKey && this.commentval.length>0){
 
-      console.log('submit comment here ....');
+      // console.log('submit comment here ....');
       let link = this.serverurl+'addcomment';
       let data = {'post_id': this.selectedpost._id,'user_id':this.user_id, 'comment':this.commentval};
-      console.log('data');
-      console.log(data);
+
       this._http.post(link, data)
           .subscribe(val =>{
 
             var res = val.json();
-            console.log('success');
-            console.log('res');
-            console.log(res.item);
+
 
             this.getallpicture();
 
@@ -458,27 +456,15 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
 
             this.commentval='';
-            /*console.log('this.tabselectedpictureindex');
-             console.log(this.tabselectedpictureindex);
-             if(this.selectedpictureindex>0){
-             console.log('selected picture index block');
-
-             // this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
-             this.selectedpicture = this.picturedetailArray[this.selectedpictureindex];
-             }*/
-
-
-
-
 
           })
     }
   }
 
   changeaudioplayertimertrending(){
-    console.log('this is timer change');
+    /*console.log('this is timer change');
     console.log('this.value2');
-    console.log(this.value2);
+    console.log(this.value2);*/
     let myAudio:any = {};
     myAudio=  document.querySelector("#audioplayer4");
     myAudio.currentTime =this.value2;
@@ -543,7 +529,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
   }
 
   setval1(){
-    console.log('value  1 chaged .......');
+    // console.log('value  1 chaged .......');
   }
   convertunixtotimeago(val:any){
     return moment.unix(val).startOf('minute').fromNow();
@@ -563,8 +549,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
              console.log('result');
              console.log(result);*/
             this.musicdetailArray=result.item;
-            console.log('this.musicdetailArray');
-            console.log(this.musicdetailArray);
+
             /*console.log('this.musicdetailArray');
              console.log(this.musicdetailArray);
              console.log('this.musicdetailArray[4].userdata[0].firstname');
@@ -595,10 +580,10 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
                     this.audiousernamefortrending = this.musicdetailArray[c1].userdata[0].firstname+' '+this.musicdetailArray[c1].userdata[0].lastname;
 
 
-                    console.log('this.selectedmusictrending in for loop1');
+                 /*   console.log('this.selectedmusictrending in for loop1');
                     console.log(this.selectedmusictrending);
                     console.log('this.selectedmusictrending.comments.....');
-                    console.log(this.selectedmusictrending.comments);
+                    console.log(this.selectedmusictrending.comments);*/
                   }
                 }
               }
@@ -651,17 +636,17 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
   playmusicfortrending(){
     let myAudio :any = {};
     myAudio = document.querySelector("#audioplayer4");
-    console.log('$(myAudio).length');
+   /* console.log('$(myAudio).length');
     console.log($(myAudio).length);
     console.log($('#audioplayer4').length);
 
     console.log('myAudio');
     console.log(myAudio);
-    console.log(myAudio.duration);
+    console.log(myAudio.duration);*/
 
     this.audioDurationfortrending = myAudio.duration.toFixed(0);
-    console.log('audioDurationfortrending');
-    console.log(this.audioDurationfortrending);
+   /* console.log('audioDurationfortrending');
+    console.log(this.audioDurationfortrending);*/
     // myAudio.currentTime =23;
     if (this.isaudioplayfortrending) {
       myAudio.pause();
@@ -671,12 +656,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
       myAudio.play();
       myAudio.volume=this.value3/100;
       this.playstatetrending = setInterval(() => {
-        console.log('in onplay interval ....');
-        console.log(myAudio.currentTime);
+       /* console.log('in onplay interval ....');
+        console.log(myAudio.currentTime);*/
         this.value2 = (myAudio.currentTime.toFixed(0));
-        console.log(this.value2);
+        // console.log(this.value2);
         //this.setaudiotimer(Math.ceil(myAudio.currentTime));
-        console.log(this.value3);
+        // console.log(this.value3);
 
 
       }, 1000);
@@ -707,9 +692,9 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
     myAudio.volume = this.oldvolumetrending;
     this.ismuteaudiotrending = false;
     this.value3 = this.oldvolumetrending*100;
-    console.log(this.value3);
+   /* console.log(this.value3);
     console.log(this.oldvolumetrending);
-    console.log(myAudio.volume);
+    console.log(myAudio.volume);*/
 
 
   }
@@ -722,8 +707,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
     this.chosenaudiotitletrending = val.title_music;
     this.audiousernamefortrending = val.userdata[0].firstname+' '+val.userdata[0].lastname;
     this.selectedmusictrending= val;
-    console.log('this.selectedmusictrending');
-    console.log(this.selectedmusictrending);
+    /*console.log('this.selectedmusictrending');
+    console.log(this.selectedmusictrending);*/
     this.selectedmusictrendinguserid = val.user_id;
 
     if(this.audioplayerindextrending==this.musicdetailArray.indexOf(val))
@@ -775,13 +760,13 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
             let result:any = {};
             result = res.json();
-            console.log('result view');
-            console.log(result);
+           /* console.log('result view');
+            console.log(result);*/
             if(result.status=='success'){
 
               this.getallmusic();
 
-              console.log('suceess view');
+              // console.log('suceess view');
             }
           });
 
@@ -809,8 +794,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
         //myAudio.play();
         //this.isaudioplay=true;
 
-        console.log($(myAudio).length);
-        console.log($('#audioplayer4').length);
+        /*console.log($(myAudio).length);
+        console.log($('#audioplayer4').length);*/
 
         if (this.isaudioplayfortrending) {
           myAudio.pause();
@@ -871,12 +856,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
 
               this.getallmusic();
-              console.log('suceess like');
+              // console.log('suceess like');
             }
           })
 
@@ -893,11 +878,11 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
               this.getallmusic();
-              console.log('suceess unlike');
+              // console.log('suceess unlike');
             }
           })
     }
@@ -913,12 +898,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
 
               this.getallpicture();
-              console.log('this.tabselectedpictureindex');
+              // console.log('this.tabselectedpictureindex');
               // console.log(this.tabselectedpictureindex);
               if (this.selectedpictureindex > 0) {
                 console.log('selected picture index block');
@@ -929,10 +914,10 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
               /*  if (this.tabselectedpictureindex > 0) {
                console.log('selected picture index block');
 
-               // this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
+               this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
                this.selectedpicture = this.picArray[this.tabselectedpictureindex];
                }*/
-              console.log('suceess like');
+              // console.log('suceess like');
 
 
             }
@@ -951,12 +936,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
           .subscribe(res=> {
 
             var result = res.json();
-            console.log(result);
+            // console.log(result);
             if (result.status == 'success') {
 
               // this.getPictureDetails();
               this.getallpicture();
-              console.log('suceess unlike');
+              // console.log('suceess unlike');
             }
           })
     }
@@ -967,8 +952,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
     this.selectedpicture = val;
     this.selectedpost = val;
-    console.log('this.selectedpicture');
-    console.log(this.selectedpicture);
+   /* console.log('this.selectedpicture');
+    console.log(this.selectedpicture);*/
     this.isModalPicDetail = true;
     /* console.log('this.picturedetailArray');
      console.log(this.picturedetailArray);
@@ -988,12 +973,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
         .subscribe(res=> {
 
           var result = res.json();
-          console.log(result);
+        /*  console.log(result);*/
           if(result.status=='success'){
 
             /*this.getPictureDetails();*/
             this.getallpicture();
-            console.log('suceess');
+            /*console.log('suceess');*/
           }
         })
   }
@@ -1008,8 +993,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
           let result = res.json();
           if(result.status=='success') {
 
-            console.log('result');
-            console.log(result);
+            /*console.log('result');
+            console.log(result);*/
             this.picturedetailArray = result.item;
 
             if (this.picturedetailArray.length > 0) {
@@ -1017,7 +1002,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
               if(this.selectedpost.comments == null)this.selectedpost = this.picturedetailArray[0];
 
               if (this.selectedpictureindex > 0) {
-                console.log('selected picture index block');
+                // console.log('selected picture index block');
 
                 // this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
                 this.selectedpost = this.picturedetailArray[this.selectedpictureindex];
@@ -1034,10 +1019,10 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
                     /* this.chosenaudiotitle = this.musicArray[c1].title_music;
                      this.audiousername = this.musicArray[c1].userdata[0].firstname+' '+this.musicArray[c1].userdata[0].lastname;*/
 
-                    console.log('this.selectedpicture in for loop1');
+                    /*console.log('this.selectedpicture in for loop1');
                     console.log(this.selectedpost);
                     console.log('this.selectedpicture.comments.....');
-                    console.log(this.selectedpost.comments);
+                    console.log(this.selectedpost.comments);*/
 
                   }
                 }
@@ -1056,21 +1041,54 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
     this.ismodalcomment = false;
   }
 
-  fbshare(type:any) {
+  fbshare(type:any,item:any) {
 
-    console.log('fbshare');
-    console.log(type);
+    let currenttime =new Date().getTime();
+    let options: any = {};
 
-    const options: UIParams = {
-      method: 'share',
-      href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
-    };
+    if( type=='trendingaudio'){
 
-    this.FBS.ui(options)
-        .then((res: UIResponse) => {
-          console.log('Got the users profile', res);
-        })
-        .catch(this.handleError);
+      options = {
+        method: 'share',
+
+        href: 'http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+
+    }
+    if(type=='trendingvideo'){
+
+      options = {
+        method: 'share',
+
+        href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+
+
+    }
+    if(type=='picture'){
+
+      options = {
+        method: 'share',
+        // href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
+        href: 'http://artistxp.com/sharetools.php?type=p&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+    }
+
+    setTimeout(()=> {
+      //alert(currenttime - this.lastsharetime);
+      //console.log('currenttime - this.lastsharetime');
+      //console.log(currenttime - this.lastsharetime);
+
+      if (currenttime - this.lastsharetime > 5000) {
+        this.FBS.ui(options)
+            .then((res: UIResponse) => {
+              console.log('Got the users profile', res);
+            })
+            .catch(this.handleError);
+        this.lastsharetime = currenttime;
+      }
+
+    },700);
 
   }
 
@@ -1085,14 +1103,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
     for (let i = 0; i < children.length; i++) {
       children[i].addEventListener("click", (event: Event) => {
         //alert("Hello world!");
-        console.log("Hello world!");
-        console.log("Hello world!b66");
-        console.log(event);
-        this.fbshare('audio');
-        /*this.fbshare('trendingaudio');
-         this.fbshare('video');
-         this.fbshare('picture');
-         this.fbshare('trendingpicture');*/
+
+        this.fbshare(this.shareflag,this.selectedsharedpost);
       });
     }
 
@@ -1101,9 +1113,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
     for (let i1 = 0; i1 < children1.length; i1++) {
       children1[i1].addEventListener("click", (event: Event) => {
         //alert("Hello 112!");
-        console.log("Hello 11!");
-        console.log("Hello world!11");
-        console.log(event);
+
         this.generalshare(this.shareflag,'twitter');
       });
     }
@@ -1112,10 +1122,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
     for (let i2 = 0; i2 < children2.length; i2++) {
       children2[i2].addEventListener("click", (event: Event) => {
-        //alert("Hello 112!");
-        console.log("Hello 11!");
-        console.log("Hello world!11");
-        console.log(event);
+
         this.generalshare(this.shareflag,'google');
       });
     }
@@ -1124,10 +1131,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
     for (let i3 = 0; i3 < children3.length; i3++) {
       children3[i3].addEventListener("click", (event: Event) => {
-        //alert("Hello 112!");
-        console.log("Hello 11!");
-        console.log("Hello world!11");
-        console.log(event);
+
         this.generalshare(this.shareflag,'linkedin');
       });
     }
@@ -1136,10 +1140,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
     for (let i4 = 0; i4 < children4.length; i4++) {
       children4[i4].addEventListener("click", (event: Event) => {
-        //alert("Hello 112!");
-        console.log("Hello 11!");
-        console.log("Hello world!11");
-        console.log(event);
+
         this.generalshare(this.shareflag,'tumblr');
       });
     }
@@ -1150,16 +1151,12 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
     if(this.generalshareurlold!=this.generalshareurl || this.generalshareurloldtype!=stype) {
 
       if (stype == 'twitter' && type == 'trendingvideo') {
-        console.log('this.selectedaudio');
 
         this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
 
       }
       if (stype == 'twitter' && type == 'picture') {
-        console.log('this.selectedaudio');
-        console.log(this.selectedsharedpost._id);
-        console.log(this.selectedsharedpost.user_id);
         this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
 
@@ -1173,22 +1170,19 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
        }*/
 
       if (stype == 'twitter' && type == 'trendingaudio') {
-        console.log('this.selectedaudio');
-        console.log(this.selectedsharedpost._id);
+
         this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
 
 
       if (stype == 'google' && type == 'trendingvideo') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
       if (stype == 'google' && type == 'picture') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
@@ -1199,8 +1193,7 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
        }*/
       if (stype == 'google' && type == 'trendingaudio') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
@@ -1208,15 +1201,13 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
 
       if (stype == 'linkedin' && type == 'trendingvideo') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
 
       if (stype == 'linkedin' && type == 'picture') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
@@ -1227,24 +1218,21 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
        }*/
       if (stype == 'linkedin' && type == 'trendingaudio') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
 
 
       if (stype == 'tumblr' && type == 'trendingvideo') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
         /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
 
       }
 
       if (stype == 'tumblr' && type == 'picture') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=p&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
         /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
 
@@ -1257,14 +1245,10 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
        }*/
       if (stype == 'tumblr' && type == 'trendingaudio') {
-        console.log('this.selectedaudio');
-        // console.log(this.selectedaudio);
+
         this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
       }
-      console.log('this.generalshareurl');
-      console.log(this.generalshareurl);
-      console.log(this.generalshareurlold);
 
 
       let gsharelink: any;
@@ -1284,8 +1268,8 @@ export class TrendingmediaComponent implements OnInit,AfterViewInit {
 
     this.shareflag = type;
     this.selectedsharedpost=selectedpost;
-    console.log('in setshareflag');
-    console.log(type);
+    /*console.log('in setshareflag');
+    console.log(type);*/
   }
 
   showcommentmodal(val:any){

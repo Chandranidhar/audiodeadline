@@ -67,6 +67,9 @@ export class MyvideoComponent implements OnInit,AfterViewInit {
   public generalshareurl:any='';
   public shareflag:any;
   public selectedsharedpost:any;
+  public lastsharetime:any=0;
+  public generalshareurlold:any='0';
+  public generalshareurloldtype:any='0';
 
 
   constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,private sanitizer: DomSanitizer,fb:FormBuilder, public FBS: FacebookService) {
@@ -788,21 +791,32 @@ export class MyvideoComponent implements OnInit,AfterViewInit {
 
   }
 
-  fbshare(type:any) {
+  fbshare(type:any,item:any) {
 
-    console.log('fbshare');
-    console.log(type);
+    let currenttime =new Date().getTime();
+    let options: any = {};
 
-    const options: UIParams = {
-      method: 'share',
-      href: 'http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75'
-    };
+    if(type=='video'){
 
-    this.FBS.ui(options)
-        .then((res: UIResponse) => {
-          console.log('Got the users profile', res);
-        })
-        .catch(this.handleError);
+      options = {
+        method: 'share',
+
+        href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+      };
+
+    }
+
+    setTimeout(()=> {
+      if (currenttime - this.lastsharetime > 5000) {
+        this.FBS.ui(options)
+            .then((res: UIResponse) => {
+              console.log('Got the users profile', res);
+            })
+            .catch(this.handleError);
+        this.lastsharetime = currenttime;
+      }
+
+    },700);
 
   }
 
@@ -817,14 +831,10 @@ export class MyvideoComponent implements OnInit,AfterViewInit {
     for (let i = 0; i < children.length; i++) {
       children[i].addEventListener("click", (event: Event) => {
         //alert("Hello world!");
-        console.log("Hello world!");
+       /* console.log("Hello world!");
         console.log("Hello world!b66");
-        console.log(event);
-        this.fbshare('audio');
-        /*this.fbshare('trendingaudio');
-         this.fbshare('video');
-         this.fbshare('picture');
-         this.fbshare('trendingpicture');*/
+        console.log(event);*/
+        this.fbshare(this.shareflag,this.selectedsharedpost);
       });
     }
 
@@ -879,6 +889,7 @@ export class MyvideoComponent implements OnInit,AfterViewInit {
   }
 
   generalshare(type:any,stype:any){
+    if(this.generalshareurlold!=this.generalshareurl || this.generalshareurloldtype!=stype) {
 
     if(stype=='twitter' && type=='video') {
       console.log('this.selectedaudio');
@@ -919,10 +930,13 @@ export class MyvideoComponent implements OnInit,AfterViewInit {
     gsharelink = document.getElementsByClassName("gsharelink");
     //gsharelink.click();
     //$('.gsharelink').click();
+     this.generalshareurlold = this.generalshareurl;
+     this.generalshareurloldtype = stype;
     setTimeout(()=> {
       this.gsharelink.nativeElement.click();
     },500);
 
+  }
   }
 
   setshareflag(type:any,selectedpost:any){

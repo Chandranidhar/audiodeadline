@@ -74,7 +74,8 @@ if($_REQUEST['type']=='p'){
 //    print_r($res->item[0]->image_pic);
 
     $title=$res->item[0]->title_pic;
-    $description="By ".$res->item[0]->desc_pic;
+//    $description="By ".$res->item[0]->desc_pic;
+    $description="By ".$res->item[0]->userdata[0]->firstname." ".$res->item[0]->userdata[0]->lastname;
 //    echo $title;
 //    echo $description;
 
@@ -88,6 +89,54 @@ if($_REQUEST['type']=='p'){
     <script type="text/javascript">
         setTimeout(function () {
             window.location.href=("https://demo.artistxp.com/postfeed/p/<?php echo $res->item[0]->_id; ?>");
+        },600);
+    </script>
+    <?php
+}
+if($_REQUEST['type']=='l'){
+
+    $curl22 = curl_init();
+    $headers = [];
+    curl_setopt_array($curl22, array(
+        //CURLOPT_URL => 'https://api.instagram.com/v1/users/'.$res->data->id.'self/?access_token='.$_GET['access_token'],
+        CURLOPT_URL => 'http://audiodeadline.com:3008/getlinkdetailsbyid?link_id='.$_REQUEST['itemid'],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+    ));
+
+    curl_setopt($curl22, CURLOPT_HTTPHEADER, $headers);
+    $response12 = curl_exec($curl22);
+
+//  echo "<pre>";
+   // print_r($response12);
+    $res=json_decode($response12);
+   /* print_r($res->item);
+    print_r($res->item[0]->_id);
+    print_r($res->item[0]->user_id);
+    print_r($res->item[0]->title);
+    print_r($res->item[0]->desc);
+    print_r($res->item[0]->image);*/
+
+//    print_r($res->item[0]->image_pic);
+
+    $title=$res->item[0]->title;
+    $description=$res->item[0]->desc;
+
+//    $image='https://artistxp.com/misc/fbimages/fbimg.jpg';
+    $image=$res->item[0]->image;
+   /* echo $image;
+    echo "</pre>";
+    exit;*/
+//
+
+    ?>
+    <script type="text/javascript">
+        setTimeout(function () {
+            window.location.href=("<?php echo $res->item[0]->linkUrl ?>");
         },600);
     </script>
     <?php
@@ -121,7 +170,7 @@ if($_REQUEST['type']=='v'){
 //    print_r($res->item[0]->image_pic);
 
     $title=$res->item[0]->title;
-    $description="";
+    $description="By ".$res->item[0]->userdata[0]->firstname." ".$res->item[0]->userdata[0]->lastname;
 //    $image='https://artistxp.com/misc/fbimages/fbimg.jpg';
     //echo $image=$res->item[0]->videoUrl;
     //echo $image=$res->item[0]->type;
