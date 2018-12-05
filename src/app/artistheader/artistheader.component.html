@@ -25,7 +25,7 @@
                     <li [style.width]="liWidth" class="ticketli"><a (click)="showPopup(headertemplate)">Tickets</a></li>
                     <li [style.width]="liWidth" class="artistexli"><a  (click)="showPopup(headertemplate)">Artist Exchange</a></li>
                     <li [style.width]="liWidth" class="artistexli" *ngIf="user_id != '' "><a [routerLink]="['/profile']">Profile</a></li>
-                    <li [style.width]="liWidth2" class="communityli"><a (click)="showPopup(headertemplate)">Communities</a></li>
+                    <li [style.width]="liWidth2" class="communityli"><a  [routerLink]="['/community']">Communities</a></li>
                     <li [style.width]="liWidth2" class="trartistli"><a [routerLink]="['/trendingartist']">Artist Search</a></li>
                     <!--<li class="trmediali"><a style="cursor: pointer;" (click)="showPopup(headertemplate)">Trending Media</a></li>-->
                     <li [style.width]="liWidth2" class="trmediali"><a [routerLink]="['/trendingmedia']">Trending Media</a></li>

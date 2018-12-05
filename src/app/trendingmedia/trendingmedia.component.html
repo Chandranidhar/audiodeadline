@@ -1008,10 +1008,14 @@
 
                                     </div>
 
-                                    <div class="row comment_input_se" >
-                                        <div class="row no-gutter col-container bodybloc5bottom" *ngIf="isloggedin == 1">
-                                            <div class="col">
-                                                <div class="feedslinks">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row comment_input_se comment_input_se_new" >
+                            <div class="row no-gutter col-container bodybloc5bottom" *ngIf="isloggedin == 1">
+                                <div class="col">
+                                    <div class="feedslinks">
                                                 <span class="feedslinks1 comment_user_image">
                                                     <div class="imgwrapper">
                                                         <!--<img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
@@ -1023,7 +1027,7 @@
                                     </span>
                                                     </div>
                                                 </span>
-                                                    <span class="feedslinks3 comment_user_text">
+                                        <span class="feedslinks3 comment_user_text">
                                                     <div class="row">
                                                         <div class="row comment_input" >
                                                             <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
@@ -1031,9 +1035,6 @@
 
                                                     </div>
                                                 </span>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

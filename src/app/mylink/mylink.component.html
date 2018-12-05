@@ -42,13 +42,14 @@
 
                 <span [popover]="popTemplatel1" [outsideClick]="true"><i class="fa fa-share-alt" aria-hidden="true" (mouseenter)="setshareflag('link',linkval)"></i> Share</span>
 
-                <span class="edit_buttons">
-                  <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-pencil-square-o" (click)="editLink(linkval)"></i></button>
-                  <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-trash-o" (click)="deleteVideo(0,linkval._id,2)"></i></button>
-                </span>
+
               </div>
               <span class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><button class="btn btn-dfalt">GO</button></a></span>
             </div>
+            <span class="edit_buttons">
+                  <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-pencil-square-o" (click)="editLink(linkval)"></i></button>
+                  <button class="button" *ngIf="cookie_user_id==linkval.user_id"><i aria-hidden="true" class="fa fa-trash-o" (click)="deleteVideo(0,linkval._id,2)"></i></button>
+                </span>
           </div>
 
           <!--<div class="singlelink">

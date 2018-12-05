@@ -403,6 +403,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                      this.insta_followers_count = result.item.insta_access_token;
                      this.instausername = result.item.instausername;*/
                     this.twitter_oauth_token = result.item[0].twitter_oauth_token;
+                    /*console.log(this.twitter_oauth_token);*/
                     this.twitter_oauth_token_secret = result.item[0].twitter_oauth_token_secret;
                     this.insta_access_token = result.item[0].insta_access_token;
                     this.insta_followers_count = result.item[0].insta_access_token;

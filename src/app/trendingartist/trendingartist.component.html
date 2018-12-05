@@ -33,15 +33,16 @@
             <!--<div class="col"><button type="button" class="btn btntopformgray">Country</button></div>-->
             <div class="col"><button type="button" class="btn btntopformgray" (click)="showstatemodal()">State</button></div>
             <div class="col"><button type="button" class="btn btntopformgray" (click)="showcitymodal()">City</button></div>
-            <div class="col"><button type="button" class="btn btntopformgray">Zip Code</button></div>
+            <div class="col"><button type="button" class="btn btntopformgray" (click)="showzipmodal()">Zip Code</button></div>
             <!--<div class="col"><button type="button" class="btn btntopformgray">Radius</button></div>-->
           </div>
-          <div class="btntopformredlists" *ngIf="selectedgenrearray.length>0">
+          <div class="btntopformredlists" *ngIf="selectedgenrearray.length>0 || selectedstatearray.length>0 || selectedcityarray.length>0 || selectedzipcodearray.length>0 ">
             <div class="col" *ngFor="let vals of selectedgenrearray" ><button type="button" class="btn btntopformred" (click)="removeselectedgenre(vals)"><i class="fa fa-close"></i> {{vals.genrename}}</button></div>
+            <div class="col" *ngFor="let vals of selectedstatearray" ><button type="button" class="btn btntopformred" (click)="removeselectedstate(vals)"><i class="fa fa-close"></i> {{vals.name}}</button></div>
+            <div class="col" *ngFor="let vals of selectedcityarray" ><button type="button" class="btn btntopformred" (click)="removeselectedcity(vals)"><i class="fa fa-close"></i> {{vals.cityname}}</button></div>
+            <div class="col" *ngFor="let vals of selectedzipcodearray" ><button type="button" class="btn btntopformred" (click)="removeselectedzip(vals)"><i class="fa fa-close"></i> {{vals.zipcode}}</button></div>
             <!--
             <div class="col" *ngFor="let vals of selectedgenrearray"><a (click)="removeselectedgenre(vals)" class="btntopformrednew"><i class="fa fa-close"></i>{{vals.genrename}}</a></div>
-
-
             <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> Jazz</button></div>
             <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> Instrumental</button></div>
             <div class="col"><button type="button" class="btn btntopformred"><i class="fa fa-close"></i> New York</button></div>
@@ -783,7 +784,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btnpink" data-dismiss="modal" >Search</button>
+          <button type="button" class="btnpink" data-dismiss="modal" (click)="isGenreModalShown=false" >Search</button>
         </div>
       </div>
     </div>
@@ -830,7 +831,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btnpink" data-dismiss="modal" >Search</button>
+          <button type="button" class="btnpink" data-dismiss="modal" (click)="isStateModalShown=false">Search</button>
         </div>
       </div>
     </div>
@@ -862,6 +863,15 @@
             </div>
           </form>
         </div>
+        <div><h2>Selected City</h2></div>
+        <div class="btntopformredlistsnew">
+          <div class="col" *ngFor="let vals of selectedcityarray"><a class="btntopformrednew" (click)="removeselectedcity(vals)" ><i class="fa fa-close"></i>{{vals.cityname}}</a></div>
+          <!--(click)="removeselectedgenre(vals)"-->
+          <!--<div class="col" ><a class="btntopformrednew"><i class="fa fa-close"></i> Jazz</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Instrumental</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Modern</a></div>
+          <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Country</a></div>-->
+        </div>
 
         <!--<div class="btntopformgraylistsnew" >
           <div class="col" *ngFor="let valc of statearray"><a class="btntopformgraynew" (click)="selectedstate(valc)">{{valc.name}}</a></div>
@@ -887,10 +897,49 @@
         </div>-->
 
         <div class="modal-footer">
-          <button type="button" class="btnpink" data-dismiss="modal" >Search</button>
+          <button type="button" class="btnpink" data-dismiss="modal" (click)="isCityModalShown=false">Search</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 <!--city modal ends here-->
+
+<!--zipcode modal starts here-->
+
+<div *ngIf="isZipcodeModalShown" class="modal fade modalUpload tatopheaderformnew" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Zip Code</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isZipcodeModalShown=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="btntopformgraylistsnew" >
+
+          <form  name="cityForm" novalidate [formGroup]="zipcodeForm" (ngSubmit)="ZipCodeSubmit(zipcodeForm.value)">
+
+            <div class="form-group">
+              <label>Zip Code:</label>
+              <input name="first-name" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="zipcodeForm.controls['zipcode']">
+              <span class="has-error" *ngIf ="zipcodeForm.controls['zipcode'].touched && !zipcodeForm.controls['zipcode'].valid">City field can not be blank</span>
+            </div>
+          </form>
+        </div>
+        <div><h2>Selected Zip Code</h2></div>
+        <div class="btntopformredlistsnew">
+          <div class="col" *ngFor="let vals of selectedzipcodearray"><a class="btntopformrednew" (click)="removeselectedzip(vals)" ><i class="fa fa-close"></i>{{vals.zipcode}}</a></div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btnpink" data-dismiss="modal" (click)="isZipcodeModalShown=false">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--zipcode modal ends here-->

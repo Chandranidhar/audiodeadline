@@ -22,8 +22,14 @@ export class TrendingartistComponent implements OnInit {
     public selectedstatearray=[];
     public isStateModalShown = 0;
     public cityForm: FormGroup;
+    public zipcodeForm: FormGroup;
     public isCityModalShown = 0;
+    public isZipcodeModalShown = 0;
     public fb;
+    public cityarray=[];
+    public selectedcityarray=[];
+    public zipcodearray=[];
+    public selectedzipcodearray=[];
 
     constructor( private _commonservices: Commonservices, private _http: Http, fb:FormBuilder) {
 
@@ -45,6 +51,11 @@ export class TrendingartistComponent implements OnInit {
             cityname: ["", Validators.required]
 
         });
+        this.zipcodeForm = this.fb.group({
+
+            zipcode: ["", Validators.required]
+
+        });
 
     }
 
@@ -55,24 +66,24 @@ export class TrendingartistComponent implements OnInit {
             .subscribe(val=> {
 
                 var result = val.json();
-                console.log('result.res');
+               /* console.log('result.res');
                 console.log(result.res);
                 console.log('result.res.type');
-                console.log(result.res[0].type);
+                console.log(result.res[0].type);*/
                 for(let i in result.res){
 
                     if(result.res[i].type =="Dancer"){
 
                         this.dancegenrearray.push(result.res[i]);
-                        console.log('this.dancegenrearray');
-                        console.log(this.dancegenrearray);
+                       /* console.log('this.dancegenrearray');
+                        console.log(this.dancegenrearray);*/
                     }
 
                     if(result.res[i].type =="Musician"){
 
                         this.musicgenrearray.push(result.res[i]);
-                        console.log('this.musicgenrearray');
-                        console.log(this.musicgenrearray);
+                      /*  console.log('this.musicgenrearray');
+                        console.log(this.musicgenrearray);*/
 
                     }
                 }
@@ -91,19 +102,20 @@ export class TrendingartistComponent implements OnInit {
             .subscribe(val => {
 
                 var result = val.json();
-                console.log('result');
+               /* console.log('result');
                 console.log('result[0].name');
-                console.log(result[0].name);
+                console.log(result[0].name);*/
                 for (let i in result) {
                     if (result.length > 0) {
 
                         this.statearray.push(result[i]);
-                        console.log(this.statearray);
+                        // console.log(this.statearray);
                     }
                     /*this.cityarray = result.*/
                 }
             })
     }
+
 
     selectedstate(val:any){
 
@@ -130,18 +142,18 @@ export class TrendingartistComponent implements OnInit {
     removeselectedgenre(vals:any){
 
 
-        console.log('vals');
-        console.log(vals);
+       /* console.log('vals');
+        console.log(vals);*/
         let index = this.selectedgenrearray.indexOf(vals);
-        console.log('index');
-        console.log(index);
+       /* console.log('index');
+        console.log(index);*/
         this.selectedgenrearray.splice(index,1);
        /* this.selectedgenrearray.splice(vals);
 
         console.log('vals..');
         console.log(vals);*/
-        console.log('vals..');
-        console.log(vals);
+        /*console.log('vals..');
+        console.log(vals);*/
     }
 
 
@@ -199,6 +211,9 @@ export class TrendingartistComponent implements OnInit {
             // }
     }
 
+
+
+
     showgenremodal(){
 
         this.isGenreModalShown = 1;
@@ -211,11 +226,79 @@ export class TrendingartistComponent implements OnInit {
 
         this.isCityModalShown = 1;
     }
+    showzipmodal(){
+
+        this.isZipcodeModalShown = 1;
+    }
 
 
     citysubmit(formval){
-        console.log('search ');
+
+        for (let x in this.cityForm.controls) {
+
+            this.cityForm.controls[x].markAsTouched();
+
+
+        }
+        console.log('this.cityForm.valid');
+        console.log(this.cityForm.valid);
+        if(this.cityForm.valid){
+
+            this.cityarray.push(formval);
+            console.log('this.cityarray');
+            console.log(this.cityarray);
+            this.selectedcityarray.push(formval);
+            console.log(' this.selectedcityarray');
+            console.log( this.selectedcityarray);
+            this.cityForm.reset();
+
+        }
     }
+
+    ZipCodeSubmit(formval){
+
+        for (let x in this.zipcodeForm.controls) {
+
+            this.zipcodeForm.controls[x].markAsTouched();
+
+
+        }
+        console.log('this.zipcodeForm.valid');
+        console.log(this.zipcodeForm.valid);
+        if(this.zipcodeForm.valid){
+
+            this.zipcodearray.push(formval);
+            console.log('this.zipcodearray');
+            console.log(this.zipcodearray);
+            this.selectedzipcodearray.push(formval);
+            console.log(' this.selectedzipcodearray');
+            console.log( this.selectedzipcodearray);
+            this.zipcodeForm.reset();
+
+        }
+    }
+
+    removeselectedcity(vals:any){
+
+
+        let index = this.selectedcityarray.indexOf(vals);
+        this.selectedcityarray.splice(index,1);
+        console.log(' this.selectedcityarray');
+        console.log( this.selectedcityarray);
+
+    }
+    removeselectedzip(vals:any){
+
+
+        let index = this.selectedzipcodearray.indexOf(vals);
+        this.selectedzipcodearray.splice(index,1);
+        console.log(' this.selectedzipcodearray');
+        console.log( this.selectedzipcodearray);
+
+    }
+
+
+
     /*ngAfterViewChecked(){
 
         //setTimeout(()=> {    //<<<---    using ()=> syntax
@@ -265,6 +348,7 @@ export class TrendingartistComponent implements OnInit {
 
     onHidden(){
         this.isCityModalShown = 0;
+        this.isZipcodeModalShown = 0;
         this.isGenreModalShown = 0;
         this.isStateModalShown = 0;
 

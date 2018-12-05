@@ -2125,6 +2125,33 @@ app.get('/trendingArtistList',function (req,resp) {
 
 });
 
+app.get('/userfanlist',function (req,resp) {
+
+   /* resp.send(JSON.stringify({'status':'success','item':09,'t':3}));
+    return;*/
+
+    var collection = db.collection('userview_trending');
+    var cond = {};
+    cond = {
+        $and : [
+            {admin : 0},
+
+
+                {fan:1},
+
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+
+});
+
 app.get('/twitter',function(req,resp){
     var collection = db.collection('user');
     var user_id = new mongodb.ObjectID(req.query.logid);

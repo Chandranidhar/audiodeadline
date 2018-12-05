@@ -1012,17 +1012,18 @@
                               <span (click)="showlinklike(linkval)" *ngIf="linkval.linklikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                <span (click)="showlinkunlike(linkval)" *ngIf="linkval.linklikes[0]!=null && getlikeonstatus(linkval.userlinklikes)"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like:{{linkval.linklikes[0].vlike}}</span>
 
-                               <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                                                                                <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
                                 <ng-template #popTemplatel1><div [innerHtml]="html"></div></ng-template>
 
                                     <span [popover]="popTemplatel1"   [outsideClick]="true"><i class="fa fa-share-alt" aria-hidden="true" (mouseenter)="setshareflag('link',linkval)"></i> Share</span>
                                                                             </p>
                                                                             <p class="linkp linkpgobtn"><a class="" target="_blank" href="https://artistxp.com/linkredirect.php?url={{linkval._id}}&user_id={{user_id}}"><button class="btn btn-dfalt">GO</button></a></p>
-<span class="edit_buttons">
+
+                                                                        </div>
+                                                                        <span class="edit_buttons">
                                                                                     <button class="button" *ngIf="isuserprofile == 0"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="editLink(linkval)" ></i> </button>
                                                                                     <button class="button" *ngIf="isuserprofile == 0"><i class="fa fa-trash-o" aria-hidden="true" (click)="deleteVideo(0,linkval._id,2)"></i> </button>
                                                                                 </span>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
 
@@ -1333,10 +1334,10 @@
                                             <!--<img src="assets/images/artistsimg-feedpost.jpg">-->
                                             <!-- <a class="btnpink"  *ngIf="isuserprofile == 0 && twitter_oauth_token=='' && twitter_oauth_token_secret=='' " target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}"(click)="gettwitterfeed()">Add your Twitter feed</a>-->
 
-                                            <div class="instagramblankdiv twitterdivadd" *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' ">
-                                                <span *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' "><i class="fa fa-twitter"></i></span>
+                                            <div class="instagramblankdiv twitterdivadd" *ngIf="twitter_oauth_token==undefined || twitter_oauth_token_secret==undefined ">
+                                                <span ><i class="fa fa-twitter"></i></span>
                                                 <!--<a class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" *ngIf="twitterresult=='' ">Add your Twitter feed</a>-->
-                                                <a class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" *ngIf="twitter_oauth_token=='' && twitter_oauth_token_secret=='' ">Add your Twitter feed</a>
+                                                <a class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" >Add your Twitter feed</a>
                                             </div>
 
                                             <!--<div class="scrollbar twitterscroll">
@@ -1457,7 +1458,7 @@ Relax & read this #BearCam story from @Buzzfeed (you won't regret it): http://on
 
 
 
-                                        <div class="av_xp_tab_contant av_xp_tab_contant_new" *ngIf="twitter_oauth_token!='' && twitter_oauth_token_secret!='' && isloggedin==1 && isuserprofile == 0" >
+                                        <div class="av_xp_tab_contant av_xp_tab_contant_new" *ngIf="twitter_oauth_token!=undefined && twitter_oauth_token_secret!=undefined && isloggedin==1 && isuserprofile == 0" >
                             <a  class="btnpink" target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}" >Update Twitter Account</a>
 
 
@@ -3690,10 +3691,15 @@ Your browser does not support the video tag.
                                         </div>
 
                                     </div>
-                                    <div class="row comment_input_se comment_input_se_new" >
-                                        <div class="row no-gutter col-container bodybloc5bottom" *ngIf="isloggedin == 1">
-                                            <div class="col">
-                                                <div class="feedslinks">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row comment_input_se comment_input_se_new" *ngIf="isloggedin == 1" >
+                            <div class="row no-gutter col-container bodybloc5bottom" >
+                                <div class="col">
+                                    <div class="feedslinks">
                                                 <span class="feedslinks1 comment_user_image">
                                                     <div class="imgwrapper">
                                                         <!--<img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
@@ -3705,7 +3711,7 @@ Your browser does not support the video tag.
                                     </span>
                                                     </div>
                                                 </span>
-                                                    <span class="feedslinks3 comment_user_text">
+                                        <span class="feedslinks3 comment_user_text">
                                                     <div class="row">
                                                         <div class="row comment_input" >
                                                             <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
@@ -3713,9 +3719,6 @@ Your browser does not support the video tag.
 
                                                     </div>
                                                 </span>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
