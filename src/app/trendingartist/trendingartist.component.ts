@@ -30,6 +30,9 @@ export class TrendingartistComponent implements OnInit {
     public selectedcityarray=[];
     public zipcodearray=[];
     public selectedzipcodearray=[];
+    public selectedstatesearcharray=[];
+    public selectedcitysearcharray=[];
+    public selectedzipsearcharray=[];
 
     constructor( private _commonservices: Commonservices, private _http: Http, fb:FormBuilder) {
 
@@ -123,6 +126,8 @@ export class TrendingartistComponent implements OnInit {
         console.log('val');
         console.log(val);
         this.selectedstatearray.push(val);
+        this.selectedstatesearcharray.push(val.abbreviation);
+        console.log(this.selectedstatesearcharray);
     }
     removeselectedstate(vals:any){
 
@@ -130,6 +135,7 @@ export class TrendingartistComponent implements OnInit {
         console.log('index');
         console.log(index);
         this.selectedstatearray.splice(index,1);
+        this.selectedstatesearcharray.splice(index,1);
 
     }
     selectedgenre(valm:any){
@@ -248,8 +254,9 @@ export class TrendingartistComponent implements OnInit {
             console.log('this.cityarray');
             console.log(this.cityarray);
             this.selectedcityarray.push(formval);
-            console.log(' this.selectedcityarray');
-            console.log( this.selectedcityarray);
+            this.selectedcitysearcharray.push(formval.cityname);
+            console.log(' this.selectedcitysearcharray');
+            console.log( this.selectedcitysearcharray);
             this.cityForm.reset();
 
         }
@@ -271,8 +278,9 @@ export class TrendingartistComponent implements OnInit {
             console.log('this.zipcodearray');
             console.log(this.zipcodearray);
             this.selectedzipcodearray.push(formval);
-            console.log(' this.selectedzipcodearray');
-            console.log( this.selectedzipcodearray);
+            this.selectedzipsearcharray.push(formval.zipcode);
+            console.log(' this.selectedzipsearcharray');
+            console.log( this.selectedzipsearcharray);
             this.zipcodeForm.reset();
 
         }
@@ -283,6 +291,7 @@ export class TrendingartistComponent implements OnInit {
 
         let index = this.selectedcityarray.indexOf(vals);
         this.selectedcityarray.splice(index,1);
+        this.selectedcitysearcharray.splice(index,1);
         console.log(' this.selectedcityarray');
         console.log( this.selectedcityarray);
 
@@ -292,6 +301,7 @@ export class TrendingartistComponent implements OnInit {
 
         let index = this.selectedzipcodearray.indexOf(vals);
         this.selectedzipcodearray.splice(index,1);
+        this.selectedzipsearcharray.splice(index,1);
         console.log(' this.selectedzipcodearray');
         console.log( this.selectedzipcodearray);
 
@@ -344,6 +354,20 @@ export class TrendingartistComponent implements OnInit {
 
 
         return 'https://audiodeadline.com/nodeserver/uploads/'+img;
+    }
+
+    getSearchedValueByQuery(){
+
+        let link = this.serverurl+'getsearchedvalue';
+        let data = {'state':this.selectedstatesearcharray,'zip':this.selectedzipsearcharray,'city':this.selectedcitysearcharray};
+        this._http.post(link,data)
+            .subscribe(res=>{
+
+                let result:any={};
+                result= res.json();
+                console.log('result');
+                console.log(result);
+            })
     }
 
     onHidden(){

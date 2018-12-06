@@ -49,12 +49,14 @@
                             </div>
                             <a class="btnredbig" *ngIf="isuserprofile == 0" [routerLink]="['/editprofile',user_id]">Update Profile</a>
                             <div class="followbtnwrapper">
-                                <!--<div class="followbtnlists">-->
-                                <!--<a class="btngraysml"><span class="fa fa-arrow-circle-right"></span> Follow</a>-->
-                                <!--</div>-->
-                                <!--<div class="followbtnlists">-->
-                                <!--<a class="btngraysml"><span class="fa fa-plus-circle"></span> Friend Request</a>-->
-                                <!--</div>-->
+                                <div class="followbtnlists" *ngIf="fan==0 && isuserprofile==1">
+                                <a class="btngraysml" (click)="addfriend()"><span class="fa fa-arrow-circle-right"></span> Follow</a>
+                                <a class="btngraysml" (click)="deletefriend()"><span class="fa fa-arrow-circle-right"></span> Unfollow</a>
+                                </div>
+                                <div class="followbtnlists" *ngIf="fan==1 && isuserprofile==1">
+                                <a class="btngraysml" (click)="addfriend()"><span class="fa fa-plus-circle"></span> Add Friend</a>
+                                <a class="btngraysml" (click)="deletefriend()"><span class="fa fa-plus-circle"></span> Unfriend</a>
+                                </div>
                             </div>
                         </div>
 
@@ -161,7 +163,7 @@
                                                                     <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && !getlikeonstatus(selectedaudio.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedaudio.musiclikes[0].vlike}}</span>
                                         <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                         <span (click)="showmusicunlike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && getlikeonstatus(selectedaudio.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedaudio.musiclikes[0].vlike}}</span>
-                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comments: {{selectedaudio.comments.length}}</span>
+                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-comment"></i> Comments: {{selectedaudio.comments.length}}</span>
                                                                 </p>
 
 
@@ -668,7 +670,7 @@
                                                                     <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && !getlikeonstatus(selectedaudio.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedaudio.musiclikes[0].vlike}}</span>
                                         <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                         <span (click)="showmusicunlike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && getlikeonstatus(selectedaudio.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedaudio.musiclikes[0].vlike}}</span>
-                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comments: {{selectedaudio.comments.length}}</span>
+                                                                    <span (click)="showcommentmodal(selectedaudio)"><i aria-hidden="true" class="fa fa-comment"></i> Comments: {{selectedaudio.comments.length}}</span>
 
                                                                      <ng-template *ngIf="html1!='' " #popTemplateAdd class="CellComment"><div [innerHtml]="html1"></div></ng-template>
                                                                     <span *ngIf="html1!='' " [popover]="popTemplateAdd"  [outsideClick]="true"><i class="fa fa-plus" aria-hidden="true"></i> Add To</span>
@@ -1330,9 +1332,11 @@
                                 <tab heading="TWITTER" id="tabtwt">
                                     <div class="feedpostwrapper">
 
-                                        <div class="feedpostwrapperinner twitterdiv ">
+
+                                        <div class="feedpostwrapperinner  ">
                                             <!--<img src="assets/images/artistsimg-feedpost.jpg">-->
                                             <!-- <a class="btnpink"  *ngIf="isuserprofile == 0 && twitter_oauth_token=='' && twitter_oauth_token_secret=='' " target="_blank" href="{{demourl}}index.php?id={{user_id}}&consumer_key={{consumer_key}}&consumer_secret={{consumer_secret}}"(click)="gettwitterfeed()">Add your Twitter feed</a>-->
+
 
                                             <div class="instagramblankdiv twitterdivadd" *ngIf="twitter_oauth_token==undefined || twitter_oauth_token_secret==undefined ">
                                                 <span ><i class="fa fa-twitter"></i></span>
@@ -1452,7 +1456,19 @@ Relax & read this #BearCam story from @Buzzfeed (you won't regret it): http://on
                                                     </div>&ndash;&gt;
                                                 </div>&ndash;&gt;
                                             </div>-->
-                                            <div class="scrollbar twitterscroll" id="twitterfeeddiv">
+                                            <!--<div class="scrollbar twitterscroll" id="twitterfeeddiv">
+                                            </div>-->
+
+
+
+
+                                            <div class="scrollbar twitterscroll" >
+
+                                                 <!--<a class="twitter-grid" href="https://twitter.com/kellytaylor001/timelines/1070609948097175552?ref_src=twsrc%5Etfw">#</a>-->
+                                                 <a class="twitter-grid" href="{{twitter_timelineurl}}?ref_src=twsrc%5Etfw">#</a>
+
+
+
                                             </div>
                                         </div>
 
@@ -1483,7 +1499,7 @@ Relax & read this #BearCam story from @Buzzfeed (you won't regret it): http://on
                                                                     <div class="imgwrapperhoverpg">
                                                                         <div class="feedslinks">
                                                                             <span class="feedslinks3"><i class="fa fa-heart-o" aria-hidden="true"></i> {{val.likes.count}}</span>
-                                                                            <span class="feedslinks6"><i class="fa fa-comment-o" aria-hidden="true"></i> {{val.comments.count}}</span>
+                                                                            <span><i class="fa fa-comment" aria-hidden="true"></i> {{val.comments.count}}</span>
                                                                         </div>
                                                                         <div class="captionpg">
                                                                             <p *ngIf="val.caption!=null">{{val.caption.text}}</p>
@@ -2306,7 +2322,7 @@ Your browser does not support the video tag.
                                                 <div class="feedslinks">
                                                     <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div></span>
                                                     <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                                                    <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
+                                                    <span><i class="fa fa-comment"></i> Comments [1]</span>
                                                     <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
                                                     <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
                                                     <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
@@ -2366,7 +2382,7 @@ Your browser does not support the video tag.
                                                 <div class="feedslinks">
                                                     <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg3btm.jpg" alt="RTP5"></div></span>
                                                     <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                                                    <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
+                                                    <span><i class="fa fa-comment"></i> Comments [1]</span>
                                                     <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
                                                     <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
                                                     <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
@@ -2448,7 +2464,7 @@ Your browser does not support the video tag.
                                                 <div class="feedslinks">
                                                     <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
                                                     <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                                                    <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
+                                                    <span><i class="fa fa-comment"></i> Comments [1]</span>
                                                     <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
                                                     <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
                                                     <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
@@ -2507,7 +2523,7 @@ Your browser does not support the video tag.
                                                 <div class="feedslinks">
                                                     <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg4btm.jpg" alt="RTP5"></div></span>
                                                     <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                                                    <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
+                                                    <span><i class="fa fa-comment"></i> Comments [1]</span>
                                                     <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
                                                     <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
                                                     <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
@@ -2859,7 +2875,7 @@ Your browser does not support the video tag.
                                     <span (click)="showmusiclike(selectedmusictrending)" *ngIf="selectedmusictrending.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
                                     <span (click)="showmusicunlike(selectedmusictrending)" *ngIf="selectedmusictrending.musiclikes[0]!=null && getlikeonstatus(selectedmusictrending.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedmusictrending.musiclikes[0].vlike}}</span>
                                     <!--<span><i aria-hidden="true" class="fa fa-commenting-o"></i> Comment</span>-->
-                                    <span (click)="showcommentmodal(selectedmusictrending)"><i aria-hidden="true" class="fa fa-commenting-o"></i> Comments: {{selectedmusictrending.comments.length}}</span>
+                                    <span (click)="showcommentmodal(selectedmusictrending)"><i aria-hidden="true" class="fa fa-comment"></i> Comments: {{selectedmusictrending.comments.length}}</span>
 
                                     </p></div>
 
@@ -3335,7 +3351,7 @@ Your browser does not support the video tag.
                                     <span (click)="showpictureunlike(selectedpost)" *ngIf="selectedpost.picturelikes[0]!=null && getlikeonstatus(selectedpost.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedpost.picturelikes[0].vlike}}</span>
 
 
-                                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comments: {{selectedpost.comments.length}}</span>
+                                    <span><i class="fa fa-comment" aria-hidden="true"></i> Comments: {{selectedpost.comments.length}}</span>
                                 </p>
                             </div>
                         </div>
@@ -4022,6 +4038,8 @@ Your browser does not support the video tag.
 </div>
 
 <!--playlist modal ends here-->
+<a class="twitter-grid" href="https://twitter.com/kellytaylor001/timelines/1070609948097175552?ref_src=twsrc%5Etfw">#</a>
+
 
 
 <a style="display: none;" #gsharelink [attr.href]="generalshareurl" class="gsharelink" target="_blank">Share</a>

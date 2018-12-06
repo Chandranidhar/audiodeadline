@@ -1992,6 +1992,38 @@ app.get('/addlinks',function(req,resp){
     });
 });
 
+app.get('/userfriendlist',function (req,resp) {
+
+    var collection = db.collection('userfriendcollection');
+    collection.insert([{
+
+        friend_id:  new mongodb.ObjectID(req.query.friend_id),
+        friend_by:  new mongodb.ObjectID(req.query.user_id),
+        type: req.query.type,
+        added_time: moment().unix(),
+    }], function (err, result) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','item':0}));
+        } else {
+
+            resp.send(JSON.stringify({'status':'success','item':result}));
+            return;
+        }
+    });
+});
+
+app.get('/deleteUserFriendListByUserId',function(req,resp){
+    var collection= db.collection('userfriendcollection');
+    var o_id = new mongodb.ObjectID(req.query._id);
+    collection.deleteOne({_id: o_id}, function(err, results) {
+        if(err){
+            resp.send(JSON.stringify({'status':'failed','item':0}));
+        }else{
+            resp.send(JSON.stringify({'status':'success','item':results}));
+        }
+    });
+});
+
 
 app.get('/editvideos',function(req,resp){
     var collection= db.collection('video');
@@ -2161,7 +2193,9 @@ app.get('/twitter',function(req,resp){
             var data = {
                 twitter_oauth_token: req.query.oauth_token,
                 twitter_oauth_token_secret: req.query.oauth_token_secret,
-            }
+                twitter_timelineid: req.query.timelineid,
+                twitter_timelineurl: req.query.timelineurl,
+            };
 
             /*collection.update({_id: o_id}, {$set: data},function(err, results) {
                 resp.send(JSON.stringify({'status':'success'}));
@@ -2323,6 +2357,40 @@ app.get('/getlinkdetailsbyid',function (req,resp) {
             resp.send(JSON.stringify({'status':'success','item':items}));
         }
     });
+});
+
+app.get('/getsearchedvalue', function(req,resp){
+
+    var collection = db.collection('user');
+    var searchquery={};
+    if(typeof(req.query.state)!='undefined' ) {
+        searchquery['state'] = {$in: req.query.state};
+    }
+    if(typeof(req.query.zip)!='undefined' ) {
+        searchquery['zip'] = {$in: req.query.zip};
+    }
+    if(typeof(req.query.city)!='undefined' ) {
+        searchquery['city'] = {$in: req.query.city};
+    }
+
+    collection.aggregate([
+        {
+            $match: {
+                $and: [
+
+                    searchquery
+                ]
+            }
+        }
+    ]).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'res':[]}));
+        } else {
+            resp.send(JSON.stringify(items));
+        }
+    });
+
 });
 
 

@@ -247,6 +247,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public musicplaylistarray:any=[];
     public playlistarray:any=[];
     public lastsharetime:any=0;
+    public userprofile_id;
+    public userfriendlist:any=[];
+    public twitter_timelineid:any='';
+    public twitter_timelineurl:any='';
     //public FBS:any;
 
 
@@ -328,9 +332,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
             this.fan = this.userdata.get('fan');
         }else{
+            console.log('in user profile ...');
             this.user_name = this.activeRoute.snapshot.params.name;
-            this.user_id = this.activeRoute.snapshot.params.id;
-            // console.log('in user profile ...');
+            // this.user_id = this.activeRoute.snapshot.params.id;
+            this.userprofile_id = this.activeRoute.snapshot.params.id;
+            console.log('this.user_id in userprofile');
+            console.log(this.user_id);
+            console.log(this.userprofile_id);
+
             this.isuserprofile = 1;
            /* this.isloggedin=1;*/
 
@@ -405,6 +414,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                     this.twitter_oauth_token = result.item[0].twitter_oauth_token;
                     /*console.log(this.twitter_oauth_token);*/
                     this.twitter_oauth_token_secret = result.item[0].twitter_oauth_token_secret;
+                    this.twitter_timelineid = result.item[0].twitter_timelineid;
+                    this.twitter_timelineurl = result.item[0].twitter_timelineurl;
                     this.insta_access_token = result.item[0].insta_access_token;
                     this.insta_followers_count = result.item[0].insta_access_token;
                     this.instausername = result.item[0].instausername;
@@ -423,7 +434,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 console.log(this.twitterresult);*/
                 if(this.twitterresult.length>30){
                     //alert(11);
-                    $('#twitterfeeddiv').html(this.twitterresult);
+                    //$('#twitterfeeddiv').html(this.twitterresult);
                 }
                 else{
                     /*alert(this.twitterresult);
@@ -3446,6 +3457,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                     this.twitter_oauth_token = result.item[0].twitter_oauth_token;
                     this.twitter_oauth_token_secret = result.item[0].twitter_oauth_token_secret;
+                    this.twitter_timelineid = result.item[0].twitter_timelineid;
+                    this.twitter_timelineurl = result.item[0].twitter_timelineurl;
                     this.insta_access_token = result.item[0].insta_access_token;
                     this.insta_followers_count = result.item[0].insta_access_token;
                     this.instausername = result.item[0].instausername;
@@ -3520,7 +3533,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 console.log(this.twitterresult);*/
                 if(result.length>30) {
                     //alert(53);
-                    $('#twitterfeeddiv').html(this.twitterresult);
+                    //$('#twitterfeeddiv').html(this.twitterresult);
                 }else{
                     //alert(54);
                 }
@@ -4075,6 +4088,33 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
             })
 
+    }
+
+
+    addfriend(){
+
+        let link = this.serverurl+'userfriendlist';
+        if(this.fan==0){
+
+            let data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'follow'};
+        }
+        if(this.fan==1){
+
+            let data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'friend'};
+        }
+
+        this._http.post(link, data)
+            .subscribe(res=>{
+
+                let result:any = {};
+                result = res.json();
+                console.log('result of userfriend list');
+                console.log(result.item.ops[0]);
+                this.userfriendlist.push(result.item.ops[0]);
+                console.log('this.userfriendlist');
+                console.log(this.userfriendlist[0]._id);
+
+            })
     }
 }
 
