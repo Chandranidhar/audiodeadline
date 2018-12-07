@@ -1992,6 +1992,8 @@ app.get('/addlinks',function(req,resp){
     });
 });
 
+
+
 app.get('/userfriendlist',function (req,resp) {
 
     var collection = db.collection('userfriendcollection');
@@ -2014,8 +2016,15 @@ app.get('/userfriendlist',function (req,resp) {
 
 app.get('/deleteUserFriendListByUserId',function(req,resp){
     var collection= db.collection('userfriendcollection');
-    var o_id = new mongodb.ObjectID(req.query._id);
-    collection.deleteOne({_id: o_id}, function(err, results) {
+    var cond = {};
+    cond = {
+        $and : [
+            {friend_id : new mongodb.ObjectID(req.query.friend_id)},
+            {friend_by:new mongodb.ObjectID(req.query.user_id)}
+
+        ]
+    };
+    collection.deleteOne(cond, function(err, results) {
         if(err){
             resp.send(JSON.stringify({'status':'failed','item':0}));
         }else{
@@ -2024,6 +2033,47 @@ app.get('/deleteUserFriendListByUserId',function(req,resp){
     });
 });
 
+app.get('/checkuserfriendrelations',function (req,resp) {
+    resp.send(JSON.stringify({'status':'123','item':98}));
+    return;
+});
+app.get('/checkuserfriendrelation',function (req,resp) {
+    var collection= db.collection('userfriendcollection');
+    var cond = {};
+  /*  cond={
+        $or:[
+
+           [ {friend_id : new mongodb.ObjectID(req.query.friend_id)},
+            {friend_by : new mongodb.ObjectID(req.query.user_id)}],
+
+            [ {friend_id : new mongodb.ObjectID(req.query.user_id)},
+                {friend_by : new mongodb.ObjectID(req.query.friend_id)}],
+
+        ]
+
+    };*/
+
+    cond = {
+        $or: [
+            {$and: [
+                {friend_id : new mongodb.ObjectID(req.query.friend_id)},
+                {friend_by : new mongodb.ObjectID(req.query.user_id)}
+            ]},
+            {$and: [
+                {friend_id : new mongodb.ObjectID(req.query.friend_id)},
+                {friend_by : new mongodb.ObjectID(req.query.user_id)}
+            ]}
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','item':items.length}));
+        }
+    });
+});
 
 app.get('/editvideos',function(req,resp){
     var collection= db.collection('video');
@@ -2361,8 +2411,10 @@ app.get('/getlinkdetailsbyid',function (req,resp) {
 
 app.get('/getsearchedvalue', function(req,resp){
 
-    var collection = db.collection('user');
+    var collection = db.collection('userview_trending');
     var searchquery={};
+    searchquery['fan']=parseInt(req.query.fan);     //convert string into integer
+    // searchquery['fan']=1;
     if(typeof(req.query.state)!='undefined' ) {
         searchquery['state'] = {$in: req.query.state};
     }
@@ -2372,8 +2424,21 @@ app.get('/getsearchedvalue', function(req,resp){
     if(typeof(req.query.city)!='undefined' ) {
         searchquery['city'] = {$in: req.query.city};
     }
+    // resp.send(JSON.stringify({'status':'error','item':searchquery}));
+    // return;
 
-    collection.aggregate([
+    collection.find((searchquery)).toArray(function (err,items) {
+
+        if(err){
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        }
+        else {
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+
+    /*collection.aggregate([
         {
             $match: {
                 $and: [
@@ -2389,7 +2454,7 @@ app.get('/getsearchedvalue', function(req,resp){
         } else {
             resp.send(JSON.stringify(items));
         }
-    });
+    });*/
 
 });
 

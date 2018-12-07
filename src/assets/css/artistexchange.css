@@ -2401,7 +2401,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .bodybloc7bottom p span{display: inline-block; width: auto; text-align: right;float: right;}
 .bodybloc7bottom .sectionheaderinner{background-color: #2d3032; padding: 8px !important; text-align: left;}
 .bodybloc7bottom .feedslinks span {font-size: 12px;}
-.bodybloc7bottom .feedslinks span span{display: inline-block;}
+.bodybloc7bottom .feedslinks span span{display: inline-block; padding: 0px 4px;}
 .bodybloc7bottom .hrdivider {width: 100%; height: 1px; background-color: #020202; margin-top: 2px; margin-bottom: 2px; float: left;}
 .bodybloc7bottom{position: relative;    display: inline-block !important;margin-top: 5px;}
 .bodybloc7bottom .scrolls .col{margin-top: 5px; margin-bottom: 10px;}
@@ -3189,6 +3189,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     flex-wrap: wrap;
     border-right: 7px solid #1c3349;
     padding-right: 10px !important;
+    height: 100%;
 }
 
 .trending_video_list .imgwrapper{width: 105px; height: 97px;border:1px solid #020202 !important;}
@@ -4106,7 +4107,10 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     margin-bottom: 6px;
 }
 
-
+.trandingaudioblock .col-container .col-1-1 {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
 
 
 

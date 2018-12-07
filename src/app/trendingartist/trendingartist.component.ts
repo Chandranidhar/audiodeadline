@@ -33,6 +33,7 @@ export class TrendingartistComponent implements OnInit {
     public selectedstatesearcharray=[];
     public selectedcitysearcharray=[];
     public selectedzipsearcharray=[];
+    public commonsearcharray=[];
 
     constructor( private _commonservices: Commonservices, private _http: Http, fb:FormBuilder) {
 
@@ -136,6 +137,7 @@ export class TrendingartistComponent implements OnInit {
         console.log(index);
         this.selectedstatearray.splice(index,1);
         this.selectedstatesearcharray.splice(index,1);
+        this.getSearchedValueByQuery();
 
     }
     selectedgenre(valm:any){
@@ -294,6 +296,7 @@ export class TrendingartistComponent implements OnInit {
         this.selectedcitysearcharray.splice(index,1);
         console.log(' this.selectedcityarray');
         console.log( this.selectedcityarray);
+        this.getSearchedValueByQuery();
 
     }
     removeselectedzip(vals:any){
@@ -304,6 +307,7 @@ export class TrendingartistComponent implements OnInit {
         this.selectedzipsearcharray.splice(index,1);
         console.log(' this.selectedzipcodearray');
         console.log( this.selectedzipcodearray);
+        this.getSearchedValueByQuery();
 
     }
 
@@ -352,14 +356,13 @@ export class TrendingartistComponent implements OnInit {
 
     imgPath(img){
 
-
         return 'https://audiodeadline.com/nodeserver/uploads/'+img;
     }
 
     getSearchedValueByQuery(){
 
         let link = this.serverurl+'getsearchedvalue';
-        let data = {'state':this.selectedstatesearcharray,'zip':this.selectedzipsearcharray,'city':this.selectedcitysearcharray};
+        let data = {'state':this.selectedstatesearcharray,'zip':this.selectedzipsearcharray,'city':this.selectedcitysearcharray,'fan':0};
         this._http.post(link,data)
             .subscribe(res=>{
 
@@ -367,6 +370,15 @@ export class TrendingartistComponent implements OnInit {
                 result= res.json();
                 console.log('result');
                 console.log(result);
+                this.commonsearcharray=result.item;
+                // this.commonsearcharray.push(result);
+                console.log('this.commonsearcharray');
+                console.log(this.commonsearcharray);
+
+                /*this.isStateModalShown = 0;
+                this.isCityModalShown = 0;
+                this.isZipcodeModalShown = 0;
+*/
             })
     }
 

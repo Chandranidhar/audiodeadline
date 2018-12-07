@@ -50,12 +50,12 @@
                             <a class="btnredbig" *ngIf="isuserprofile == 0" [routerLink]="['/editprofile',user_id]">Update Profile</a>
                             <div class="followbtnwrapper">
                                 <div class="followbtnlists" *ngIf="fan==0 && isuserprofile==1">
-                                <a class="btngraysml" (click)="addfriend()"><span class="fa fa-arrow-circle-right"></span> Follow</a>
-                                <a class="btngraysml" (click)="deletefriend()"><span class="fa fa-arrow-circle-right"></span> Unfollow</a>
+                                <a class="btngraysml" *ngIf="showfollowbtn==0" (click)="addfriend()"><span class="fa fa-arrow-circle-right"></span> Follow</a>
+                                <a class="btngraysml" *ngIf="showfollowbtn==1" (click)="deletefriend()"><span class="fa fa-arrow-circle-right"></span> Unfollow</a>
                                 </div>
                                 <div class="followbtnlists" *ngIf="fan==1 && isuserprofile==1">
-                                <a class="btngraysml" (click)="addfriend()"><span class="fa fa-plus-circle"></span> Add Friend</a>
-                                <a class="btngraysml" (click)="deletefriend()"><span class="fa fa-plus-circle"></span> Unfriend</a>
+                                <a class="btngraysml" *ngIf="showfollowbtn==0" (click)="addfriend()"><span class="fa fa-plus-circle"></span> Add Friend</a>
+                                <a class="btngraysml" *ngIf="showfollowbtn==1" (click)="deletefriend()"><span class="fa fa-plus-circle"></span> Unfriend</a>
                                 </div>
                             </div>
                         </div>
@@ -1462,10 +1462,12 @@ Relax & read this #BearCam story from @Buzzfeed (you won't regret it): http://on
 
 
 
-                                            <div class="scrollbar twitterscroll" >
+                                            <div class="scrollbar twitterscroll" > vv
 
                                                  <!--<a class="twitter-grid" href="https://twitter.com/kellytaylor001/timelines/1070609948097175552?ref_src=twsrc%5Etfw">#</a>-->
-                                                 <a class="twitter-grid" href="{{twitter_timelineurl}}?ref_src=twsrc%5Etfw">#</a>
+                                                 <a *ngIf="twitter_timelineurl!='' && twitter_timelineurl!=null " class="twitter-grid" href="{{twitter_timelineurl}}?ref_src=twsrc%5Etfw">#</a>
+
+                                                <!--<a class="twitter-grid" href="https://twitter.com/GargiRo38390587/timelines/1070974243460927488?ref_src=twsrc%5Etfw">#</a>-->
 
 
 
@@ -4038,7 +4040,7 @@ Your browser does not support the video tag.
 </div>
 
 <!--playlist modal ends here-->
-<a class="twitter-grid" href="https://twitter.com/kellytaylor001/timelines/1070609948097175552?ref_src=twsrc%5Etfw">#</a>
+<!--<a class="twitter-grid" href="https://twitter.com/kellytaylor001/timelines/1070609948097175552?ref_src=twsrc%5Etfw">#</a>-->
 
 
 

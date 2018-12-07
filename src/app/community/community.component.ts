@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Commonservices} from "../app.commonservices";
 import {Http} from "@angular/http";
+// import {ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
 declare var $:any;
 declare var moment: any;
@@ -29,6 +30,10 @@ export class CommunityComponent implements OnInit {
   public isZipcodeModalShown = 0;
   public zipcodearray=[];
   public selectedzipcodearray=[];
+  public selectedstatesearcharray=[];
+  public selectedcitysearcharray=[];
+  public selectedzipsearcharray=[];
+  public commonsearcharray=[];
 
   constructor( private _commonservices: Commonservices, private _http: Http, fb:FormBuilder) {
 
@@ -62,7 +67,9 @@ export class CommunityComponent implements OnInit {
     let link= this.serverurl+'userfanlist';
     this._http.get(link)
         .subscribe(res => {
-          var result = res.json();
+
+          let result:any={};
+          result = res.json();
           console.log("result");
           console.log(result);
           this.userlist = result.item;
@@ -120,7 +127,8 @@ export class CommunityComponent implements OnInit {
     this._http.get(link)
         .subscribe(val => {
 
-          var result = val.json();
+          let result:any={};
+          result = val.json();
           /* console.log('result');
            console.log('result[0].name');
            console.log(result[0].name);*/
@@ -141,6 +149,7 @@ export class CommunityComponent implements OnInit {
     console.log('val');
     console.log(val);
     this.selectedstatearray.push(val);
+    this.selectedstatesearcharray.push(val.abbreviation);
   }
 
   removeselectedstate(vals:any){
@@ -149,6 +158,8 @@ export class CommunityComponent implements OnInit {
     console.log('index');
     console.log(index);
     this.selectedstatearray.splice(index,1);
+    this.selectedstatesearcharray.splice(index,1);
+    this.getSearchedValueByQuery();
 
   }
 
@@ -182,6 +193,7 @@ export class CommunityComponent implements OnInit {
       console.log('this.cityarray');
       console.log(this.cityarray);
       this.selectedcityarray.push(formval);
+      this.selectedcitysearcharray.push(formval.cityname);
       console.log(' this.selectedcityarray');
       console.log( this.selectedcityarray);
       this.cityForm.reset();
@@ -205,6 +217,7 @@ export class CommunityComponent implements OnInit {
       console.log('this.zipcodearray');
       console.log(this.zipcodearray);
       this.selectedzipcodearray.push(formval);
+      this.selectedzipsearcharray.push(formval.zipcode);
       console.log(' this.selectedzipcodearray');
       console.log( this.selectedzipcodearray);
       this.zipcodeForm.reset();
@@ -217,8 +230,10 @@ export class CommunityComponent implements OnInit {
 
     let index = this.selectedcityarray.indexOf(vals);
     this.selectedcityarray.splice(index,1);
+    this.selectedcitysearcharray.splice(index,1);
     console.log(' this.selectedcityarray');
     console.log( this.selectedcityarray);
+    this.getSearchedValueByQuery();
 
   }
   removeselectedzip(vals:any){
@@ -226,9 +241,33 @@ export class CommunityComponent implements OnInit {
 
     let index = this.selectedzipcodearray.indexOf(vals);
     this.selectedzipcodearray.splice(index,1);
+    this.selectedzipsearcharray.splice(index,1);
     console.log(' this.selectedzipcodearray');
     console.log( this.selectedzipcodearray);
+    this.getSearchedValueByQuery();
 
+  }
+  getSearchedValueByQuery(){
+
+    let link = this.serverurl+'getsearchedvalue';
+    let data = {'state':this.selectedstatesearcharray,'zip':this.selectedzipsearcharray,'city':this.selectedcitysearcharray,'fan':1};
+    this._http.post(link,data)
+        .subscribe(res=>{
+
+          let result:any={};
+          result= res.json();
+          console.log('result');
+          console.log(result);
+          this.commonsearcharray=result.item;
+          // this.commonsearcharray.push(result);
+          console.log('this.commonsearcharray');
+          console.log(this.commonsearcharray);
+
+          this.isStateModalShown = 0;
+          this.isCityModalShown = 0;
+          this.isZipcodeModalShown = 0;
+
+        });
   }
 
   onHidden(){

@@ -10,6 +10,7 @@ import { FacebookService, InitParams,UIParams, UIResponse } from 'ngx-facebook';
 declare var $:any;
 declare var moment: any;
 declare var FB: any;
+declare var twttr: any;
 //declare var scrolled = 0;
 
 @Component({
@@ -250,7 +251,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public userprofile_id;
     public userfriendlist:any=[];
     public twitter_timelineid:any='';
+    //public twitter_timelineurl:any='https://twitter.com/GargiRo38390587/timelines/1070974243460927488';
     public twitter_timelineurl:any='';
+    public showfollowbtn:any=0;
     //public FBS:any;
 
 
@@ -380,8 +383,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this._http.post(link2, data)
             .subscribe(res => {
                 var result = res.json();
-                // console.log('result.item');
-                // console.log(result.item);
+                 //console.log('result.item');
+                 //console.log(result.item);
                 if(result.status=='success'){
 
                     this.real_name = result.item[0].realname;
@@ -427,8 +430,11 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                     if(this.twitterfeed !=null && this.twitterfeed.length>30){
                         this.twitterresult=this.twitterfeed;
                     }
+                    console.log(this.twitter_timelineurl);
+                    console.log('this.twitter_timelineurl');
+                    twttr.widgets.load();
 
-                //console.log(result._body);
+                    //console.log(result._body);
                 // this.twitterhtml = result._body;
                /* console.log('twiter result');
                 console.log(this.twitterresult);*/
@@ -1367,6 +1373,32 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
 
+
+        if(this.isuserprofile==1){
+            this.checkuserfriendrelation();
+
+        }
+
+
+
+    }
+
+    checkuserfriendrelation(){
+
+        let link = this.serverurl+'checkuserfriendrelation';
+        let data={'friend_id':this.userprofile_id,'user_id': this.user_id};
+        this._http.post(link,data)
+            .subscribe(res=>{
+                let result:any={};
+                result= res.json();
+                /*console.log('result-----');
+                 console.log(result);
+                 */
+               /* console.log(result.item);*/
+                this.showfollowbtn = result.item;
+
+               /*console.log(this.showfollowbtn);*/
+            });
     }
 
 
@@ -4094,13 +4126,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     addfriend(){
 
         let link = this.serverurl+'userfriendlist';
+        let data:any={};
         if(this.fan==0){
 
-            let data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'follow'};
+            data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'follow'};
         }
         if(this.fan==1){
 
-            let data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'friend'};
+            data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'friend'};
         }
 
         this._http.post(link, data)
@@ -4108,13 +4141,29 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                 let result:any = {};
                 result = res.json();
-                console.log('result of userfriend list');
-                console.log(result.item.ops[0]);
+                /*console.log('result of userfriend list');
+                console.log(result.item.ops[0]);*/
                 this.userfriendlist.push(result.item.ops[0]);
-                console.log('this.userfriendlist');
-                console.log(this.userfriendlist[0]._id);
+                // console.log('this.userfriendlist');
+                this.checkuserfriendrelation();
 
             })
+    }
+
+    deletefriend(){
+
+        let link = this.serverurl+'deleteUserFriendListByUserId';
+        let data={'friend_id':this.userprofile_id,'user_id': this.user_id};
+        this._http.post(link, data)
+            .subscribe(res=>{
+
+                let result:any={};
+                result=res.json();
+                /*console.log('result of delete userfriendlist');
+                console.log(result);*/
+                this.checkuserfriendrelation();
+
+            });
     }
 }
 
