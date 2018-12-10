@@ -69,7 +69,8 @@ export class TrendingartistComponent implements OnInit {
         this._http.get(link2)
             .subscribe(val=> {
 
-                var result = val.json();
+                let result:any={};
+                result = val.json();
                /* console.log('result.res');
                 console.log(result.res);
                 console.log('result.res.type');
@@ -105,7 +106,8 @@ export class TrendingartistComponent implements OnInit {
         this._http.get(link)
             .subscribe(val => {
 
-                var result = val.json();
+                let result:any={};
+                result = val.json();
                /* console.log('result');
                 console.log('result[0].name');
                 console.log(result[0].name);*/
@@ -172,7 +174,8 @@ export class TrendingartistComponent implements OnInit {
         var link= this.serverurl+'trendingArtistList';
         this._http.get(link)
             .subscribe(res => {
-                var result = res.json();
+                let result:any={};
+                result = res.json();
 
                 this.userlist = result.id;
                 console.log('userlist');

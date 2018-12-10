@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Commonservices} from '../app.commonservices';
-import {FormArray, FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators,ValidatorFn, AbstractControl} from '@angular/forms';
 import {CommunitysignupComponent} from '../communitysignup/communitysignup.component';
 import {Http} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -44,6 +44,9 @@ export class EditprofileComponent implements OnInit {
 
 
   public isupdatedatamodal:any;
+  public showpasswordmodal:any=0;
+    public passwordForm:FormGroup;
+    public passworderrormsg:any='';
 
   constructor(fb: FormBuilder,private _http: Http,private router: Router, private _commonservices : Commonservices,private route:ActivatedRoute, userdata: CookieService) {
 
@@ -103,6 +106,16 @@ export class EditprofileComponent implements OnInit {
         website: this.fb.array([]),
       });
 
+
+        this.passwordForm = this.fb.group({
+
+            old_password: ["", Validators.required],
+            _id:[""],
+            password:['',Validators.required],
+            confirmPassword:['',Validators.compose([Validators.required,
+                this.equalToPass('password')
+            ])],
+        });
       var link =this.serverurl+'dashboard';
       var data = {_id: this.userid};
 
@@ -312,6 +325,26 @@ export class EditprofileComponent implements OnInit {
     });
   }
 
+
+    equalToPass(fieldname): ValidatorFn {                                 //password match custom function
+        return (control: AbstractControl): { [key: string]: any } => {
+            let input = control.value;
+           /* console.log('control.value');
+            console.log(control.value);
+            console.log(control.root.value[fieldname]);*/
+            let isValid = control.root.value[fieldname] == input;
+           /* console.log('isValid');
+            console.log(isValid);*/
+
+            if (!isValid)
+                return{
+                    equalTo:true            //this value will be called
+                };
+
+        };
+
+    }
+
   createWebsite(defaultVal): FormGroup {
     return this.fb.group({ name: [defaultVal,Validators.required] });
   }
@@ -346,6 +379,21 @@ export class EditprofileComponent implements OnInit {
       control.removeAt(index);
   }
 
+    public matchingPasswords(passwordKey: string, confirmPasswordKey: string){
+        return (group: FormGroup): {[key: string]: any} => {
+
+            let password = group.controls[passwordKey];
+            let confirmPassword = group.controls[confirmPasswordKey];
+
+            if (password.value !== confirmPassword.value){
+                confirmPassword.setErrors({'incorrect': true});
+                return {
+                    mismatchedPasswords: true
+                };
+            }
+        }
+    }
+
   ngOnInit() {
   }
 
@@ -368,7 +416,7 @@ export class EditprofileComponent implements OnInit {
     this._http.post(this.uploadurl, uploadData)
         .subscribe(event => {
           var res = event.json();
-          console.log(res);
+          // console.log(res);
 
           if(res.error_code == 0){
             this.image = res.filename;
@@ -385,8 +433,8 @@ export class EditprofileComponent implements OnInit {
     this.exparr = [];
     this.webarr = [];
 
-    console.log('formval');
-    console.log(formval);
+   /* console.log('formval');
+    console.log(formval);*/
 
     if (this.dataForm.valid ) {
 
@@ -442,4 +490,51 @@ export class EditprofileComponent implements OnInit {
           });
     }
   }
+
+
+    passwordSubmit(formval){
+
+        for(let i in this.passwordForm.controls){
+            this.passwordForm.controls[i].markAsTouched();
+            /*console.log(this.passwordForm.value);
+            console.log(this.passwordForm.controls[i].valid);*/
+        }
+
+       /* console.log('this.passwordForm.valid');
+        console.log(this.passwordForm.valid);*/
+        let link = this.serverurl+'changepassword';
+
+        let data={
+
+            old_password:formval.old_password,
+            password:formval.password,
+            _id:this.userid
+
+        };
+        this._http.post(link ,data)
+            .subscribe(res=>{
+
+                let result:any= {};
+                result= res.json();
+                /*console.log(result);
+                console.log(result.msg);*/
+                this.passworderrormsg= result.msg;
+
+
+            })
+
+
+
+
+
+    }
+
+    showPasswordModal(){
+
+        this.showpasswordmodal = 1;
+
+    }
+    onHidden(){
+        this.showpasswordmodal = 0
+    }
 }

@@ -104,6 +104,6 @@ export class Commonservices{
 
     logout(){
         this.cookieData.deleteAll();
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/');
     }
 }

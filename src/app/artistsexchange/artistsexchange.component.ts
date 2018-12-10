@@ -6,6 +6,7 @@ import {ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
 import { DomSanitizer} from '@angular/platform-browser';
 import { FacebookService, InitParams,UIParams, UIResponse } from 'ngx-facebook';
+import {reserveSlots} from "@angular/core/src/render3/instructions";
 
 declare var $:any;
 declare var moment: any;
@@ -254,6 +255,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     //public twitter_timelineurl:any='https://twitter.com/GargiRo38390587/timelines/1070974243460927488';
     public twitter_timelineurl:any='';
     public showfollowbtn:any=0;
+    public user_id_new;
+    public commontrendingarray:any=[];
+    public friendsarray:any=[];
+    public favoritesarray:any=[];
     //public FBS:any;
 
 
@@ -313,6 +318,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.shuffleflag2 = false;
 
 
+
         this.siteurl=_commonservices.siteurl;
 
       /*  console.log('routes');
@@ -325,6 +331,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         this.user_name = this.userdata.get('user_name');
         this.user_id = this.userdata.get('user_id');
+        this.user_id_new = this.userdata.get('user_id');
         this.fan = 0;
         // this.image = this.userdata.get('image');
 
@@ -337,7 +344,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         }else{
             console.log('in user profile ...');
             this.user_name = this.activeRoute.snapshot.params.name;
-            // this.user_id = this.activeRoute.snapshot.params.id;
+            this.user_id = this.activeRoute.snapshot.params.id;             /*----*/
             this.userprofile_id = this.activeRoute.snapshot.params.id;
             console.log('this.user_id in userprofile');
             console.log(this.user_id);
@@ -387,7 +394,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                  //console.log(result.item);
                 if(result.status=='success'){
 
-                    this.real_name = result.item[0].realname;
+                    this.real_name = result.item[0].firstname+' '+result.item[0].lastname;
                     this.facebook_page_url=result.item[0].facebookpage;
                     // console.log('facebook_page_url');
                     // console.log(this.facebook_page_url);
@@ -497,6 +504,11 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.getfanlikeditems();
         this.getplaylists();
 
+        setTimeout(()=> {
+            this.getfeedofusers();
+        },3000);
+
+        // this.getfeedofusers();
         //this.callininterval();
 
 
@@ -521,6 +533,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     }
 
     ngAfterViewInit(){
+
 
     }
     callininterval(){
@@ -1369,6 +1382,11 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         });
 
 
+        console.log('friendslist called');
+        this.friendslist();
+
+        console.log('friendslist end');
+
 
 
 
@@ -1386,7 +1404,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     checkuserfriendrelation(){
 
         let link = this.serverurl+'checkuserfriendrelation';
-        let data={'friend_id':this.userprofile_id,'user_id': this.user_id};
+        let data={'friend_id':this.userprofile_id,'user_id': this.user_id_new};
         this._http.post(link,data)
             .subscribe(res=>{
                 let result:any={};
@@ -3299,7 +3317,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                         }
                     }
 
+                    // this.getfeedofusers();
                 }
+
+
             })
     }
     getallpicture(){
@@ -3315,6 +3336,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                     /*console.log('result');
                     console.log(result);*/
                     this.picturedetailArray = result.item;
+                    /*console.log('this.picturedetailArray');
+                    console.log(this.picturedetailArray);*/
 
                     if (this.picturedetailArray.length > 0) {
 
@@ -3350,7 +3373,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
                     }
+
                 }
+
             })
     }
     getallmusic(){
@@ -3433,6 +3458,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                         
                         
                     }
+
+                    // this.getfeedofusers();
 
                 }
             })
@@ -4129,11 +4156,11 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         let data:any={};
         if(this.fan==0){
 
-            data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'follow'};
+            data = {'friend_id':this.userprofile_id,'user_id': this.user_id_new, type:'follow'};
         }
         if(this.fan==1){
 
-            data = {'friend_id':this.userprofile_id,'user_id': this.user_id, type:'friend'};
+            data = {'friend_id':this.userprofile_id,'user_id': this.user_id_new, type:'friend'};
         }
 
         this._http.post(link, data)
@@ -4153,7 +4180,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     deletefriend(){
 
         let link = this.serverurl+'deleteUserFriendListByUserId';
-        let data={'friend_id':this.userprofile_id,'user_id': this.user_id};
+        let data={'friend_id':this.userprofile_id,'user_id': this.user_id_new};
         this._http.post(link, data)
             .subscribe(res=>{
 
@@ -4165,6 +4192,73 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
             });
     }
+
+
+    friendslist(){
+        let link = this.serverurl+'getuserdetailsbyfriendtype';
+        let data ={ 'user_id': this.user_id_new};
+        this._http.post(link ,data)
+            .subscribe(res=>{
+
+                let result:any={};
+                result= res.json();
+                if(result.status=='success'){
+
+                    console.log('result.item...................');
+                    console.log(result.item);
+                    let items = result.item;
+
+                    for(let i in items){
+                        if(items[i].friend_by == this.user_id_new){
+                            console.log('items[i].userdata[0].fan');
+                            console.log(items[i].userdata[0].fan);
+                            if(items[i].userdata[0].fan == 0){
+
+                                this.favoritesarray.push(items[i].userdata[0]);
+                            }
+                            if(items[i].userdata[0].fan == 1){
+
+                                this.friendsarray.push(items[i].userdata[0]);
+                            }
+                        }
+                        if(items[i].friend_id == this.user_id_new){
+                            console.log('items[i].userdatafrom[0].fan');
+                            console.log(items[i].userdatafrom[0].fan);
+                            if(items[i].userdatafrom[0].fan == 0){
+
+                                this.favoritesarray.push(items[i].userdatafrom[0]);
+                            }
+                            if(items[i].userdatafrom[0].fan == 1){
+
+                                this.friendsarray.push(items[i].userdatafrom[0]);
+                            }
+                        }
+
+                    }
+
+                    console.log('this.friendsarray');
+                    console.log(this.friendsarray);
+                    console.log('this.favoritesarray');
+                    console.log(this.favoritesarray);
+                }
+            })
+
+
+    }
+
+    getfeedofusers(){
+        /*console.log(this.videodetailArray);
+        console.log(this.musicdetailArray);
+        console.log(this.picturedetailArray);*/
+
+        this.commontrendingarray.push(this.videodetailArray );
+        /*this.results = this.results.concat(data.results);*/
+        this.commontrendingarray.push(this.musicdetailArray);
+        this.commontrendingarray.push(this.picturedetailArray);
+        console.log(this.commontrendingarray);
+
+    }
+
 }
 
 

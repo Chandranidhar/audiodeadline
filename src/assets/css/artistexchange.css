@@ -2054,13 +2054,16 @@ img.playicon{
 
 blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3px solid #ff007e;}
 
-.sectionbody .mb-0, .sectionbody .mb-1, .sectionbody .mb-2{font-family: 'RobotoBold';font-size: 12px; padding: 0; margin: 0px; line-height: 14px; letter-spacing: 0px;margin-top: 0px; text-transform: uppercase;}
-.sectionbody .mb-0{color:#cacaca; margin-bottom: 13px;}
+.sectionbody .mb-0, .sectionbody .mb-1, .sectionbody .mb-2, .sectionbody .mb-3{font-family: 'RobotoBold';font-size: 12px; padding: 0; margin: 0px; line-height: 14px; letter-spacing: 0px;margin-top: 0px; text-transform: uppercase;}
+.sectionbody .mb-0{color:#cacaca; margin-bottom: 10px;}
 .sectionbody .mb-0 span{float: right;}
-.sectionbody .mb-1{color:#64aee2; margin-bottom: 13px;}
-.sectionbody .mb-2{color:#df9650;}
+.sectionbody .mb-1{color:#64aee2; margin-bottom: 10px;}
+.sectionbody .mb-2{color:#df9650; margin-bottom: 10px;}
+.sectionbody .mb-2 span{color:#e5ff0a; margin-right: 5px;}
 .sectionbody .mb-2 a{color:#df9650; cursor: pointer; text-decoration: none;}
 .sectionbody .mb-2 a:hover{color:#df9650; cursor: pointer; text-decoration: none;}
+.sectionbody .mb-3{color:#df9650;}
+.sectionbody .mb-3 span{color:#e5ff0a; margin-right: 5px;}
 
 
 
@@ -3219,8 +3222,24 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 }
 .friendsblock1 .block4container {
     padding: 10px;
+    position: relative;
 }
 
+.friendsblock1 .sectionbody .sectionheaderinner{display: flex; flex-wrap: wrap;}
+.friendsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+    width: 18%;
+    position: relative;
+    min-height: 1px;
+    margin-right: 1% !important;
+    margin-left: 1% !important;
+    padding: 0px !important;
+    margin-bottom: 2%;
+    background-color: #252525;
+}
+.friendsblock1 .sectionbody .sectionheaderinner .col-1-5 .imgwrapper{}
+.friendsblock1 .artistsexchangeleftdiv .sectionbody {
+    border-bottom: 0px solid #1c3349 !important;
+}
 
 /*-----Favoriteartists---*/
 .trendingartistblock1.favoriteartistsblock1 h2 {
@@ -3247,6 +3266,28 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 .favoriteartistsblock1 .block4container {
     padding: 10px;
+}
+
+
+.favoriteartistsblock1 .sectionbody .sectionheaderinner{display: flex; flex-wrap: wrap;}
+.favoriteartistsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+    width: 18%;
+    position: relative;
+    min-height: 1px;
+    margin-right: 1% !important;
+    margin-left: 1% !important;
+    padding: 0px !important;
+    margin-bottom: 2%;
+    background-color: #252525;
+}
+.favoriteartistsblock1 .sectionbody .sectionheaderinner .col-1-5 .imgwrapper{}
+.favoriteartistsblock1 .artistsexchangeleftdiv .sectionbody {
+    border-bottom: 0px solid #1c3349 !important;
+}
+
+.favoriteartistsblock1 .block4container {
+    padding: 10px;
+    position: relative;
 }
 
 /*-- My Links css --*/
@@ -6143,8 +6184,23 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 
 @media (max-width: 1199px){
-
-
+    .landingwrapper_genuserlanpt .newheaderclass h1 {
+        position: inherit;
+        top: 0;
+        left: 0;
+        -webkit-transform: inherit;
+        -moz-transform: inherit;
+        -ms-transform: inherit;
+        -o-transform: inherit;
+        transform: inherit;
+        width: 100%;
+    }
+    .favoriteartistsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 23%;
+    }
+    .friendsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 23%;
+    }
     .trendingartistblock1.trendingmedia .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
         height: 42px;
     }
@@ -6726,6 +6782,13 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 991px){
+    .friendsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 31%;
+    }
+    .favoriteartistsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 31%;
+    }
+
     .picture_modal .modal-body .col-md-5 .pic_modal_right .pic_modal_right_wrapper {
         max-height: 400px;
         height: auto;
@@ -7595,6 +7658,13 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 640px) {
+    .friendsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 48%;
+    }
+    .favoriteartistsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 48%;
+    }
+
     .pic_arrow p i {
         font-size: 26px;
         padding: 0px 9px;
@@ -8139,6 +8209,13 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 480px){
+    .friendsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 98%;
+    }
+    .favoriteartistsblock1 .sectionbody .sectionheaderinner .col-1-5 {
+        width: 98%;
+    }
+
     .trendingmusic-contaioner .playericons .audioicon_d {
         width: 33%;
     }

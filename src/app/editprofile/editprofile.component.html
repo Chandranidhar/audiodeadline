@@ -235,8 +235,18 @@
                 <span class="has-error" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid"> ZipCode field can not be blank</span>
               </div>
 
-              <input class="btnbuyticket_genuserlanpt" value="UPDATE YOUR PROFILE" type="submit">
-              <button [routerLink]="['/profile']" class="btnbuyticket_genuserlanpt" value="CANCEL" >CANCEL</button>
+              <div class="form-group inlinedivbottom">
+                <a (click)="showPasswordModal()">Change Password</a>
+              </div>
+              <div class="form-group inlinedivbottom">
+                <a>Manage Roles</a>
+              </div>
+
+              <div class="btndivbottom">
+                <input class="btnbuyticket_genuserlanpt" value="UPDATE YOUR PROFILE" type="submit">
+                <button [routerLink]="['/profile']" class="btnbuyticket_genuserlanpt" value="CANCEL" >CANCEL</button>
+              </div>
+
             </form>
           </div>
           <div class="landingformfooter_genuserlanpt"></div>
@@ -267,6 +277,57 @@
       <div class="modal-body">
         <h4 class="modal-title pull-left demoModalHeader1" >Your Profile has been updated successfully!</h4>
         <img class="demoModalImg" src="../../assets/images/artistheaderlogo.png">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--password modal starts here-->
+<div *ngIf="showpasswordmodal"class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #lgModal="bs-modal" [config]="{show: 'true'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name8" class="modal-title demoModalHeader" >Change Your Password</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="showpasswordmodal = 0">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup]="passwordForm" name="passwordForm"  (ngSubmit)="passwordSubmit(passwordForm.value)">
+
+          <div class="form-group">
+            <p>Enter the old password:</p>
+            <input type="password" name="old_password" value="" size="40" placeholder=""  [formControl]="passwordForm.controls['old_password']" >
+            <input type="hidden" name="_id" value="" size="40" placeholder=""  [formControl]="passwordForm.controls['_id']" >
+            <span *ngIf ="passwordForm.controls['old_password'].touched && !passwordForm.controls['old_password'].valid" class="has-error">Old Password is Required !</span>
+            <span class="has-error">{{passworderrormsg}}</span>
+
+
+          </div>
+          <div class="form-group">
+            <p>Enter the new password:</p>
+            <input type="password" name="password" value="" size="40" placeholder=""  [formControl]="passwordForm.controls['password']" >
+            <span *ngIf ="passwordForm.controls['password'].touched && !passwordForm.controls['password'].valid" class="has-error">New Password is Required !</span>
+          </div>
+
+          <div class="form-group">
+            <p>Reenter the new password:</p>
+            <input type="password" name="confirmpassword" value="" size="40" placeholder=""  [formControl]="passwordForm.controls['confirmPassword']" >
+            <span class="has-error"*ngIf ="passwordForm.controls['confirmPassword'].touched && !passwordForm.controls['confirmPassword'].valid"> Confirm Password field can not be blank</span>
+            <span class="has-error"  *ngIf="passwordForm.controls['confirmPassword'].hasError('equalTo') && passwordForm.controls['confirmPassword'].touched" > Passwords must match</span>
+          </div>
+
+
+
+          <div class="av_button">
+            <button type="button" class=""  type="submit">Save</button>
+
+
+          </div>
+        </form>
+
       </div>
     </div>
   </div>

@@ -297,6 +297,47 @@ app.get('/userlogin', function (req, resp) {
     });
 });
 
+app.get('/changepassword', function (req, resp) {
+    var crypto = require('crypto');
+    var secret = req.query.old_password;
+    var hash = crypto.createHmac('sha256', secret)
+        .update('password')
+        .digest('hex');
+    //resp.send(JSON.stringify({'status':'error','msg':req.query.email}));
+    //return;
+    var collection = db.collection('user');
+    var user_id = new mongodb.ObjectID(req.query._id);
+    var cond={};
+    cond={
+
+        _id:user_id,
+        password: hash
+    };
+
+    collection.find(cond).toArray(function(err, items){
+
+        // resp.send(JSON.stringify({'status':'123','length':items.length, 'item':items}));
+
+
+        if(items.length==0){
+            resp.send(JSON.stringify({'status':'error','msg':'Password invalid...'}));
+            return;
+        }
+        if(items.length>0){
+            var secret1 = req.query.password;
+            var hash1 = crypto.createHmac('sha256', secret1)
+                .update('password')
+                .digest('hex');
+
+            collection.update({_id: user_id}, {$set: {password:hash1 }},function(err, results) {
+                resp.send(JSON.stringify({'status':'success','msg':'Password has been updated'}));
+            });
+        }
+
+
+    });
+});
+
 app.get('/allemail',function(req,resp){
     var collection= db.collection('user');
     var email=req.query.email;
@@ -2376,6 +2417,62 @@ app.get('/getvideodetailsbyid',function (req,resp) {
         }
     });
 });
+
+app.get('/getuserdetailsbyfriendtype1',function (req,resp) {
+
+    var collection = db.collection('userfriendcollection');
+    var cond = {};
+    cond = {
+        $and : [
+            {friend_by :new mongodb.ObjectID(req.query.user_id)},
+            {type: req.query.type},
+
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
+
+app.get('/getuserdetailsbyfriendtype',function (req,resp) {
+    var collection= db.collection('userfriendlistview');
+    var cond = {};
+    /*  cond={
+     $or:[
+
+     [ {friend_id : new mongodb.ObjectID(req.query.friend_id)},
+     {friend_by : new mongodb.ObjectID(req.query.user_id)}],
+
+     [ {friend_id : new mongodb.ObjectID(req.query.user_id)},
+     {friend_by : new mongodb.ObjectID(req.query.friend_id)}],
+
+     ]
+
+     };*/
+
+    cond = {
+        $or: [
+                {friend_by : new mongodb.ObjectID(req.query.user_id)},
+
+                {friend_id : new mongodb.ObjectID(req.query.user_id)}
+
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        } else {
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
+
 
 app.get('/getpicturedetailsbyid',function (req,resp) {
 

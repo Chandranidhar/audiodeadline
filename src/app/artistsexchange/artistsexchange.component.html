@@ -2007,16 +2007,19 @@ Your browser does not support the video tag.
                     </div>
                     <div class="sectionbody">
                         <div class="row no-gutter sectionheaderinner col-container">
-                            <div class="col-1-4 col">
+                            <div class="col-1-4 col" *ngFor="let val of friendsarray">
                                 <div class="imgwrapper">
-                                    <img src="assets/images/artistimg-friend1.jpg" alt="friend1">
+                                    <!--<img src="assets/images/artistimg-friend1.jpg" alt="friend1">-->
+                                    <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="friend1" [routerLink]="['/userprofile',val._id,val.username]">
+                                    <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="friend1" [routerLink]="['/userprofile',val._id,val.username]">
+                                    <!--<img *ngIf="val.images== undefined" src="../../assets/images/default_profile_pic.jpg" alt="rightbannerdiv screen6">-->
                                     <div class="block4container">
-                                        <h2>Lorem ipsum dolor</h2>
+                                        <h2>{{val.firstname}} {{val.lastname}}</h2>
                                         <h3>4 new posts</h3>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-1-4 col">
+                            <!--<div class="col-1-4 col">
                                 <div class="imgwrapper">
                                     <img src="assets/images/artistimg-friend2.jpg" alt="friend2">
                                     <div class="block4container">
@@ -2078,7 +2081,7 @@ Your browser does not support the video tag.
                                         <h3>4 new posts</h3>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -2095,16 +2098,18 @@ Your browser does not support the video tag.
                     </div>
                     <div class="sectionbody">
                         <div class="row no-gutter sectionheaderinner col-container">
-                            <div class="col-1-6 col">
+                            <div class="col-1-6 col" *ngFor="let val of favoritesarray">
                                 <div class="imgwrapper">
-                                    <img src="assets/images/artistimg-communities1.jpg" alt="communities1">
+                                    <!--<img src="assets/images/artistimg-communities1.jpg" alt="communities1">-->
+                                    <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="communities1" [routerLink]="['/userprofile',val._id,val.username]">
+                                    <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="communities1" [routerLink]="['/userprofile',val._id,val.username]">
                                     <div class="block4container">
-                                        <h2>Lorem ipsum</h2>
+                                        <h2>{{val.firstname}} {{val.lastname}}</h2>
                                         <h3>4 new posts</h3>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-1-6 col">
+                            <!--<div class="col-1-6 col">
                                 <div class="imgwrapper">
                                     <img src="assets/images/artistimg-communities2.jpg" alt="img-communities2">
                                     <div class="block4container">
@@ -2256,7 +2261,7 @@ Your browser does not support the video tag.
                                         <h3>4 new posts</h3>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

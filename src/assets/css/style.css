@@ -9250,6 +9250,18 @@ p {
 }
 
 
+.btndivbottom{display: inline-flex;flex-wrap: wrap; width: 100%; justify-content: space-between;}
+.landingforminnerwrapper_genuserlanpt .btndivbottom .btnbuyticket_genuserlanpt{width: 49%; margin-left: 0px;}
+.landingforminnerwrapper_genuserlanpt .btndivbottom .btnbuyticket_genuserlanpt{width: 49%; margin-right: 0px;}
+.landingforminnerwrapper_genuserlanpt .form-group a{color:#83aa30; font-size: 16px; cursor: pointer;}
+.landingforminnerwrapper_genuserlanpt .form-group a:hover{color:#ffcf4c; text-decoration: none;}
+.multi_bg_example_genuserlanpt .landingforminnerwrapper_genuserlanpt .formdiv .form-group:nth-last-of-type(3).inlinedivbottom{
+    margin-left: 0px !important;
+    border-right: 1px solid #43494d;
+    padding-right: 10px;
+}
+.multi_bg_example_genuserlanpt .landingforminnerwrapper_genuserlanpt .formdiv .form-group.inlinedivbottom{display:inline-block !important; float: left; margin-left: 10px;}
+
 @media only screen and (max-width: 1199px) {
     .competitionblock2 .artistsexchangeleftdiv{
         border-right: 0px solid #1c3349 !important;
@@ -9352,6 +9364,10 @@ p {
 }
 
 @media only screen and (max-width: 480px) {
+    .landingforminnerwrapper_genuserlanpt .btnbuyticket_genuserlanpt {
+        padding: 10px;
+        font-size: 16px;
+    }
     .landingforminnerwrapper_genuserlanpt ul li {
         width: 100%;
     }
@@ -12990,6 +13006,9 @@ span.spangreen{
         display: inline-block;
         text-align: center;
         margin: 10px 0px;
+    }
+    .landingforminnerwrapper_genuserlanpt .form-group a {
+        font-size: 14px;
     }
 }
 /*********************************Host flii stylz [start]***********************************/
