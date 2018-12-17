@@ -25,10 +25,12 @@ export class Commonservices{
     pictureuploadurl:any;
     audiouploadurl:any;
      demourl1:any;
+    private demositeurl:any;
 
 
     constructor(private http: Http,private router: Router, userdata: CookieService) {
             this.siteurl = 'https://audiodeadline.com/';
+            this.demositeurl = 'https://demo.artistxp.com/#/';
             this.nodeurl = 'http://192.169.196.208:3009/';
             this.url = 'https://audiodeadline.com/server1.php?q=';
         this.uploadurl = 'https://audiodeadline.com/fileupload.php';
@@ -104,6 +106,6 @@ export class Commonservices{
 
     logout(){
         this.cookieData.deleteAll();
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/login');
     }
 }

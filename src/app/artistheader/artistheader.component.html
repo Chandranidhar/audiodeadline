@@ -24,14 +24,19 @@
                     <li [style.width]="liWidth" class="nextdeadli"><a (click)="showPopup(headertemplate)">Next Deadline</a></li>
                     <li [style.width]="liWidth" class="ticketli"><a (click)="showPopup(headertemplate)">Tickets</a></li>
                     <li [style.width]="liWidth" class="artistexli"><a  (click)="showPopup(headertemplate)">Artist Exchange</a></li>
-                    <li [style.width]="liWidth" class="artistexli" *ngIf="user_id != '' "><a [routerLink]="['/profile']">Profile</a></li>
+
+                    <li *ngIf="user_id != '' " [style.width]="liWidth" class="contactli"><a (click)="showPopup(headertemplate)">Contact</a></li>
+                    <li *ngIf="user_id == '' " [style.width]="liWidth2" class="contactli"><a (click)="showPopup(headertemplate)">Contact</a></li>
+
+                    <li [style.width]="liWidth2" class="artistexli" *ngIf="user_id != '' "><a [routerLink]="['/profile']">Profile</a></li>
                     <li [style.width]="liWidth2" class="communityli"><a  [routerLink]="['/community']">Communities</a></li>
                     <li [style.width]="liWidth2" class="trartistli"><a [routerLink]="['/trendingartist']">Artist Search</a></li>
                     <!--<li class="trmediali"><a style="cursor: pointer;" (click)="showPopup(headertemplate)">Trending Media</a></li>-->
                     <li [style.width]="liWidth2" class="trmediali"><a [routerLink]="['/trendingmedia']">Trending Media</a></li>
                     <li [style.width]="liWidth2" *ngIf="user_id == '' " class="signupli"><a [routerLink]="['']">Sign up</a></li>
                     <li [style.width]="liWidth2" class="commpli"><a [routerLink]="['/competition/']">Competitions</a></li>
-                    <li [style.width]="liWidth2" class="contactli"><a [routerLink]="['/artistxp-contactus/']">Contact</a></li>
+                    <!--<li [style.width]="liWidth2" class="contactli"><a [routerLink]="['/artistxp-contactus/']">Contact</a></li>-->
+
                   </ul>
                 </div>
               </div>
@@ -64,7 +69,7 @@
 
     <button type="button" class="close" (click)="closep()">&times;</button>
     <img src="../../assets/images/artistheaderlogo.png" alt="logo">
-    <p><span>We are currently in Pre-Launch and will be turning on the full power of ArtistXP.com on November 10th, 2018!<br><br>You can sign up now to get your profile the minute we go live.<a style="cursor: pointer;" (click)="gotoSignUp()">Sign up Now!</a></span></p>
+    <p><span>We are currently in Pre-Launch and will be turning on the full power of ArtistXP.com on January 5th, 2019!<br><br>You can sign up now to get your profile the minute we go live.<a style="cursor: pointer;" (click)="gotoSignUp()">Sign up Now!</a></span></p>
 
   </div>
 </ng-template>

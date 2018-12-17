@@ -47,7 +47,7 @@
                                     <!--hover class ends-->
                                 </div>
                             </div>
-                            <a class="btnredbig" *ngIf="isuserprofile == 0" [routerLink]="['/editprofile',user_id]">Update Profile</a>
+                            <a class="btnredbig" *ngIf="isuserprofile == 0" [routerLink]="['/editprofile',user_id]">Edit Profile</a>
                             <div class="followbtnwrapper">
                                 <div class="followbtnlists" *ngIf="fan==0 && isuserprofile==1">
                                 <a class="btngraysml" *ngIf="showfollowbtn==0" (click)="addfriend()"><span class="fa fa-arrow-circle-right"></span> Follow</a>
@@ -67,7 +67,7 @@
                         <span *ngIf="fan==true">
                             <tabset>
 
-                                <tab heading="FAVOURITE MUSIC" id="tabPlayerFan" >
+                                <tab heading="FAVORITE MUSIC" id="tabPlayerFan" >
 
                                     <!--<div class="feedpostwrapper">
                                         <div class="feedpostwrapperinner">
@@ -316,7 +316,7 @@
                                     </div>
                                 </tab>
 
-                                <tab heading="FAVOURITE VIDEOS" id="tabVideosFan">
+                                <tab heading="FAVORITE VIDEOS" id="tabVideosFan">
                                    <!-- <div class="feedpostwrapper">
                                         <div class="feedpostwrapperinner">
                                             <img src="assets/images/artistsimg-feedpost.jpg">
@@ -458,7 +458,7 @@
 
 
                                 </tab>
-                                <tab heading="FAVOURITE LINKS" id="tabLinksFan">
+                                <tab heading="FAVORITE LINKS" id="tabLinksFan">
                                    <!-- <div class="feedpostwrapper">
                                         <div class="feedpostwrapperinner">
                                             <img src="assets/images/artistsimg-feedpost.jpg">
@@ -878,7 +878,10 @@
           <span (click)="showcommentmodal(selectedvideo)"><i class="fa fa-comment"></i> Comments:  {{selectedvideo.comments.length}}</span>
 
           <ng-template #popTemplateAdd2 class="CellComment"><div [innerHtml]="html2"></div></ng-template>
-                                                                    <span [popover]="popTemplateAdd2"  [outsideClick]="true"><i class="fa fa-plus" aria-hidden="true"></i> Add To</span>
+                                                                    <span [popover]="popTemplateAdd2"  [outsideClick]="true" *ngIf="videoselectflag==true"><i class="fa fa-plus" aria-hidden="true"></i> Add To</span>
+
+          <span *ngIf="videoselectflag==true">Edit</span>
+          <span *ngIf="videoselectflag==true">Delete</span>
       </p>
      </div>
      </div>
@@ -888,7 +891,7 @@
           </div>
           <div class="scrollbar style-2" id="style-2">
               <div class="row">
-                  <div id="vlist" class="video_list" *ngFor="let val of videoArray">
+                  <div id="vlist" class="video_list" *ngFor="let val of videoArray; let i = index;">
                       <div class="col-md-4 col-sm-3 col-xs-3">
                           <div class="videoWrapper">
                               <img (click)="playthumb(val)"  [attr.src]="getthumbnail(val)" alt="#">
@@ -898,6 +901,7 @@
                       <div class="col-md-8 col-sm-9 col-xs-9">
 
                           <p>{{val.title}}</p>
+                          <input type="checkbox" name="name1" value="" (click)="checkvideoselbox()"  [(ngModel)]="videocheckarr[val._id]" >
                           <p><span>{{val.userdata[0].firstname}} {{val.userdata[0].lastname}} </span>
                               <span class="pull-right">
                                   <!--<span> ON {{unixtodatetimeConverter(0,val.added_time)}}</span>-->
@@ -1462,10 +1466,10 @@ Relax & read this #BearCam story from @Buzzfeed (you won't regret it): http://on
 
 
 
-                                            <div class="scrollbar twitterscroll" > vv
+                                            <div id="twittertimeline"  class="scrollbar twitterscroll" >
 
                                                  <!--<a class="twitter-grid" href="https://twitter.com/kellytaylor001/timelines/1070609948097175552?ref_src=twsrc%5Etfw">#</a>-->
-                                                 <a *ngIf="twitter_timelineurl!='' && twitter_timelineurl!=null " class="twitter-grid" href="{{twitter_timelineurl}}?ref_src=twsrc%5Etfw">#</a>
+                                                 <!--<a id="twittertimeline" *ngIf="twitter_timelineurl!='' && twitter_timelineurl!=null " class="twitter-grid" href="{{twitter_timelineurl}}?ref_src=twsrc%5Etfw">#</a>-->
 
                                                 <!--<a class="twitter-grid" href="https://twitter.com/GargiRo38390587/timelines/1070974243460927488?ref_src=twsrc%5Etfw">#</a>-->
 
@@ -1998,7 +2002,7 @@ Your browser does not support the video tag.
                     <div class="sectionheader">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 col">
-                                <h2>Friends <span>( 110 )</span></h2>  <a class="btnpink" [routerLink]="['/friends']">View All</a>
+                                <h2>Friends <span>( {{friendsarray.length}} )</span></h2>  <a class="btnpink" [routerLink]="['/friends']">View All</a>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 col">
                                 <h3>...</h3>
@@ -2010,12 +2014,14 @@ Your browser does not support the video tag.
                             <div class="col-1-4 col" *ngFor="let val of friendsarray">
                                 <div class="imgwrapper">
                                     <!--<img src="assets/images/artistimg-friend1.jpg" alt="friend1">-->
-                                    <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="friend1" [routerLink]="['/userprofile',val._id,val.username]">
-                                    <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="friend1" [routerLink]="['/userprofile',val._id,val.username]">
+
+
+                                    <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="friend1" >
+                                    <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="friend1">
                                     <!--<img *ngIf="val.images== undefined" src="../../assets/images/default_profile_pic.jpg" alt="rightbannerdiv screen6">-->
                                     <div class="block4container">
-                                        <h2>{{val.firstname}} {{val.lastname}}</h2>
-                                        <h3>4 new posts</h3>
+                                        <h2><a target="_blank" [routerLink]="['/userprofile',val._id,val.username]">{{val.fullname}}</a></h2>
+
                                     </div>
                                 </div>
                             </div>
@@ -2089,7 +2095,7 @@ Your browser does not support the video tag.
                     <div class="sectionheader">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 col">
-                                <h2>FAVORITE ARTISTS <span>( 320 )</span></h2>  <a class="btnpink" [routerLink]="['/favoriteartists']">View All</a>
+                                <h2>FAVORITE ARTISTS <span>( {{favoritesarray.length}} )</span></h2>  <a class="btnpink" [routerLink]="['/favoriteartists']">View All</a>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 col">
                                 <h3>...</h3>
@@ -2101,11 +2107,11 @@ Your browser does not support the video tag.
                             <div class="col-1-6 col" *ngFor="let val of favoritesarray">
                                 <div class="imgwrapper">
                                     <!--<img src="assets/images/artistimg-communities1.jpg" alt="communities1">-->
-                                    <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="communities1" [routerLink]="['/userprofile',val._id,val.username]">
-                                    <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="communities1" [routerLink]="['/userprofile',val._id,val.username]">
+                                    <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="communities1" >
+                                    <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="communities1" >
                                     <div class="block4container">
-                                        <h2>{{val.firstname}} {{val.lastname}}</h2>
-                                        <h3>4 new posts</h3>
+                                        <h2><a target="_blank" [routerLink]="['/userprofile',val._id,val.username]">{{val.fullname}}</a></h2>
+                                        <!--<h3>4 new posts</h3>-->
                                     </div>
                                 </div>
                             </div>
@@ -2575,7 +2581,7 @@ Your browser does not support the video tag.
                                     <blockquote>
 
                                        <!-- <p class="mb-0"><span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>on {{unixtodatetimeConverter(0,pvalue.added_time)}}</span></p>-->
-                                        <p class="mb-0"><span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>{{convertunixtotimeago(pvalue.added_time)}}</span></p>
+                                        <p class="mb-0"><a target="_blank" [routerLink]="['/userprofile',pvalue.user_id,pvalue.userdata[0].username]">{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</a><span>{{convertunixtotimeago(pvalue.added_time)}}</span></p>
                                     </blockquote>
                                 </div>
                                 <div class="feedslinks trndingaudiosharetools">
@@ -2729,7 +2735,7 @@ Your browser does not support the video tag.
                                                 </div>
                                                 <div class="col-lg-8 col-md-10 col-sm-9 col-xs-12">
                                                     <h2>{{val.title}}</h2>
-                                                    <p>{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}  <span>{{convertunixtotimeago(val.added_time)}}</span></p>
+                                                    <p><a target="_blank" [routerLink]="['/userprofile',val.user_id,val.userdata[0].username]">{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</a>  <span>{{convertunixtotimeago(val.added_time)}}</span></p>
                                                     <div class="hrdivider"></div>
                                                     <div class="feedslinks">
                                                     <span class="feedslinks5"><i class="fa fa-eye"></i> Views:
@@ -2901,7 +2907,7 @@ Your browser does not support the video tag.
                                             </div>
                                             <div class="col-lg-8 col-md-10 col-sm-9 col-xs-12">
                                                 <h2>{{val.title_music}}</h2>
-                                                <p>{{val.userdata[0].firstname+' '+val.userdata[0].lastname}} <span>{{convertunixtotimeago(val.added_time)}}</span></p>
+                                                <p><a target="_blank" [routerLink]="['/userprofile',val.user_id,val.userdata[0].username]">{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</a> <span>{{convertunixtotimeago(val.added_time)}}</span></p>
                                                 <div class="hrdivider"></div>
                                                 <div class="feedslinks trndingaudiosharetools">
                                                     <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 0</span>-->
@@ -2984,16 +2990,16 @@ Your browser does not support the video tag.
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title pull-left">Create Profile Picture</h4>
+                <h4 class="modal-title pull-left">Update Profile Picture</h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <img src="{{image}}">
+                <img src="{{tempimage}}">
                 <div class="modal-footer">
                     <!--<button type="button" class="btn btn-default" data-dismiss="modal" (click)="onHidden()">No</button>-->
-                    <button type="button" class="btn btn-primary btnuploadsave" data-dismiss="modal" >Save</button>
+                    <button type="button" (click)="updateprofilepicture()" class="btn btn-primary btnuploadsave" data-dismiss="modal" >Save</button>
                 </div>
             </div>
         </div>
@@ -3319,12 +3325,14 @@ Your browser does not support the video tag.
                                         <span class="feedslinks1 userimagetitle">
                                             <div class="imgwrapper">
                                                 <!--<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                                <a target="_blank" [routerLink]="['/userprofile',selectedpost.user_id,selectedpost.userdata[0].username]">
                                                 <img src="{{siteurl}}nodeserver/uploads/{{selectedpost.userdata[0].images}}" alt="RTP5">
+                                                    </a>
 
                                             </div>
                                             <div class="usertitle">
 
-                                                {{selectedpost.userdata[0].firstname}}  {{selectedpost.userdata[0].lastname}}
+                                                <a target="_blank" [routerLink]="['/userprofile',selectedpost.user_id,selectedpost.userdata[0].username]">{{selectedpost.userdata[0].firstname}}  {{selectedpost.userdata[0].lastname}}</a>
                                             </div>
                                         </span>
                                         <span class="feedslinks3 userrightmrnu">

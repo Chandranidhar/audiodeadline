@@ -346,7 +346,7 @@
                                             <!--<p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>-->
                                             <p>{{val.title_music}}</p>
                                             <!--<p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>-->
-                                            <p>{{val.userdata[0].firstname+' '+val.userdata[0].lastname}} <span class="pull-right">{{convertunixtotimeago(val.added_time)}}</span></p>
+                                            <p><span><a target="_blank" [routerLink]="['/userprofile',val.user_id,val.userdata[0].username]">{{val.userdata[0].firstname+' '+val.userdata[0].lastname}}</a></span> <span class="pull-right">{{convertunixtotimeago(val.added_time)}}</span></p>
                                             <p>
                                                 <!--<span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>-->
                                                 <span class="feedslinks5" *ngIf="val.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{val.musicviews[0].musiccount}}</span>

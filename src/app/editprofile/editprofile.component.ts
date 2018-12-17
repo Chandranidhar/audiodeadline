@@ -17,6 +17,7 @@ declare var $:any;
 export class EditprofileComponent implements OnInit {
 
   public dataForm: FormGroup;
+  public roleForm: FormGroup;
   private fb;
   private userdata:CookieService;
   private userdatanew:CookieService;
@@ -47,6 +48,7 @@ export class EditprofileComponent implements OnInit {
   public showpasswordmodal:any=0;
     public passwordForm:FormGroup;
     public passworderrormsg:any='';
+    public showrolemodal:any=0;
 
   constructor(fb: FormBuilder,private _http: Http,private router: Router, private _commonservices : Commonservices,private route:ActivatedRoute, userdata: CookieService) {
 
@@ -116,7 +118,21 @@ export class EditprofileComponent implements OnInit {
                 this.equalToPass('password')
             ])],
         });
-      var link =this.serverurl+'dashboard';
+
+
+        this.roleForm = this.fb.group({
+
+            musicians: [false],
+            dancer: [false],
+            model: [false],
+            signupaffiliate: [false],
+            fan: [true],
+        });
+
+
+        this.getValuesByUserid();
+
+      /*var link =this.serverurl+'dashboard';
       var data = {_id: this.userid};
 
       this._http.post(link, data)
@@ -152,8 +168,8 @@ export class EditprofileComponent implements OnInit {
                             .subscribe(res => {
                               let result1 = res.json();
                               this.usergenrelist = result1.item;
-                             /* console.log('this.usergenrelist');
-                              console.log(this.usergenrelist);*/
+                             /!* console.log('this.usergenrelist');
+                              console.log(this.usergenrelist);*!/
                               let musicgenarr=[];
                               let dancegenarr=[];
                               for(let x in this.usergenrelist){
@@ -319,10 +335,218 @@ export class EditprofileComponent implements OnInit {
             }
           },error => {
             console.log("Oooops!");
-          });
+          });*/
 
 
     });
+  }
+
+  getValuesByUserid(){
+      var link =this.serverurl+'dashboard';
+      var data = {_id: this.userid};
+
+      this._http.post(link, data)
+          .subscribe(res => {
+              var result = res.json();
+              this.showLoader = 1;
+              if (result.status == 'success' && typeof(result.item) != 'undefined'){
+                  let userdata2 = result.item;
+
+                  this.userid = userdata2._id;
+                  this.userdetails = userdata2;
+                  this.musicians = userdata2.musicians;
+                  this.model = userdata2.model;
+                  this.dancer = userdata2.dancer;
+
+
+
+                  if(this.musicians == 1){
+                      let link=this.serverurl+'genrelist';
+                      let data = {'type':'active','musicians':1,'model':0,'dancer':0};
+
+                      this._http.post(link,data)
+                          .subscribe(res => {
+                              let result1 = res.json();
+                              this.genrelist = result1.res;
+                              //        to select the chosen value in music genre list
+                              //starts here
+                              if(this.musicians == 1 || this.dancer == 1){
+                                  let link=this.serverurl+'getusergenredetail';
+                                  let data = {'user_id':this.userid};
+
+                                  this._http.post(link,data)
+                                      .subscribe(res => {
+                                          let result1 = res.json();
+                                          this.usergenrelist = result1.item;
+                                          /* console.log('this.usergenrelist');
+                                           console.log(this.usergenrelist);*/
+                                          let musicgenarr=[];
+                                          let dancegenarr=[];
+                                          for(let x in this.usergenrelist){
+
+                                              console.log(this.usergenrelist[x]);
+                                              console.log($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length);
+                                              if($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                                  musicgenarr.push(this.usergenrelist[x].genreid);
+                                              }
+                                              if($('select[name="dancergenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                                  dancegenarr.push(this.usergenrelist[x].genreid);
+                                              }
+                                              console.log($('select[name="musicgenre"]').find('option').length);
+                                          }
+                                          if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
+                                              //this.dataForm.controls['ability'].setValidators(Validators.required);
+                                              this.dataForm.controls['musicgenre'].setValue(musicgenarr);
+                                              this.dataForm.controls['dancergenre'].setValue(dancegenarr);
+
+                                          }
+
+                                      }, error => {
+                                          console.log("Oooops!");
+                                      });
+                              }
+
+
+                              //ends here
+
+
+                          }, error => {
+                              console.log("Oooops!");
+                          });
+                  }
+
+                  if(this.dancer == 1){
+                      let link=this.serverurl+'genrelist';
+                      let data = {'type':'active','musicians':0,'model':0,'dancer':1};
+
+                      this._http.post(link,data)
+                          .subscribe(res => {
+                              let result1 = res.json();
+                              this.genrelist1 = result1.res;
+
+                              if(this.musicians == 1 || this.dancer == 1){
+                                  let link=this.serverurl+'getusergenredetail';
+                                  let data = {'user_id':this.userid};
+
+                                  this._http.post(link,data)
+                                      .subscribe(res => {
+                                          let result1 = res.json();
+                                          this.usergenrelist = result1.item;
+                                          console.log('this.usergenrelist');
+                                          console.log(this.usergenrelist);
+                                          let musicgenarr=[];
+                                          let dancegenarr=[];
+                                          for(let x in this.usergenrelist){
+
+                                              console.log(this.usergenrelist[x]);
+                                              console.log($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length);
+                                              if($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                                  musicgenarr.push(this.usergenrelist[x].genreid);
+                                              }
+                                              if($('select[name="dancergenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                                  dancegenarr.push(this.usergenrelist[x].genreid);
+                                              }
+                                              console.log($('select[name="musicgenre"]').find('option').length);
+                                          }
+                                          if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
+                                              //this.dataForm.controls['ability'].setValidators(Validators.required);
+                                              this.dataForm.controls['musicgenre'].setValue(musicgenarr);
+                                              this.dataForm.controls['dancergenre'].setValue(dancegenarr);
+
+                                          }
+                                      }, error => {
+                                          console.log("Oooops!");
+                                      });
+                              }
+                          }, error => {
+                              console.log("Oooops!");
+                          });
+                  }
+
+                  this.showLoader = 0;
+
+
+                  if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
+                      this.dataForm.controls['ability'].setValidators(Validators.required);
+                  }
+                  if(this.userdetails.musicians == 1){
+                      this.dataForm.controls['musicgenre'].setValidators(Validators.required);
+                  }
+                  if(this.userdetails.dancer == 1){
+                      this.dataForm.controls['dancergenre'].setValidators(Validators.required);
+                  }
+                  if(this.userdetails.model == 1){
+                      this.dataForm.controls['ethnicity'].setValidators(Validators.required);
+                  }
+
+                  this.dataForm.controls['firstname'].setValue(this.userdetails.firstname);
+                  this.dataForm.controls['lastname'].setValue(this.userdetails.lastname);
+                  this.dataForm.controls['email'].setValue(this.userdetails.email);
+                  this.dataForm.controls['username'].setValue(this.userdetails.username);
+                  this.dataForm.controls['phone'].setValue(this.userdetails.phone);
+                  this.image= this.userdetails.images;
+                  this.dataForm.controls['realname'].setValue(this.userdetails.firstname+' '+this.userdetails.lastname);
+                  this.dataForm.controls['gender'].setValue(this.userdetails.gender);
+                  this.dataForm.controls['alias'].setValue(this.userdetails.alias);
+                  this.dataForm.controls['bio'].setValue(this.userdetails.bio);
+                  this.dataForm.controls['city'].setValue(this.userdetails.city);
+                  // this.dataForm.controls['image'].setValue(this.userdetails.image);
+                  this.dataForm.controls['address'].setValue(this.userdetails.address);
+                  this.dataForm.controls['state'].setValue(this.userdetails.state);
+                  this.dataForm.controls['zip'].setValue(this.userdetails.zip);
+                  console.log('this.userdetails.website');
+                  console.log(this.userdetails.website);
+                  console.log('this.userdetails.website.length');
+                  console.log(this.userdetails.website.length);
+                  if(this.userdetails.website.length>0){
+
+                      for( let i in this.userdetails.website){
+
+
+                          this.addWebsite(this.userdetails.website[i]);
+
+                      }
+                  }
+                  else
+                  {
+                      this.addWebsite('');
+                  }
+
+                  console.log('this.userdetails.experience');
+                  console.log(this.userdetails.experience);
+                  console.log('this.userdetails.experience.length');
+                  console.log(this.userdetails.experience.length);
+                  if(this.userdetails.experience.length>0){
+
+                      for( let i in this.userdetails.experience){
+
+                          this.addExperience(this.userdetails.experience[i]);
+                      }
+                  }
+                  else
+                  {
+                      this.addExperience('');
+                  }
+
+
+
+                  if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
+                      this.dataForm.controls['ability'].setValue(this.userdetails.ability);
+                  }
+
+                  if(this.userdetails.model == 1){
+                      this.dataForm.controls['ethnicity'].setValue(this.userdetails.ethnicity);
+                  }
+
+
+                  console.log('this.userdetails');
+                  console.log(this.userdetails);
+
+              }
+          },error => {
+              console.log("Oooops!");
+          });
+
   }
 
 
@@ -534,7 +758,73 @@ export class EditprofileComponent implements OnInit {
         this.showpasswordmodal = 1;
 
     }
+
+    showRoleModal(){
+
+        this.showrolemodal = 1;
+    }
+
+
+    roleSubmit(formval){
+
+        for (let x in this.roleForm.controls) {
+            this.roleForm.controls[x].markAsTouched();
+        }
+
+       if(this.roleForm.valid){
+
+           let link = this.serverurl+'manageRoleByUserId';
+           let data={
+               _id: this.userid,
+               dancer: 0,
+               model: 0,
+               musicians: 0,
+               fan: 0,
+               signupaffiliate: 0
+           };
+           if(formval.dancer){
+               data.dancer = 1;
+           }
+           if(formval.model){
+               data.model = 1;
+           }
+           if(formval.musicians){
+               data.musicians = 1;
+           }
+           if(formval.fan){
+               data.fan = 1;
+           }
+           if(formval.signupaffiliate){
+               data.signupaffiliate = 1;
+           }
+           this._http.post(link, data)
+               .subscribe(res=>{
+
+                   let result:any = {};
+                   result = res.json();
+                   /*console.log('result of role');
+                   console.log(result);*/
+                   if(result.status=='success'){
+
+                       this.showrolemodal = 0;
+                       this.getValuesByUserid();
+                   }
+               })
+
+
+       }
+
+    }
+    onChangeCategory(){
+        if(this.roleForm.controls['musicians'].value || this.roleForm.controls['dancer'].value || this.roleForm.controls['model'].value){
+            this.roleForm.controls['fan'].setValue(false);
+        }
+        if(!this.roleForm.controls['musicians'].value && !this.roleForm.controls['dancer'].value && !this.roleForm.controls['model'].value){
+            this.roleForm.controls['fan'].setValue(true);
+        }
+    }
     onHidden(){
-        this.showpasswordmodal = 0
+        this.showpasswordmodal = 0;
+        this.showrolemodal = 0;
     }
 }

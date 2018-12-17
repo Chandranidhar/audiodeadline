@@ -239,11 +239,11 @@
                 <a (click)="showPasswordModal()">Change Password</a>
               </div>
               <div class="form-group inlinedivbottom">
-                <a>Manage Roles</a>
+                <a (click)="showRoleModal()">Manage Roles</a>
               </div>
 
               <div class="btndivbottom">
-                <input class="btnbuyticket_genuserlanpt" value="UPDATE YOUR PROFILE" type="submit">
+                <button class="btnbuyticket_genuserlanpt" type="submit">UPDATE YOUR PROFILE</button>
                 <button [routerLink]="['/profile']" class="btnbuyticket_genuserlanpt" value="CANCEL" >CANCEL</button>
               </div>
 
@@ -263,7 +263,7 @@
 <!--<app-footer></app-footer>-->
 <app-artistfooter></app-artistfooter>
 
-
+<!--update success modal starts here-->
 <div *ngIf="isupdatedatamodal" class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true,backdrop:'static'}"
      tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -281,7 +281,7 @@
     </div>
   </div>
 </div>
-
+<!--update success modal ends here-->
 
 <!--password modal starts here-->
 <div *ngIf="showpasswordmodal"class="modal fade modalVideoUpload" (onHidden)="onHidden()" bsModal #lgModal="bs-modal" [config]="{show: 'true'}"
@@ -332,3 +332,99 @@
     </div>
   </div>
 </div>
+
+<!--password modal ends here-->
+
+<!--role modal starts here-->
+<div *ngIf="showrolemodal"class="modal fade modalVideoUpload rolemodalstyle" (onHidden)="onHidden()" bsModal #lgModal="bs-modal" [config]="{show: 'true'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-static-name8" class="modal-title demoModalHeader" >Manage Your Roles</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="showrolemodal = 0">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup]="roleForm" name="roleForm"  (ngSubmit)="roleSubmit(roleForm.value)">
+
+
+          <div class="form-group">
+          <div class="col-container">
+          <div class="col">
+            <div class="fanartistimgwraper">
+              <img src="../../assets/images/fanartistimg1.jpg">
+            </div>
+          </div>
+          <div class="col">
+            <h2>Musician!</h2>
+            <p>The ArtistXP is an opportunity like no other to express your music, interact with fans and best of all, trade traffic with other artists. Plus, you can complete to be on the AudioDeadline.com live broadcast!</p>
+            <input type="checkbox" name="name1" value="" checked [formControl]="roleForm.controls['musicians']" (change)="onChangeCategory()" >
+          </div>
+
+          </div>
+          <div class="col-container">
+          <div class="col">
+            <div class="fanartistimgwraper">
+              <img src="../../assets/images/fanartistimg2.jpg">
+            </div>
+          </div>
+          <div class="col">
+            <h2>Dancers!</h2>
+            <p>The ArtistXP will get you in front of the kind of fans that will enjoy your work and help create credibility behind your dance career. Plus, you can complete to be on the AudioDeadline.com live broadcast!</p>
+            <input type="checkbox" name="name1" value="" checked [formControl]="roleForm.controls['dancer']" (change)="onChangeCategory()">
+          </div>
+          </div>
+          <div class="col-container">
+          <div class="col">
+            <div class="fanartistimgwraper">
+              <img src="../../assets/images/fanartistimg3.jpg">
+            </div>
+          </div>
+          <div class="col">
+            <h2>Models!</h2>
+            <p>The ArtistXP is a place you can interact with other artists, trade traffic and build a fan base around your work. Plus, you can complete to be on the AudioDeadline.com live broadcast!</p>
+            <input type="checkbox" name="name1" value="" checked [formControl]="roleForm.controls['model']" (change)="onChangeCategory()" >
+          </div>
+          </div>
+          <div class="col-container">
+            <div class="col">
+              <div class="fanartistimgwraper">
+                <img src="../../assets/images/fanartistimg4.jpg">
+              </div>
+            </div>
+            <div class="col">
+              <h2>Affiliates!</h2>
+              <p>You can sign up to sell streaming tickets as well as invite members to the AudioDeadline.com and Artist XP. Earn 10% on streaming ticket sales and a 5% on our soon to come Artist ad display rev share on signed up artists!</p>
+              <input type="checkbox" name="name1" value="" checked [formControl]="roleForm.controls['signupaffiliate']" (change)="onChangeCategory()">
+            </div>
+          </div>
+
+          <div class="col-container">
+            <div class="col">
+              <div class="fanartistimgwraper">
+                <img src="../../assets/images/fanartistimg5.jpg">
+              </div>
+            </div>
+            <div class="col">
+              <h2>Fans!</h2>
+              <p>If you are into checking out musicians, dancers, models and other artistry, this is the place to be! We have all kinds of available content and there is always our show the AudioDeadline.com where the magic really happens!</p>
+              <input type="checkbox" name="name1" value="" checked [formControl]="roleForm.controls['fan']" (change)="onChangeCategory()">
+            </div>
+          </div>
+
+          </div>
+          <div class="av_button">
+            <button type="button" class=""  type="submit">Save</button>
+
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--role modal ends here-->

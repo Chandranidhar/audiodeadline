@@ -125,8 +125,13 @@
                     <div class="contentbottom">
                       <div class="feedslinks">
                         <span class="feedslinks1"><i class="fa fa-users"></i>[ 0 ]</span>
-                        <span class="feedslinks2"><i class="fa fa-music"></i>[ 0 ]</span>
-                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ 0 ]</span>
+                        <span class="feedslinks1"><i class="fa fa-eye"></i></span>
+                        <span class="feedslinks2"><i class="fa fa-music"></i>[ {{val.countofmusic}} ]</span>
+                        <span class="feedslinks2" (click)="getmusicdetails(val._id)"><i class="fa fa-eye"></i></span>
+                        <span class="feedslinks3"><i class="fa fa-youtube-play"></i>[ {{val.countofvideo}} ]</span>
+                        <span class="feedslinks3" (click)="getVideoDetails(val._id)"><i class="fa fa-eye"></i></span>
+                        <span class="feedslinks3"><i class="fa fa-image"></i>[ {{val.countofpicture}} ]</span>
+                        <span class="feedslinks3" (click)="getPictureDetails(val._id)"><i class="fa fa-eye"></i></span>
                         <span class="feedslinks4"><div class="btnviewprofilenew"><a class="btngraygradient" [routerLink]="['/userprofile',val._id,val.username]">view profile</a></div></span>
                       </div>
                     </div>
@@ -1545,3 +1550,639 @@
   </div>
 </div>
 <!--zipcode modal ends here-->
+
+<!--picture modal starts here-->
+
+<div *ngIf="isPicModalShow" class="modal fade modalUpload picturemodalsmall" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Pictures</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isPicModalShow=0">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="btntopformgraylistsnew" >
+          <div class="feedpostwrapper">
+            <div class="feedpostwrapperinner avi_pic_css">
+
+              <div class="scrollbar style-3" id="style-3">
+                <div class="row no-gutter artistsexchangeblock1bodybloc1" *ngIf="picArray.length!=0">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="pic_arrow">
+                      <p *ngIf="piclimitstart!= 0" class="leftarrow" (click)="scrollleft()"><i class="fa fa-angle-left" aria-hidden="true" ></i></p>
+                      <p *ngIf="piclimitend < picArray.length" class="rightarrow" (click)="scrollright()"><i class="fa fa-angle-right" aria-hidden="true"></i></p>
+
+                    </div>
+                    <div class="sectionbody">
+                      <div class="row no-gutter sectionheaderinner col-container">
+
+                                                <span  *ngFor="let pvalue of picArray;index as i">
+                                                    <div class="col-1-5 col colcolor picture_list"  *ngIf="i<piclimitend && i>=piclimitstart ">
+                                                        <div class="imgwrapper" *ngIf="pvalue.image_pic!='' ">
+                                                            <img src="https://audiodeadline.com/nodeserver/uploads/pictures/{{pvalue.user_id}}/{{pvalue.image_pic}}" alt="RTR1" >
+                                                        </div>
+                                                        <div class="imgwrapper" *ngIf="pvalue.image_pic==''">
+                                                            <img src="../../assets/images/default_profile_pic.jpg" alt="RTR1">
+                                                        </div>
+
+                                                        <div class="sectionheaderinnercontainer pic_title_con">
+                                                            <blockquote>
+                                                                <div class="row no-gutter col-container bodybloc5bottom">
+                                                                    <div class="col">
+                                                                        <div class="feedslinks trndingaudiosharetools pic_fa_icon">
+                                                                            <!--<span class="feedslinks3"><i class="fa fa-comment"></i> Comments</span>-->
+                                                                            <span class="feedslinks3" (click)="showcommentmodal(pvalue)"><i class="fa fa-comment"></i> Comments: {{pvalue.comments.length}}</span>
+
+               <!--<ng-template #popTemplate5 ><div [innerHtml]="html"></div></ng-template>
+               <span class="feedslinks4" [popover]="popTemplate5" [outsideClick]="true"  (mouseenter)="setshareflag('picture',pvalue)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                                                                            <span (click)="showpicturelike(pvalue)" *ngIf="pvalue.picturelikes[0]!=null && !getlikeonstatus(pvalue.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{pvalue.picturelikes[0].vlike}}</span>
+                              <span (click)="showpicturelike(pvalue)" *ngIf="pvalue.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                                                  <span (click)="showpictureunlike(pvalue)" *ngIf="pvalue.picturelikes[0]!=null && getlikeonstatus(pvalue.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{pvalue.picturelikes[0].vlike}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </blockquote>
+                                                        </div>
+
+                                                    </div>
+                                                   <div class="pic_modal_right_wrapper" id="style-6">
+                        <div class="comment_modal">
+
+                          <div class="comment_container">
+
+                            <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of pvalue.comments">
+                              <div class="col">
+                                <div class="feedslinks">
+                            <span class="feedslinks1 comment_user_image">
+                                <div class="imgwrapper">
+                                    <!--<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                     <span *ngIf="valc.userdata[0].images!=null" >
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                        <img src="https://audiodeadline.com/nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                        </a>
+                                    </span>
+
+                                    <span *ngIf="valc.userdata[0].images==null">
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+                                            </a>
+                                    </span>
+                                </div>
+                            </span>
+                                  <span class="feedslinks3 comment_user_text">
+                                <div class="row comment_box">
+                                    <span class="timespan">{{convertunixtotimeago(valc.added_time)}}</span>
+                                  <!--<a href="#">User name</a>
+                                  <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>-->
+
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                        <b>{{valc.comment}}</b>
+                                </div>
+                                    <!--<div class="row no-gutter col-container bodybloc5bottom">
+                                        <div class="col">
+                                            <div class="feedslinks comment_text_reply">
+                                                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                            </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row comment_input_se" *ngIf="isloggedin==1">
+                              <div class="row no-gutter col-container bodybloc5bottom">
+                                <div class="col">
+                                  <div class="feedslinks">
+                                                <span class="feedslinks1 comment_user_image">
+                                                    <div class="imgwrapper">
+
+                                                        <!--<img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
+                                                         <span *ngIf="image==null">
+
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+
+                                        </span>
+                                        <span *ngIf="image!=null" >
+
+                                            <img src="https://audiodeadline.com/nodeserver/uploads/{{image}}" >
+
+                                        </span>
+                                                    </div>
+                                                </span>
+                                    <span class="feedslinks3 comment_user_text">
+                                                    <div class="row">
+                                                        <div class="row comment_input">
+                                                            <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                        </div>
+
+                                                    </div>
+                                                </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                                                </span>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <!--<button type="button" class="btnpink" data-dismiss="modal" (click)="isZipcodeModalShown=false">Search</button>-->
+          <button type="button" class="btnpink" data-dismiss="modal" (click)="getSearchedValueByQuery()">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--picture modal ends here-->
+
+<!--music modal starts here-->
+
+<div *ngIf="isModalMusicShown" class="modal fade modalUpload picturemodalsmall" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Musics</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="isModalMusicShown=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="artistsexchangeleftdiv trendingmusic-contaioner">
+                    <div class="sectionbody">
+                        <div class="row no-gutter sectionheaderinner col-container tranding_videoandlisting">
+                        <div class="row avi_trandingmedia">
+                        <div class="col-md-8 col-lg-8 col-sm-7 col-xs-12 audioplayer_play">
+                            <div class="col-1-1">
+                                <div class="col-1-5 col colcolor">
+                                    <div class="videoWrapper">
+                                        <!--<img src="assets/images/audioplayerbackground.jpg" alt="RTR1">-->
+                                        <div class="audioinfo">
+                                            <div class="audioinfologo">
+                                                <img src="../../assets/images/artistheaderlogo.png" alt="%">
+                                            </div>
+                                            <div class="audioinfotitle">
+                                                <!--Audio Default title-->
+                                                {{chosenaudiotitle}}
+                                            </div>
+                                            <div class="audioinfousername">
+                                                <!--UserName - <span>IBM</span>-->
+                                                By - <span>{{audiousername}}</span>
+                                            </div>
+
+                                        </div>
+                                        <img *ngIf="isaudioplay" src="../../assets/images/audio-play-image.gif" alt="RTR1">
+                                        <img *ngIf="!isaudioplay" src="../../assets/images/pause-gif-image.jpg" alt="RTR1">
+
+                                        <!--<img src="../../assets/images/audio-play-image.gif" alt="RTR1" class="playaudioimage">-->
+
+                                        <audio *ngIf="chosenaudiourl!=''" id="audioplayer1">
+                                            <source [attr.src]="chosenaudiourl" type="audio/mpeg">
+                                            Your browser does not support the audio tag.
+                                        </audio>
+
+                                    </div>
+                                    <div class="sectionheaderinnercontainer">
+                                        <div class="playsilider">
+
+                                            <ng5-slider [(value)]="value1" [options]="options1" (userChange)="changeaudioplayertimer()" (valueChange)="setval1()"></ng5-slider>
+
+                                            <!--<ng5-slider [(value)]="value1" [options]="options1"></ng5-slider>-->
+                                        </div>
+                                        <div class="playericons">
+                                            <!--<blockquote>
+                                                <p class="mb-0">Total Audience 31,000 </p>
+                                                <p class="mb-1">Genre Hip Hop, Rap </p>
+                                                <p class="mb-2"><a href="javascript:void(0);">See Trade</a></p>
+                                            </blockquote>-->
+                                            <div class="audioicon_d audioicon1">
+                                                <!--<p>0:00:00/01:21:36</p>-->
+                                                <p>{{convertsecstoformat(value1)}}/{{convertsecstoformat(audioDuration)}}</p>
+                                            </div>
+                                            <div class="audioicon_d audioicon2">
+
+                                                <span class="icons1"><img src="assets/images/audio_leftarrow.png" (click)="playbackward()" alt="#"> </span>
+                                                <span *ngIf="!isaudioplay" class="icons2" (click)="playmusic()"><img src="assets/images/audio_playicon.png" alt="#"> </span>
+                                                <span *ngIf="isaudioplay" class="icons2" (click)="playmusic()"><img src="assets/images/audio_pauseicon.png" alt="#"> </span>
+                                                <span class="icons3"><img src="assets/images/audio_rightarrow.png" (click)="playforward()" alt="#"> </span>
+
+
+                                                <!--<span class="icons1"><img src="assets/images/audio_leftarrow.png" alt="#"> </span>-->
+                                                <!--<span class="icons2"><img src="assets/images/audio_playicon.png" alt="#"> </span>-->
+                                                <!--<span class="icons3"><img src="assets/images/audio_rightarrow.png" alt="#"> </span>-->
+
+                                            </div>
+                                            <div class="audioicon_d audioicon3">
+                                                <!--<span class="icons01"><img src="assets/images/audioicon1.png" alt="#"> </span>-->
+                                                <span class="icons01" *ngIf="!shuffleflag"><img  (click)="shuffleon()" src="../../assets/images/audioicon1-inactive.png" alt="#"></span>
+                                                <span class="icons01" *ngIf="shuffleflag"><img  (click)="shuffleoff()" src="../../assets/images/audioicon1-active.png" alt="#"></span>
+                                                <!-- <span class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>-->
+                                                <span *ngIf="!ismuteaudio" (click)="muteaudio()"  class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>
+                                                <span *ngIf="ismuteaudio" (click)="unmuteaudio()"  class="icons02"><img src="../../assets/images/audio_muteicon.png" alt="#"> </span>
+                                                <span class="icons03">
+                                                                               <!-- <ng5-slider [(value)]="value" [options]="options"></ng5-slider>-->
+                                                        <ng5-slider [(value)]="value" [options]="options" (userChange)="changeaudioplayervolume()"></ng5-slider>
+                                                                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span *ngIf="musicArray.length>0">
+                  <!--<span *ngIf="musicdetailArray.length>0">-->
+                                <div class="feedslinks" >
+                                    <!--<span class="feedslinks5"><i class="fa fa-eye"></i>Views:784</span>-->
+                                     <span class="feedslinks5" *ngIf="selectedaudio.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{selectedaudio.musicviews[0].musiccount}}</span>
+                                            <span class="feedslinks5" *ngIf="selectedaudio.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+                                    <!--<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:158</span>-->
+                                    <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && !getlikeonstatus(selectedaudio.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedaudio.musiclikes[0].vlike}}</span>
+                                            <span (click)="showmusiclike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                            <span (click)="showmusicunlike(selectedaudio)" *ngIf="selectedaudio.musiclikes[0]!=null && getlikeonstatus(selectedaudio.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedaudio.musiclikes[0].vlike}}</span>
+
+                                    <!--<span class="feedslinks3"><i class="fa fa-comment"></i> Comments:{{selectedmusictrending.comments.length}}</span>-->
+                                    <span class="feedslinks3"><i class="fa fa-comment"></i> Comments: {{selectedaudio.comments.length}}</span>
+                                    <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
+                                    <!--<ng-template #popTemplate ><div [innerHtml]="html"></div></ng-template>
+                                        <span class="feedslinks4" [popover]="popTemplate" [outsideClick]="true"  (mouseenter)="setshareflag('audio',selectedaudio)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                                </div>
+
+                            </span>
+                            <div class="comment_modal">
+                                <div class="comment_container">
+                                    <div class="row" *ngIf="isloggedin==1">
+                                        <div class="row no-gutter col-container bodybloc5bottom">
+                                            <div class="col">
+                                                <div class="feedslinks">
+                                                        <span class="feedslinks1 comment_user_image">
+                                                            <div class="imgwrapper">
+                                                                <!--<img src="assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
+                                                                <span *ngIf="image==null">
+
+                                                <img src="../../assets/images/default_profile_pic.jpg" >
+
+                                            </span>
+                                            <span *ngIf="image!=null" >
+
+                                                <img src="https://audiodeadline.com/nodeserver/uploads/{{image}}" >
+
+                                            </span>
+                                                            </div>
+                                                        </span>
+                                                    <span class="feedslinks3 comment_user_text">
+                                                            <div class="row">
+                                                                <div class="row comment_input">
+                                                                   <!-- <input type="text" class="form-control">-->
+                                                                    <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                                </div>
+
+                                                            </div>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedaudio.comments">
+                                        <!--<div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedmusictrending.comments">-->
+                                        <div class="col">
+                                            <div class="feedslinks">
+                                <span class="feedslinks1 comment_user_image">
+                                    <div class="imgwrapper">
+
+
+                                        <!--<img src="assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                        <span *ngIf="valc.userdata[0].images!=null" >
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="https://audiodeadline.com/nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                            </a>
+                                        </span>
+
+                                        <span *ngIf="valc.userdata[0].images==null">
+                                                <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                                <img src="../../assets/images/default_profile_pic.jpg" >
+                                                </a>
+                                        </span>
+
+                                    </div>
+                                </span>
+                                                <span class="feedslinks3 comment_user_text">
+                                    <div class="row">
+                                        <div class="row comment_box">
+                                            <span class="timespan">{{convertunixtotimeago(valc.added_time)}}</span>
+                                            <!--<a href="#">User name</a>
+                                            <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>-->
+
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                            <b>{{valc.comment}}</b>
+                                        </div>
+                                        <!--<div class="row no-gutter col-container bodybloc5bottom">
+                                            <div class="col">
+                                                <div class="feedslinks comment_text_reply">
+                                                    <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                    <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                                    <!-- <div class="row">
+                                                         <div class="row no-gutter col-container bodybloc5bottom">
+                                                             <div class="col">
+                                                                 <div class="feedslinks">
+                                                                     <span class="feedslinks1 comment_user_image">
+                                                                         <div class="imgwrapper"><img src="assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                                     </span>
+                                                                     <span class="feedslinks3 comment_user_text">
+                                                                         <div class="row">
+                                                                             <div class="row comment_box">
+                                                                                 <a href="#">User name</a>
+                                                                                 <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
+                                                                             </div>
+                                                                             <div class="row no-gutter col-container bodybloc5bottom">
+                                                                                 <div class="col">
+                                                                                     <div class="feedslinks comment_text_reply">
+                                                                                         <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                                                         <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                                                     </div>
+                                                                                 </div>
+                                                                             </div>
+                                                                         </div>
+                                                                     </span>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                     <div class="row">
+                                                         <div class="row no-gutter col-container bodybloc5bottom">
+                                                             <div class="col">
+                                                                 <div class="feedslinks">
+                                                                     <span class="feedslinks1 comment_user_image">
+                                                                         <div class="imgwrapper"><img src="assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                                     </span>
+                                                                     <span class="feedslinks3 comment_user_text">
+                                                                         <div class="row">
+                                                                             <div class="row comment_input">
+                                                                                 <input type="text" class="form-control">
+                                                                             </div>
+
+                                                                         </div>
+                                                                     </span>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>-->
+                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row" *ngIf="isloggedin==1">-->
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 trending_video_list">
+                            <div class="scrollbar trendingvideoscrollbar style-2" id="style-4">
+                                <div class="row" *ngFor="let valMusic of musicArray;let i=index;">
+                                    <div class="video_list">
+                                        <!--<div class="video_list" *ngFor="let val of musicdetailArray;let i=index;" >-->
+                                        <div class="col-md-4 col-sm-4 col-xs-3">
+                                            <div class="videowrapper">
+                                                <!--<img src="assets/images/xp_music_banner2.jpg" alt="#">-->
+
+                                                <img *ngIf="(audioplayerindex!=i  && isaudioplay==false ) || (audioplayerindex==i && i==0 && isaudioplay==false )|| (audioplayerindex!=i && i!=0 && isaudioplay==true ) || (audioplayerindex!=i && i==0 && isaudioplay==true ) || isaudioplay==false " (click)="playaudio(valMusic)" src="../../assets/images/xp_music_banner.jpg" alt="#">
+                                                <img *ngIf="audioplayerindex==i && isaudioplay==true " (click)="playaudio(valMusic)" src="../../assets/images/xp-music-pause-banner-2.png" alt="#">
+                                                <!--<img _ngcontent-c1="" alt="#" src="../../assets/images/s_play_btn.png">-->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+                                            <!-- <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>-->
+                                            <p>{{valMusic.title_music}}</p>
+                                            <!--<p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>-->
+                                            <p><span>{{valMusic.userdata[0].firstname+' '+valMusic.userdata[0].lastname}}</span> <span class="pull-right">{{convertunixtotimeago(valMusic.added_time)}}</span></p>
+                                            <p>
+                                                <!--<span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>-->
+                                                <span class="feedslinks5" *ngIf="valMusic.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{valMusic.musicviews[0].musiccount}}</span>
+                                                <span class="feedslinks5" *ngIf="valMusic.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+
+                                                <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                                                <!--<ng-template #popTemplate1 ><div [innerHtml]="html"></div></ng-template>
+                                                <span class="feedslinks4" [popover]="popTemplate1" [outsideClick]="true"  (mouseenter)="setshareflag('audio',valMusic)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+
+
+
+                                                <span (click)="showmusiclike(valMusic)" *ngIf="valMusic.musiclikes[0]!=null && !getlikeonstatus(valMusic.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{valMusic.musiclikes[0].vlike}}</span>
+                                                <span (click)="showmusiclike(valMusic)" *ngIf="valMusic.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                                <span (click)="showmusicunlike(valMusic)" *ngIf="valMusic.musiclikes[0]!=null && getlikeonstatus(valMusic.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{valMusic.musiclikes[0].vlike}}</span>
+
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--music modal ends here-->
+
+<!--video modal starts here-->
+<div *ngIf="isModalVideoShown" class="modal fade modalUpload picturemodalsmall" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Videos</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="isModalVideoShown=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="artistsexchangeleftdiv trendingmusic-contaioner">
+                    <div class="sectionbody">
+                        <div class="artistsexchangeleftdiv">
+                            <div class="sectionbody">
+                        <div class="row no-gutter sectionheaderinner col-container tranding_videoandlisting">
+                            <div class="row avi_trandingmedia">
+                                <div class="col-md-8 col-lg-8 col-sm-7 col-xs-12">
+                                    <div class="row no-gutter sectionheaderinner col-container">
+                                        <div class="col-1-1 col videoblocknew">
+                                            <div class="videoWrapper">
+                                                <div class="iframevideo">
+                                                    <iframe width="100%" *ngIf="currentvideotype=='vimeo'" height="320" [attr.src]="choosenvideourl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                                    <youtube-player *ngIf="currentvideotype=='youtube'" [videoId]="choosenvideourl" [height]="320" (change)="onStateChange($event)"></youtube-player>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1-1 col" *ngIf="videoArray.length>0">
+                                            <div class="feedslinks"><span class="feedslinks3"><i class="fa fa-comment"></i> Comments: {{selectedvideo.comments.length}}</span>
+                                                <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
+                                               <!-- <ng-template #popTemplate6 ><div [innerHtml]="html"></div></ng-template>
+                                                <span [popover]="popTemplate6" [outsideClick]="true"  (mouseenter)="setshareflag('video',selectedvideo)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                                                <span class="feedslinks5" *ngIf="selectedvideo.videoviews[0]!=null"><i class="fa fa-eye"></i>Views:{{selectedvideo.videoviews[0].vcount}}</span>
+                                                <span class="feedslinks5" *ngIf="selectedvideo.videoviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+
+                                                <span (click)="showvideolike(selectedvideo)" *ngIf="selectedvideo.videolikes[0]!=null && !getlikeonstatus(selectedvideo.uservideolikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedvideo.videolikes[0].vlike}}</span>
+                                                <span (click)="showvideolike(selectedvideo)" *ngIf="selectedvideo.videolikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                                <span (click)="showvideounlike(selectedvideo)" *ngIf="selectedvideo.videolikes[0]!=null && getlikeonstatus(selectedvideo.uservideolikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedvideo.videolikes[0].vlike}}</span></div>
+                                            <div class="comment_modal">
+
+                                                <div class="comment_container">
+                                                    <div class="row" *ngIf="isloggedin==1">
+                                                        <div class="row no-gutter col-container bodybloc5bottom">
+                                                            <div class="col">
+                                                                <div class="feedslinks">
+                                                    <span class="feedslinks1 comment_user_image">
+                                                        <div class="imgwrapper">
+                                                            <span *ngIf="image==null">
+
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+
+                                        </span>
+                                        <span *ngIf="image!=null" >
+
+                                            <img src="https://audiodeadline.com/nodeserver/uploads/{{image}}" >
+
+                                        </span>
+                                                        </div>
+                                                    </span>
+                                                                    <span class="feedslinks3 comment_user_text">
+                                                        <div class="row">
+                                                            <div class="row comment_input">
+                                                                <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                            </div>
+
+                                                        </div>
+                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedvideo.comments">
+                                                        <div class="col">
+                                                            <div class="feedslinks">
+                                <span class="feedslinks1 comment_user_image">
+                                    <div class="imgwrapper">
+                                        <!--<img src="assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                         <span *ngIf="valc.userdata[0].images==null">
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+                                            </a>
+                                        </span>
+                                        <span *ngIf="valc.userdata[0].images!=null" >
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="https://audiodeadline.com/nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                            </a>
+                                        </span>
+                                    </div>
+                                </span>
+                                                                <span class="feedslinks3 comment_user_text">
+                                    <div class="row">
+                                        <div class="row comment_box">
+                                            <!--<span class="timespan"> on {{unixtodatetimeConverter(0,valc.added_time)}} at {{unixtodatetimeConverter(1,valc.added_time)}}</span>-->
+                                            <span class="timespan"> {{convertunixtotimeago(valc.added_time)}}</span>
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                        <b>{{valc.comment}}</b>
+                                        </div>
+                                        <!--<div class="row no-gutter col-container bodybloc5bottom">
+                                            <div class="col">
+                                                <div class="feedslinks comment_text_reply">
+                                                    &lt;!&ndash;<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                    <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>&ndash;&gt;
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 trending_video_list">
+
+                                    <div class="scrollbar trendingvideoscrollbar style-2" id="style-4">
+                                        <div class="row" *ngFor="let val of videoArray">
+                                            <div class="video_list">
+                                                <div class="col-md-4 col-sm-4 col-xs-3">
+                                                    <div class="videoWrapper">
+                                                        <img (click)="playthumb(val)" [attr.src]="getthumbnail(val)" alt="#">
+                                                        <img (click)="playthumb(val)" src="../../assets/images/s_play_btn.png" alt="#" class="playicon">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-9 tranding_blogp">
+
+                                                    <h2>{{val.title}}</h2>
+
+                                                    <p><span>{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</span>  <span>{{convertunixtotimeago(val.added_time)}}</span></p>
+                                                    <p>
+                                                        <span><i class="fa fa-eye" aria-hidden="true"></i> Views:<span *ngIf="val.videoviews[0]!=null">{{val.videoviews[0].vcount}}</span><span *ngIf="val.videoviews[0]==null">0</span></span>
+                                                        <!--<ng-template #popTemplate5 ><div [innerHtml]="html"></div></ng-template>
+                                                        <span [popover]="popTemplate5" [outsideClick]="true"  (mouseenter)="setshareflag('video',val)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+
+                                                        <span (click)="showvideolike(val)" *ngIf="val.videolikes[0]!=null && !getlikeonstatus(val.uservideolikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{val.videolikes[0].vlike}}</span>
+                                                        <span (click)="showvideolike(val)" *ngIf="val.videolikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                                        <span (click)="showvideounlike(val)" *ngIf="val.videolikes[0]!=null && getlikeonstatus(val.uservideolikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{val.videolikes[0].vlike}}</span>
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--video modal ends here-->
+
+
+
+
+

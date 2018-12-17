@@ -32,7 +32,7 @@
                         <div class="sectionheaderinnercontainer">
                             <blockquote>
                                 <!--<p class="mb-0">Jimmy Sarab on <span>3-14-2018</span></p>-->
-                                <p class="mb-0"><span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>{{convertunixtotimeago(pvalue.added_time)}}</span></p>
+                                <p class="mb-0"><span><a target="_blank" [routerLink]="['/userprofile',pvalue.user_id,pvalue.userdata[0].username]">{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</a></span><span>{{convertunixtotimeago(pvalue.added_time)}}</span></p>
                             </blockquote>
                         </div>
                         <div class="feedslinks">
@@ -253,11 +253,13 @@
                                         <span class="feedslinks1 userimagetitle">
                                             <div class="imgwrapper">
                                                 <!--<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                                <a target="_blank" [routerLink]="['/userprofile',selectedpicture.user_id,selectedpicture.userdata[0].username]">
                                                 <img src="{{siteurl}}nodeserver/uploads/{{selectedpicture.userdata[0].images}}" alt="RTP5">
+                                                    </a>
                                             </div>
                                             <div class="usertitle">
                                                  <!--user name-->
-                                                {{selectedpicture.userdata[0].firstname}}  {{selectedpicture.userdata[0].lastname}}
+                                                <a target="_blank" [routerLink]="['/userprofile',selectedpicture.user_id,selectedpicture.userdata[0].username]">{{selectedpicture.userdata[0].firstname}}  {{selectedpicture.userdata[0].lastname}}</a>
                                                 <!--<span>{{pvalue.userdata[0].firstname}} {{pvalue.userdata[0].lastname}}</span><span>{{convertunixtotimeago(pvalue.added_time)}}</span>-->
                                             </div>
                                         </span>

@@ -49,18 +49,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 `;*/
     html1='';
 
-    html2: string = `
-<div class="socialmediaicons socialmediaiconsform">    
-<form action="">
-      <input type="checkbox" name="watchlater" value="watchlater" > Watch later        
-      <a href="javascript:void(0)" class="createlabel createplaylist2"><i class="fa fa-plus"></i> Create new playlist</a>   
-      <div class="hide">
-        <input class="form-control" placeholder="Enter playlist name..." tabindex="0" maxlength="150">           
-        <input type="button" value="Create"> 
-      </div>  
-</form>
-</div>
-`;
+    html2: string = ``;
     /*for share popover*/
 
 
@@ -188,8 +177,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
     public chkerror;
     public chkerror2;
-    private audioplayerindex:any=0;
-    private audioplayerindextrending:any=0;
+    public audioplayerindex:any=0;
+    public audioplayerindextrending:any=0;
     public shuffleflag:boolean = false;
 
     public audiousername:any;
@@ -259,12 +248,18 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public commontrendingarray:any=[];
     public friendsarray:any=[];
     public favoritesarray:any=[];
+    public videocheckarr:any=[];
+    public videoselectflag:any=false;
+    private tempimage:any;
+    private tempuserprofilepicfile:any;
     //public FBS:any;
 
 
 
 
     constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,fb:FormBuilder,private sanitizer: DomSanitizer,public FBS: FacebookService) {
+
+
 
         this.chkerror = 0;
         //this.FBS=FBS;
@@ -390,8 +385,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this._http.post(link2, data)
             .subscribe(res => {
                 var result = res.json();
-                 //console.log('result.item');
-                 //console.log(result.item);
+                 console.log('result.item');
+                 console.log(result.item);
                 if(result.status=='success'){
 
                     this.real_name = result.item[0].firstname+' '+result.item[0].lastname;
@@ -424,7 +419,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                     this.twitter_oauth_token = result.item[0].twitter_oauth_token;
                     /*console.log(this.twitter_oauth_token);*/
                     this.twitter_oauth_token_secret = result.item[0].twitter_oauth_token_secret;
-                    this.twitter_timelineid = result.item[0].twitter_timelineid;
+                    let twitter_timelineid=this.twitter_timelineid = result.item[0].twitter_timelineid;
                     this.twitter_timelineurl = result.item[0].twitter_timelineurl;
                     this.insta_access_token = result.item[0].insta_access_token;
                     this.insta_followers_count = result.item[0].insta_access_token;
@@ -439,7 +434,18 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                     }
                     console.log(this.twitter_timelineurl);
                     console.log('this.twitter_timelineurl');
-                    twttr.widgets.load();
+                    //twttr.widgets.load();
+                    twttr.ready(function(twttr){
+                        twttr.widgets.createGridFromCollection(
+                            twitter_timelineid.replace('custom-',''),
+                            document.getElementById("twittertimeline"),
+                            {
+                                limit: 99,
+                                chrome: "nofooter",
+
+                            }
+                        );
+                    });
 
                     //console.log(result._body);
                 // this.twitterhtml = result._body;
@@ -507,6 +513,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         setTimeout(()=> {
             this.getfeedofusers();
         },3000);
+
+
+
+
 
         // this.getfeedofusers();
         //this.callininterval();
@@ -1381,23 +1391,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         });
 
-
-        console.log('friendslist called');
         this.friendslist();
-
-        console.log('friendslist end');
-
-
-
-
-
 
         if(this.isuserprofile==1){
             this.checkuserfriendrelation();
 
         }
-
-
 
     }
 
@@ -2310,37 +2309,21 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 // console.log(res);
 
                 if(res.error_code == 0){
-                    this.image = res.filename;
+                    //this.image = res.filename;
+                    this.tempimage = 'https://audiodeadline.com/nodeserver/uploads/'+res.filename;
+                    this.tempuserprofilepicfile = res.filename;
                     // console.log(123);
 
                     // this.imagepath = './nodeserver/uploads/';
                     // this.image = res.imagepath.filename;
-                    this.image = 'https://audiodeadline.com/nodeserver/uploads/'+res.filename;
-                    var link3=this.serverurl+'updateProfileImg';
-                    var dataval ={
-                        'userid':this.user_id,
-                        'images':res.filename
-                    };
+
+
+
+
                     this.showLoader = 0;
                     this.isModalShown = true;           //modal enables here
                     /*console.log('dataval');
                     console.log(dataval);*/
-                    this._http.post(link3,dataval)
-                        .subscribe(data => {
-
-                            var res = data.json();
-                            if(res.status=='success'){
-
-                                this.user_id = res.items._id;
-                                res.filename = res.items.images;
-
-                            }
-                            }, error =>{
-
-                            // console.log('Error');
-                            }
-
-                        );
 
 
                     /*console.log('this.image');
@@ -2353,6 +2336,39 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             });
     }
 
+
+    updateprofilepicture(){
+
+        //this.image = 'https://audiodeadline.com/nodeserver/uploads/'+this.tempimage;
+        var link3=this.serverurl+'updateProfileImg';
+        var dataval ={
+            'userid':this.user_id,
+            'images':this.tempuserprofilepicfile
+        };
+
+        this._http.post(link3,dataval)
+            .subscribe(data => {
+
+                let res = data.json();
+                console.log(res);
+                if(res.status=='success'){
+
+                    //this.user_id = res.items._id;
+                    //res.filename = res.items.images;
+                    this.image = this.tempimage;
+                    console.log('this.image');
+                    console.log(this.image);
+                    this.isModalShown = false;
+
+                }
+                }, error =>{
+
+                // console.log('Error');
+                }
+
+            );
+
+    }
 
     onFileUpload(event){
 
@@ -2716,6 +2732,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             this.getplaylists();
 
 
+
                         }
 
                     }, error =>{
@@ -2736,10 +2753,36 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                 let result:any={};
                 result= res.json();
-                /*console.log('result of playlist ...');
-                console.log(result);*/
-                this.playlistarray= result;
-                this.html1="<div>5465656</div>";
+                console.log('result of playlist ...');
+                console.log(result.item);
+                this.playlistarray= result.item;
+                let vplaylisthtml='';
+                for(let c in this.playlistarray){
+                    let tempid='id'+this.playlistarray[c]._id;
+
+                    if(this.playlistarray[c].type=='video') vplaylisthtml+='<a href="javascript:void(0)" tid="'+tempid+'" class="createlabel createplaylist2"><i class="fa fa-plus"></i> <span class="hide">'+this.playlistarray[c]._id+'</span> '+this.playlistarray[c].playlist_name+'</a>  ';
+                    console.log('vplaylisthtml');
+                    console.log(vplaylisthtml);
+                }
+
+                this.html2 = `
+<div class="socialmediaicons socialmediaiconsform">   
+<form action="">
+     <input type="checkbox" class="hide" name="watchlater" value="watchlater" >My Playlist    
+        `+vplaylisthtml+`
+     <a href="javascript:void(0)" class="createlabel createplaylist2"><i class="fa fa-plus"></i> Create new playlist</a>  
+     <div class="hide">
+       <input class="form-control" placeholder="Enter playlist name..." tabindex="0" maxlength="150">          
+       <input type="button" value="Create">
+     </div>
+</form>
+</div>
+`;
+
+                console.log('this.html2');
+                console.log(this.html2);
+
+                // this.html1="<div>5465656</div>";
             });
 
 
@@ -2784,7 +2827,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             /*console.log('Success');
                             console.log('result of playlist');
                             console.log(res.item.ops[0]);*/
+
+                            this.getplaylists();
                             this.isPlaylistVideoModalShown = false;
+
 
 
                         }
@@ -3128,11 +3174,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.isModalLinkShown = false;
         this.isModalMusicShown= false;
         this.isModalPicDetail= false;
-        this.ismodalcomment = false;
+        this.ismodalcomment = 0;
         this.isModalfbShown = false;
         this.iscommonconfirmmodal=false;
         this.iscommonmodal=false;
         this.isPlaylistModalShown = false;
+        this.isPlaylistVideoModalShown = false;
 
     }
 
@@ -3905,9 +3952,36 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             children6[i6].addEventListener("click", (event: Event) => {
                 //alert("Hello 69!");
                /* console.log("Hello children5!");
-
                 console.log(event);*/
-                this.isPlaylistVideoModalShown = true;
+
+               console.log($(children6[i6]).attr('class'));
+               console.log($(children6[i6]).find('span').text());
+
+                if($(children6[i6]).find('span').length == 0)this.isPlaylistVideoModalShown = true;
+                if($(children6[i6]).find('span').length> 0){
+
+                    let tempvarr = [];
+                    for (let y in this.videocheckarr){
+
+                        if(this.videocheckarr[y]==true){
+
+                            tempvarr.push(y);
+                        }
+                    }
+                    let data ={playlist_id:$(children6[i6]).find('span').text(), videoarray: tempvarr, type:'video'};
+                    console.log(data);
+                    let link = this.serverurl+'adduserplaylistdata';
+                    this._http.post(link, data)
+                        .subscribe(res=>{
+
+                            let result:any={};
+                            result = res.json();
+                   /*       console.log('result');
+                            console.log(result);*/
+                        })
+
+                }
+                // children6[i6].removeEventListener();                 /***********/
 
             });
 
@@ -4204,14 +4278,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 result= res.json();
                 if(result.status=='success'){
 
-                    console.log('result.item...................');
-                    console.log(result.item);
+                    /*console.log('result.item...................');
+                    console.log(result.item);*/
                     let items = result.item;
 
                     for(let i in items){
                         if(items[i].friend_by == this.user_id_new){
-                            console.log('items[i].userdata[0].fan');
-                            console.log(items[i].userdata[0].fan);
+                            /*console.log('items[i].userdata[0].fan');
+                            console.log(items[i].userdata[0].fan);*/
                             if(items[i].userdata[0].fan == 0){
 
                                 this.favoritesarray.push(items[i].userdata[0]);
@@ -4222,8 +4296,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             }
                         }
                         if(items[i].friend_id == this.user_id_new){
-                            console.log('items[i].userdatafrom[0].fan');
-                            console.log(items[i].userdatafrom[0].fan);
+                           /* console.log('items[i].userdatafrom[0].fan');
+                            console.log(items[i].userdatafrom[0].fan);*/
                             if(items[i].userdatafrom[0].fan == 0){
 
                                 this.favoritesarray.push(items[i].userdatafrom[0]);
@@ -4236,10 +4310,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                     }
 
-                    console.log('this.friendsarray');
+                    /*console.log('this.friendsarray');
                     console.log(this.friendsarray);
                     console.log('this.favoritesarray');
-                    console.log(this.favoritesarray);
+                    console.log(this.favoritesarray);*/
                 }
             })
 
@@ -4252,10 +4326,38 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         console.log(this.picturedetailArray);*/
 
         this.commontrendingarray.push(this.videodetailArray );
-        /*this.results = this.results.concat(data.results);*/
+        /*this.commontrendingarray = this.commontrendingarray.concat(this.videodetailArray);*/
         this.commontrendingarray.push(this.musicdetailArray);
         this.commontrendingarray.push(this.picturedetailArray);
-        console.log(this.commontrendingarray);
+        // console.log(this.commontrendingarray);
+
+    }
+
+    checkvideoselbox(){
+        console.log('in checkvideoselbox');
+        console.log(this.videocheckarr);
+        setTimeout(()=> {
+            this.videoselectflag=false;
+            for (let y in this.videocheckarr){
+                if(this.videocheckarr[y]==true){
+
+                    this.videoselectflag = true;
+
+
+                }
+                /*if(this.videocheckarr[y]==false){
+                    console.log('delteing ...')
+                    console.log( this.videocheckarr[y]);
+                    console.log(y);
+                    console.log(this.videocheckarr.indexOf(this.videocheckarr[y]));
+                    this.videocheckarr.splice(this.videocheckarr.indexOf(this.videocheckarr[y]),1);
+                }*/
+
+                console.log('in checkvideoselbox');
+                console.log(this.videocheckarr);
+            }
+        },2000);
+
 
     }
 

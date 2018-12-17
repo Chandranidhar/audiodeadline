@@ -111,8 +111,8 @@
                                 <!--<span class="feedslinks3"><i class="fa fa-comment"></i> Comments:{{selectedmusictrending.comments.length}}</span>-->
                                 <span class="feedslinks3"><i class="fa fa-comment"></i> Comments: {{selectedaudio.comments.length}}</span>
                                 <!--<span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>-->
-                                <ng-template #popTemplate ><div [innerHtml]="html"></div></ng-template>
-                                    <span class="feedslinks4" [popover]="popTemplate" [outsideClick]="true"  (mouseenter)="setshareflag('audio',selectedaudio)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                               <!-- <ng-template #popTemplate ><div [innerHtml]="html"></div></ng-template>
+                                    <span class="feedslinks4" [popover]="popTemplate" [outsideClick]="true"  (mouseenter)="setshareflag('audio',selectedaudio)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
                             </div>
 
                         </span>
@@ -249,6 +249,7 @@
 
                         </div>
 
+
                         <div class="col-md-4 col-lg-4 col-sm-5 col-xs-12 trending_video_list">
                             <div class="scrollbar trendingvideoscrollbar style-2" id="style-4">
                                 <div class="row" *ngFor="let valMusic of musicArray;let i=index;">
@@ -267,15 +268,15 @@
                                             <!-- <p>Lorem ipsum dolor sit amet, in nec eros melius adipiscing</p>-->
                                             <p>{{valMusic.title_music}}</p>
                                             <!--<p><span>JIMMY SARAB </span> <span class="pull-right"> ON 3-14-2018</span></p>-->
-                                            <p><span>{{valMusic.userdata[0].firstname+' '+valMusic.userdata[0].lastname}}</span> <span class="pull-right">{{convertunixtotimeago(valMusic.added_time)}}</span></p>
+                                            <p><span><a target="_blank" [routerLink]="['/userprofile',valMusic.user_id,valMusic.userdata[0].username]" >{{valMusic.userdata[0].firstname+' '+valMusic.userdata[0].lastname}}</a></span> <span class="pull-right">{{convertunixtotimeago(valMusic.added_time)}}</span></p>
                                             <p>
                                                 <!--<span><i class="fa fa-eye" aria-hidden="true"></i> Views: 389</span>-->
                                                 <span class="feedslinks5" *ngIf="valMusic.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{valMusic.musicviews[0].musiccount}}</span>
                                                 <span class="feedslinks5" *ngIf="valMusic.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
 
                                                 <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
-                                                <ng-template #popTemplate1 ><div [innerHtml]="html"></div></ng-template>
-                                                <span class="feedslinks4" [popover]="popTemplate1" [outsideClick]="true"  (mouseenter)="setshareflag('audio',valMusic)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                                <!--<ng-template #popTemplate1 ><div [innerHtml]="html"></div></ng-template>
+                                                <span class="feedslinks4" [popover]="popTemplate1" [outsideClick]="true"  (mouseenter)="setshareflag('audio',valMusic)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
 
 
                                                 <!--<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>-->
@@ -423,31 +424,7 @@
                 </div>
 
             </div>
-            <!--<div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
-              <nav class="paginationtab">
-                <div class="paginationwrapper">
-                  <ul class="pagination pg-darkgrey pagination_list">
-                    <li class="page-item">
-                      <a class="page-link" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link">1</a></li>
-                    <li class="page-item"><a class="page-link">2</a></li>
-                    <li class="page-item"><a class="page-link">3</a></li>
-                    <li class="page-item"><a class="page-link">4</a></li>
-                    <li class="page-item"><a class="page-link">5</a></li>
-                    <li class="page-item">
-                      <a class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
-            </div>-->
+
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 competitionrightdiv competitionrightdivtop">
             <!---Right Side Banner Start Block---->

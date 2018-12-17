@@ -317,7 +317,7 @@ export class Communitysignupstep2Component implements OnInit {
       this.exparr = [];
       this.webarr = [];
 
-    console.log('formval');
+  /*  console.log('formval');
     console.log(formval);
     console.log('this.dataForm.valid');
     console.log( this.dataForm.controls['ethnicity'].valid);
@@ -328,22 +328,8 @@ export class Communitysignupstep2Component implements OnInit {
     console.log( this.dataForm.controls['state'].valid);
     console.log( this.dataForm.controls['zip'].valid);
     console.log( this.dataForm.controls['experience'].valid);
-    console.log( this.dataForm.controls['website'].valid);
+    console.log( this.dataForm.controls['website'].valid);*/
 
-      /* realname: ["",Validators.required],
-       alias: [""],
-       gender: ["",Validators.required],
-       musicgenre: [""],
-       dancergenre: [""],
-       ethnicity: [""],
-       ability: [""],
-       bio: ["",Validators.required],
-       city: ["",Validators.required],
-       address: ["",Validators.required],
-       state: ["",Validators.required],
-       zip: ["",Validators.required],
-       experience: this.fb.array([this.createExp('')]),
-       website: this.fb.array([this.createWebsite('')]),*/
 
     if (this.dataForm.valid ) {
 

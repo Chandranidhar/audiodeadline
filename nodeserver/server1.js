@@ -1572,6 +1572,28 @@ app.get('/editprofiledetails',function(req,resp){
 });
 
 
+app.get('/manageRoleByUserId',function(req,resp){
+    var collection= db.collection('user');
+    var o_id = new mongodb.ObjectID(req.query._id);
+
+    var data = {
+        dancer : parseInt(req.query.dancer),
+        model : parseInt(req.query.model),
+        musicians : parseInt(req.query.musicians),
+        fan : parseInt(req.query.fan),
+        signupaffiliate : parseInt(req.query.signupaffiliate)
+    };
+
+    collection.update({_id: o_id}, {$set: data},function(err, results) {
+        if(err){
+            resp.send(JSON.stringify({'status':'error'}));
+        }else{
+            resp.send(JSON.stringify({'status':'success','item':results}));
+        }
+    });
+});
+
+
 /*app.get('/addacctoken',function(req,resp){
     var collection= db.collection('user');
     var o_id = new mongodb.ObjectID('5b6c0c0d7fb62cc83631664e');
@@ -1716,6 +1738,93 @@ app.get('/getPlaylistByUserid',function(req,resp){
         }
     });
 });
+
+
+app.get('/adduserplaylistdata',function(req,resp){
+    var collection = db.collection('userplaylist');
+    var tvarr=[];
+    var tempvarforv='';
+    for(c in req.query.videoarray){
+
+        tempvarforv={type:req.query.type,playlist_id:new mongodb.ObjectID(req.query.playlist_id),videoid:new mongodb.ObjectID(req.query.videoarray[c])} ;
+        tvarr.push(tempvarforv);
+    }
+
+    collection.insert(tvarr, function (err, result) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','msg':'Database error occured. Try again!'}));
+        } else {
+
+            /*for(c in req.query.videoarray){
+
+                tempvarforv={type:req.query.type,playlist_id:new mongodb.ObjectID(req.query.playlist_id),videoid:new mongodb.ObjectID(req.query.videoarray[c])} ;
+                //tvarr.push(tempvarforv);
+                collection.find(tempvarforv).toArray(function(err, items) {
+                    if (err) {
+                        resp.send(JSON.stringify({'status':'error','id':0}));
+                    } else {
+                        // resitem = items[0];
+                        // /if(items.length>0) collection.deleteOne(tempvarforv);
+                    }
+                });
+
+
+            }*/
+
+
+            clearuserplaylistdata();
+            resp.send(JSON.stringify({'status': 'success'}));
+        }
+    });
+
+
+    /*collection.find({_id:new mongodb.ObjectID(req.query.playlist_id)}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            // resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });*/
+});
+
+app.get('/clearuserplaylistdata',function(req,resp) {
+
+    var collection = db.collection('userplaylist');
+    collection.find({}).sort({_id:1}).forEach(function(doc){
+        collection.remove({_id:{$gt:doc._id}, playlist_id:doc.playlist_id,type:doc.type,videoid:doc.videoid});
+    });
+    resp.send(JSON.stringify({'status':'error','id':0}));
+
+
+
+    //resp.send(JSON.stringify({'status':'error','id':0}));
+    //return;
+    /*collection.find().toArray(function(err, items) {
+        if (err) {
+            //resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+
+            clearuserplaylistdata(items)
+            // resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','itemc':items.length,'item':items}));
+            //return;
+
+        }
+    });*/
+
+});
+
+
+function clearuserplaylistdata(){
+
+    var collection = db.collection('userplaylist');
+    collection.find({}).sort({_id:1}).forEach(function(doc){
+        collection.remove({_id:{$gt:doc._id}, playlist_id:doc.playlist_id,type:doc.type,videoid:doc.videoid});
+    });
+
+
+}
 
 
 
@@ -2442,19 +2551,6 @@ app.get('/getuserdetailsbyfriendtype1',function (req,resp) {
 app.get('/getuserdetailsbyfriendtype',function (req,resp) {
     var collection= db.collection('userfriendlistview');
     var cond = {};
-    /*  cond={
-     $or:[
-
-     [ {friend_id : new mongodb.ObjectID(req.query.friend_id)},
-     {friend_by : new mongodb.ObjectID(req.query.user_id)}],
-
-     [ {friend_id : new mongodb.ObjectID(req.query.user_id)},
-     {friend_by : new mongodb.ObjectID(req.query.friend_id)}],
-
-     ]
-
-     };*/
-
     cond = {
         $or: [
                 {friend_by : new mongodb.ObjectID(req.query.user_id)},

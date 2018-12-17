@@ -20,19 +20,21 @@
       </div>
       <div class="sectionbody">
         <div class="row no-gutter sectionheaderinner col-container">
-          <div class="col-1-5 col">
+          <div class="col-1-5 col" *ngFor="let val of friendsarray">
             <div class="imgwrapper">
-              <img src="assets/images/artistimg-friend1.jpg" alt="friend1">
+              <!--<img src="assets/images/artistimg-friend1.jpg" alt="friend1">-->
+              <img *ngIf="val.images!= undefined"  src="https://audiodeadline.com/nodeserver/uploads/{{val.images}}" alt="communities1" [routerLink]="['/userprofile',val._id,val.username]">
+              <img *ngIf="val.images== undefined"  src="../../assets/images/default_profile_pic.jpg" alt="communities1" [routerLink]="['/userprofile',val._id,val.username]">
             </div>
             <div class="block4container">
               <blockquote>
-                <p class="mb-0">Jane Doe</p>
-                <p class="mb-1">New York, CA - 600156</p>
-                <p class="mb-2"><span>MEMBER SINCE</span> 04-DEC-2018</p>
+                <p class="mb-0">{{val.fullname}}</p>
+                <p class="mb-1" *ngIf="val.city!='' || val.state!='' || val.zip!='' ">{{val.city}} , {{val.state}} - {{val.zip}}</p>
+                <p class="mb-2"><span>MEMBER SINCE</span> {{unixtodatetimeConverter(0,val.added_time)}}</p>
               </blockquote>
             </div>
           </div>
-          <div class="col-1-5 col">
+         <!-- <div class="col-1-5 col">
             <div class="imgwrapper">
               <img src="assets/images/artistimg-friend2.jpg" alt="friend2">
             </div>
@@ -115,7 +117,7 @@
                 <p class="mb-2"><span>MEMBER SINCE</span> 04-DEC-2018</p>
               </blockquote>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
