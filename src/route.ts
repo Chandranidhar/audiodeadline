@@ -88,6 +88,7 @@ import {MymusicplayerComponent} from "./app/mymusicplayer/mymusicplayer.componen
 import {MyvideoComponent} from "./app/myvideo/myvideo.component";
 import {MyphotosComponent} from "./app/myphotos/myphotos.component";
 import {MylinkComponent} from "./app/mylink/mylink.component";
+import {MediawallComponent} from "./app/mediawall/mediawall.component";
 
 
 const appRoutes: Routes = [
@@ -172,8 +173,9 @@ const appRoutes: Routes = [
     { path: 'artistxp-contactus', component: ArtistxpcontactusComponent},
     { path: 'postfeed/:type/:id', component: PostfeedComponent},
     { path: 'editprofile/:id', component: EditprofileComponent},
-    { path: 'photogallery', component: PhotogalleryComponent},
+    { path: 'trendingphotos', component: PhotogalleryComponent},
     { path: 'favoriteartists', component: FavoriteartistsComponent},
+    { path: 'mediawall', component: MediawallComponent},
     { path: 'friends', component: FriendsComponent},
     { path: 'friendsfeed', component: FriendsfeedComponent},
     { path: 'artistfeed', component: ArtistfeedComponent},

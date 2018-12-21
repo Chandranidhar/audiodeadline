@@ -1581,9 +1581,9 @@ img.playicon{
     overflow-x: hidden;*/
     overflow-y: auto;
     overflow-x: hidden;
-    height: 329px;
+   /* height: 329px;
     margin-bottom: 6px;
-    margin-top: 6px;
+    margin-top: 6px;*/
     float: left;
 }
 #tabVideos .arrow a i {
@@ -2209,7 +2209,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0049', endColorstr='#ff0049',GradientType=1 ); /* ie6-9 */
     border-radius: 10px; width: 59px; height: 19px;-webkit-box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);
     -moz-box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);
-    box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);}
+    box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75); filter: sepia(100%) saturate(360%) grayscale(0) contrast(140%) hue-rotate(56deg) invert(16%);}
 .scrolling-wrapper::-moz-scrollbar-thumb {/*background: url(../images/artistimg-scrollbar-redbg.png) no-repeat;*/ background: -moz-linear-gradient(0deg, rgba(255,0,73,1) 0%, rgba(255,0,73,1) 34%, rgba(163,3,49,1) 36%, rgba(255,0,73,1) 37%, rgba(163,3,49,1) 39%, rgba(255,0,73,1) 40%, rgba(163,3,49,1) 42%, rgba(255,0,73,1) 43%, rgba(163,3,49,1) 45%, rgba(255,0,73,1) 46%, rgba(163,3,49,1) 48%, rgba(255,0,73,1) 49%, rgba(163,3,49,1) 51%, rgba(255,0,73,1) 53%, rgba(163,3,49,1) 54%, rgba(255,0,73,1) 56%, rgba(163,3,49,1) 58%, rgba(255,0,73,1) 59%, rgba(163,3,49,1) 61%, rgba(255,0,73,1) 63%, rgba(255,0,73,1) 100%); /* ff3.6+ */
     background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255,0,73,1)), color-stop(34%, rgba(255,0,73,1)), color-stop(36%, rgba(163,3,49,1)), color-stop(37%, rgba(255,0,73,1)), color-stop(39%, rgba(163,3,49,1)), color-stop(40%, rgba(255,0,73,1)), color-stop(42%, rgba(163,3,49,1)), color-stop(43%, rgba(255,0,73,1)), color-stop(45%, rgba(163,3,49,1)), color-stop(46%, rgba(255,0,73,1)), color-stop(48%, rgba(163,3,49,1)), color-stop(49%, rgba(255,0,73,1)), color-stop(51%, rgba(163,3,49,1)), color-stop(53%, rgba(255,0,73,1)), color-stop(54%, rgba(163,3,49,1)), color-stop(56%, rgba(255,0,73,1)), color-stop(58%, rgba(163,3,49,1)), color-stop(59%, rgba(255,0,73,1)), color-stop(61%, rgba(163,3,49,1)), color-stop(63%, rgba(255,0,73,1)), color-stop(100%, rgba(255,0,73,1))); /* safari4+,chrome */
     background: -webkit-linear-gradient(0deg, rgba(255,0,73,1) 0%, rgba(255,0,73,1) 34%, rgba(163,3,49,1) 36%, rgba(255,0,73,1) 37%, rgba(163,3,49,1) 39%, rgba(255,0,73,1) 40%, rgba(163,3,49,1) 42%, rgba(255,0,73,1) 43%, rgba(163,3,49,1) 45%, rgba(255,0,73,1) 46%, rgba(163,3,49,1) 48%, rgba(255,0,73,1) 49%, rgba(163,3,49,1) 51%, rgba(255,0,73,1) 53%, rgba(163,3,49,1) 54%, rgba(255,0,73,1) 56%, rgba(163,3,49,1) 58%, rgba(255,0,73,1) 59%, rgba(163,3,49,1) 61%, rgba(255,0,73,1) 63%, rgba(255,0,73,1) 100%); /* safari5.1+,chrome10+ */
@@ -2218,7 +2218,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     background: linear-gradient(90deg, rgba(255,0,73,1) 0%, rgba(255,0,73,1) 34%, rgba(163,3,49,1) 36%, rgba(255,0,73,1) 37%, rgba(163,3,49,1) 39%, rgba(255,0,73,1) 40%, rgba(163,3,49,1) 42%, rgba(255,0,73,1) 43%, rgba(163,3,49,1) 45%, rgba(255,0,73,1) 46%, rgba(163,3,49,1) 48%, rgba(255,0,73,1) 49%, rgba(163,3,49,1) 51%, rgba(255,0,73,1) 53%, rgba(163,3,49,1) 54%, rgba(255,0,73,1) 56%, rgba(163,3,49,1) 58%, rgba(255,0,73,1) 59%, rgba(163,3,49,1) 61%, rgba(255,0,73,1) 63%, rgba(255,0,73,1) 100%); /* w3c */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0049', endColorstr='#ff0049',GradientType=1 ); /* ie6-9 */ border-radius: 10px; width: 59px; height: 19px;-webkit-box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);
     -moz-box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);
-    box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);}
+    box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);filter: sepia(100%) saturate(360%) grayscale(0) contrast(140%) hue-rotate(56deg) invert(16%);}
 .scrolling-wrapper::-ms-scrollbar-thumb {/*background: url(../images/artistimg-scrollbar-redbg.png) no-repeat;*/ background: -moz-linear-gradient(0deg, rgba(255,0,73,1) 0%, rgba(255,0,73,1) 34%, rgba(163,3,49,1) 36%, rgba(255,0,73,1) 37%, rgba(163,3,49,1) 39%, rgba(255,0,73,1) 40%, rgba(163,3,49,1) 42%, rgba(255,0,73,1) 43%, rgba(163,3,49,1) 45%, rgba(255,0,73,1) 46%, rgba(163,3,49,1) 48%, rgba(255,0,73,1) 49%, rgba(163,3,49,1) 51%, rgba(255,0,73,1) 53%, rgba(163,3,49,1) 54%, rgba(255,0,73,1) 56%, rgba(163,3,49,1) 58%, rgba(255,0,73,1) 59%, rgba(163,3,49,1) 61%, rgba(255,0,73,1) 63%, rgba(255,0,73,1) 100%); /* ff3.6+ */
     background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255,0,73,1)), color-stop(34%, rgba(255,0,73,1)), color-stop(36%, rgba(163,3,49,1)), color-stop(37%, rgba(255,0,73,1)), color-stop(39%, rgba(163,3,49,1)), color-stop(40%, rgba(255,0,73,1)), color-stop(42%, rgba(163,3,49,1)), color-stop(43%, rgba(255,0,73,1)), color-stop(45%, rgba(163,3,49,1)), color-stop(46%, rgba(255,0,73,1)), color-stop(48%, rgba(163,3,49,1)), color-stop(49%, rgba(255,0,73,1)), color-stop(51%, rgba(163,3,49,1)), color-stop(53%, rgba(255,0,73,1)), color-stop(54%, rgba(163,3,49,1)), color-stop(56%, rgba(255,0,73,1)), color-stop(58%, rgba(163,3,49,1)), color-stop(59%, rgba(255,0,73,1)), color-stop(61%, rgba(163,3,49,1)), color-stop(63%, rgba(255,0,73,1)), color-stop(100%, rgba(255,0,73,1))); /* safari4+,chrome */
     background: -webkit-linear-gradient(0deg, rgba(255,0,73,1) 0%, rgba(255,0,73,1) 34%, rgba(163,3,49,1) 36%, rgba(255,0,73,1) 37%, rgba(163,3,49,1) 39%, rgba(255,0,73,1) 40%, rgba(163,3,49,1) 42%, rgba(255,0,73,1) 43%, rgba(163,3,49,1) 45%, rgba(255,0,73,1) 46%, rgba(163,3,49,1) 48%, rgba(255,0,73,1) 49%, rgba(163,3,49,1) 51%, rgba(255,0,73,1) 53%, rgba(163,3,49,1) 54%, rgba(255,0,73,1) 56%, rgba(163,3,49,1) 58%, rgba(255,0,73,1) 59%, rgba(163,3,49,1) 61%, rgba(255,0,73,1) 63%, rgba(255,0,73,1) 100%); /* safari5.1+,chrome10+ */
@@ -2227,7 +2227,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     background: linear-gradient(90deg, rgba(255,0,73,1) 0%, rgba(255,0,73,1) 34%, rgba(163,3,49,1) 36%, rgba(255,0,73,1) 37%, rgba(163,3,49,1) 39%, rgba(255,0,73,1) 40%, rgba(163,3,49,1) 42%, rgba(255,0,73,1) 43%, rgba(163,3,49,1) 45%, rgba(255,0,73,1) 46%, rgba(163,3,49,1) 48%, rgba(255,0,73,1) 49%, rgba(163,3,49,1) 51%, rgba(255,0,73,1) 53%, rgba(163,3,49,1) 54%, rgba(255,0,73,1) 56%, rgba(163,3,49,1) 58%, rgba(255,0,73,1) 59%, rgba(163,3,49,1) 61%, rgba(255,0,73,1) 63%, rgba(255,0,73,1) 100%); /* w3c */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff0049', endColorstr='#ff0049',GradientType=1 ); /* ie6-9 */ border-radius: 10px; width: 59px; height: 19px;-webkit-box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);
     -moz-box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);
-    box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);}
+    box-shadow: -3px 15px 24px -1px rgba(0,0,0,0.75);filter: sepia(100%) saturate(360%) grayscale(0) contrast(140%) hue-rotate(56deg) invert(16%);}
 
 
 .sectionheader {
@@ -2493,14 +2493,46 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .bodybloc7bottom{width: 100%; }
 .bodybloc7bottom .imgwrapper{width: 109px; height: 97px;border:1px solid #020202 !important;}
 .bodybloc7bottom .imgwrapper img{width: 100%;}
-.bodybloc7bottom h2{padding: 0px 5px; margin: 0; font-family: 'RobotoMedium'; font-size: 14px; color:#6ed2fc; text-align: left; font-weight: normal; line-height: 16px; text-transform: inherit; white-space: normal;
+.bodybloc7bottom h2{display: block; padding: 0px 5px; margin: 0; font-family: 'RobotoMedium'; font-size: 14px; color:#6ed2fc; text-align: left; font-weight: normal; line-height: 16px; text-transform: inherit; white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    min-height: 32px;
+    max-height: 32px;
 }
+
+
+
+@-moz-document url-prefix() {
+    .bodybloc7bottom h2 {
+        overflow: hidden;
+        position: relative;
+    }
+    .bodybloc7bottom h2:before {
+        /*background: #FFFFFF;*/
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        float: right;
+        content: '\2026';
+        margin-left: -1rem;
+        width: 10px;
+    }
+    .bodybloc7bottom h2:after {
+        content: '';
+        position: absolute;
+        height: 32px;
+        width: 100%;
+        z-index: 1;
+    }
+}
+
+
+
+
+
+
 .bodybloc7bottom p{padding: 0px 5px; margin: 7px 0px; font-family: 'RobotoMedium'; font-size: 11px; color: #d4d6d7; text-align: left; font-weight: normal;  line-height: 14px; text-transform: uppercase; margin-left: auto!important;
     display: inline-block; width: 100%;  float: left;}
 .bodybloc7bottom p span{display: inline-block; width: auto; text-align: right;float: right;}
@@ -2648,6 +2680,16 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 
 
 /*start avijit css */
+/*---------- mediawall css 21/12/2018--------*/
+
+.as_friendsfeed .sectionbody{border: 0;}
+.as_mediawall .artistfeedsblock .sectionbody{border: 0;}
+.as_artistfeed .artistfeedsblock .sectionbody{border: 0;}
+
+.as_artistfeed{ border-left: 0;}
+.as_friendsfeed{border-left: 0;}
+.as_mediawall{padding-top:20px; border-left: 0;}
+
 .avi_pic_css .col-1-5 {
     width: 23%;
     position: relative;
@@ -3845,7 +3887,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
     padding: 0 0px 0 !important;*/
     position: relative;
     display: block;
-    width: 100%;
+    width: 98%;
     margin: 0 auto;
     padding: 0 0px 0 !important;
 }
@@ -5304,7 +5346,6 @@ MY
 
 
 
-
 #tabPlayerFan .feedpostwrapperinner {height: 420px;}
 #tabPlayerFan .player_con .scrollbar4 {height: 320px;}
 #tabVideosFan .iframevideo {padding-right: 5px;}
@@ -5559,6 +5600,215 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 .picturemodalsmall .modal-dialog .feedslinks span:last-child {display: table-cell;}
 
 
+
+
+
+.inputcheckbox{
+    display: inline-flex !important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.inputcheckbox input[type=checkbox]:not(old),
+.inputcheckbox input[type=radio   ]:not(old){
+    width: 16px;
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    opacity: 1;
+    height: 16px;
+}
+
+.inputcheckbox input[type=checkbox]:not(old) + label,
+.inputcheckbox input[type=radio   ]:not(old) + label{
+    /*display      : inline-block;
+    margin-left  : 0em;
+    line-height  : 1.5em;*/
+    display: inline-block;
+    line-height: 22px;
+    width: 92%;
+    margin-bottom: 0px !important;
+}
+
+.inputcheckbox input[type=checkbox]:not(old) + label > span,
+.inputcheckbox input[type=radio   ]:not(old) + label > span{
+    display          : inline-block;
+    width            : 0.875em;
+    height           : 0.875em;
+    margin           : 0.25em 0.5em 0.25em 0.25em;
+    border           : 0.0625em solid rgb(192,192,192);
+    border-radius    : 0.25em;
+    background       : rgb(0,0,0);
+    background-image :    -moz-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image :     -ms-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image :      -o-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image : -webkit-linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    background-image :         linear-gradient(rgb(240,240,240),rgb(224,224,224));
+    vertical-align   : bottom;
+}
+
+.inputcheckbox input[type=checkbox]:not(old):checked + label > span,
+.inputcheckbox input[type=radio   ]:not(old):checked + label > span{
+    background-image :    -moz-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image :     -ms-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image :      -o-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image : -webkit-linear-gradient(rgb(224,224,224),rgb(240,240,240));
+    background-image :         linear-gradient(rgb(224,224,224),rgb(240,240,240));
+}
+
+.inputcheckbox input[type=checkbox]:not(old):checked + label > span:before{
+    content     : '✓';
+    display     : block;
+    width       : 1em;
+    color       : rgb(153,204,102);
+    font-size   : 0.875em;
+    line-height : 1em;
+    text-align  : center;
+    text-shadow : 0 0 0.0714em rgb(115,153,77);
+    font-weight : bold;
+}
+
+.inputcheckbox input[type=radio]:not(old):checked +  label > span > span{
+    display          : block;
+    width            : 0.5em;
+    height           : 0.5em;
+    margin           : 0.125em;
+    border           : 0.0625em solid rgb(115,153,77);
+    border-radius    : 0.125em;
+    background       : rgb(153,204,102);
+    background-image :    -moz-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+    background-image :     -ms-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+    background-image :      -o-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+    background-image : -webkit-linear-gradient(rgb(179,217,140),rgb(153,204,102));
+    background-image :         linear-gradient(rgb(179,217,140),rgb(153,204,102));
+}
+
+
+.playlistactionbtn{
+    position: absolute;
+    right: 0;
+    bottom: -44px;
+    width: auto;
+    margin-right: 7px;
+    margin-top: 2px;
+    display: inline-block;
+    text-align: center;
+}
+.playlistactionbtn span {
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    padding: 6px 0px;
+    margin-right: 0px;
+    margin-left: 2px;
+    width: 72px;
+}
+
+.playlistactionbtn span.addlist{
+    background-color: #88a60e;
+    margin-left: 5px;
+}
+.playlistactionbtn span.editlist{
+    background-color: #f88400;
+}
+.playlistactionbtn span.deletelist{
+    background-color: #ff0049;
+}
+
+#tabPlayer .tab-container .CellWithComment span i.fa{font-size: 18px;}
+#tabPlayer .player_con .scrollbar4{
+    height: 360px;
+    margin-bottom: 8px;
+    margin-top: 0px;
+}
+.avi_trandingmedia .trending_video_list{
+    position: relative;
+    padding-right: 5px;
+}
+
+.playlistactionbtn .arrow{
+    width: auto !important;
+    margin-left: 5px;
+}
+.playlistactionbtn .arrow:nth-child(1){
+    margin-left: 0px;
+}
+
+.playlistactionbtn .arrow:last-child {
+    position: relative;
+    z-index: 999;
+    bottom: 0;
+    left: 0px;
+}
+
+.modalVideoUpload .av_button img {
+    max-width: 8%;
+}
+
+
+
+#tabVideos .col-md-6.col-sm-5.col-xs-12{
+    position: relative;
+    height: 100%;
+    padding-right: 5px;
+}
+
+#tabVideos .tab-container .CellWithComment span i.fa{font-size: 18px;}
+#tabVideos .style-2{
+    height: 368px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+
+
+
+
+
+
+@-moz-document url-prefix() {
+    .trending_video_list .scrollbar{overflow: hidden !important;}
+    #tabVideos .scrollbar{overflow: hidden !important;}
+    /*html,body{overflow: hidden !important;}*/
+}
+
+
+.playlistmodal{}
+.playlistmodal .col-md-12{padding-left: 0px; padding-right: 0px;}
+.playlistmodal .player_con .scrollbar4 {height: 360px;margin-bottom: 8px;}
+.playlistmodal .play_video_status p{display: table; margin: 0;}
+.playlistmodal .col-md-12 .sectionbody {padding-bottom: 5px;}
+.playlistmodal .col-md-12 .av_button{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font-family: 'RobotoRegular';
+    font-size: 18px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+    border: 2px solid #333;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.playlistmodal .col-md-12 .av_button button{width: 32.33%; margin: .5%;}
+.playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting {border-bottom: 2px solid #1c3349;}
+.playlistmodal .avi_trandingmedia .trending_video_list {padding-right: 0px;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant {width: 99%;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-7.col-xs-12{padding-left:0px; padding-right:5px;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12{padding-right:0px; padding-left:5px;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar{height: 281px;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar .video_list .col-md-4.col-sm-3.col-xs-3{padding-left:0; padding-right:0;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar .video_list .col-md-8.col-sm-9.col-xs-9 {padding-left: 0; padding-right: 0;}
 
 /*---Media Css Start Here----*/
 
@@ -5844,10 +6094,17 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         display: inline-block;
         width: 100%;
         font-size: 10px;
+        font-size: 10px;
     }
 }
 
 @media(max-width: 1600px) {
+    .playlistactionbtn span {
+        padding: 6px 2px;
+        width: 65px;
+        font-size: 13px;
+    }
+
     .trendingmedia .artistsexchangeleftdiv .sectionbody .tranding_videoandlisting .scrollbar4 {
         height: 640px;
     }
@@ -5945,6 +6202,12 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1500px) {
+/*
+    #tabPlayer .play_video_status p span i{
+        display: block;
+        width: 100%;
+    }*/
+
     .trendingmusic-contaioner .tranding_videoandlisting .trendingvideoscrollbar {
         height: 680px;
     }
@@ -6245,6 +6508,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 1300px) {
+    .tab-container .CellWithComment span i.fa {
+        font-size: 13px;
+    }
+
     #tabVideos .play_video_status p {
         padding-top: 7px;
         font-size: 11px;
@@ -6373,6 +6640,13 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 
 @media (max-width: 1199px){
+
+
+
+    #tabPlayer .player_con .play_video_status {
+        text-align: left;
+        padding: 14px;
+    }
     .landingwrapper_genuserlanpt .newheaderclass h1 {
         position: inherit;
         top: 0;
@@ -6971,6 +7245,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 991px){
+    .as_mediawall .col-container .col-1-2{width: 100%;}
+    .as_artistfeed .col-container .col-1-2{width: 100%;}
+    .as_friendsfeed .col-container .col-1-2{width: 100%;}
+
     .picturemodalsmall .modal-dialog .playericons .audioicon_d.audioicon3 .icons03 .ng5-slider {
         margin: 10px 10px!important;
     }
@@ -7180,9 +7458,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     .playericons .audioicon_d {
         width: 32%;
     }
-    #tabPlayer .player_con .scrollbar4 {
+/*    #tabPlayer .player_con .scrollbar4 {
         height: 310px;
-    }
+    }*/
     #tabPlayer .play_video_status p{
         padding-bottom: 5px;
     }
@@ -7222,6 +7500,25 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 991px) {
+    .playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting .avi_trandingmedia .audioplayer_play{width: 100%;}
+    .playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting .avi_trandingmedia .trending_video_list{width: 100%;}
+
+    .playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting .avi_trandingmedia .trending_video_list .playlistactionbtn {
+        position: inherit;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        margin-right: 7px;
+        margin-top: 2px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .playlistmodal .col-md-12 .av_button button {
+        width: 48.33%;
+        margin: .5%;
+    }
+
     .postgallery .col-1-4.col.postgallerysingle{width: 33%;}
 
     .artistsexchangeblock1topleft{height: auto;}
@@ -7374,6 +7671,24 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 
 @media (max-width: 767px){
+    #tabPlayer .player_con .scrollbar4 {
+        height: 360px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+    .playlistactionbtn {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        margin-right: auto;
+        margin-top: 0px;
+        display: inline-block;
+        width: 100%;
+        float: right;
+        text-align: center;
+    }
+
     #tabLinks .video_link .av_xp_tab_contant p{width:100%;}
 
     .trendingartistblock1.mylinksblock h2 {
@@ -7571,6 +7886,9 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 767px){
+    .playlistmodal .modal-dialog {
+        width: 90%;
+    }
     .video_list .tranding_blogp p:nth-child(2) {
         width: 100% !important;
         margin-top: 10px;
@@ -7851,6 +8169,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 640px) {
+
     .picturemodalsmall .modal-dialog .trendingmusic-contaioner .tranding_videoandlisting .trendingvideoscrollbar {
         height: 520px;
     }
@@ -7989,7 +8308,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 @media(max-width: 600px) {
 
-
+    .playlistmodal .col-md-12 .av_button button {
+        width: 98.33%;
+        margin: .5%;
+    }
 
     .singlelink .feedslinks span {
         display: inline-block;
@@ -8051,7 +8373,28 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 540px) {
+    .inputcheckbox input[type=checkbox]:not(old), .inputcheckbox input[type=radio ]:not(old) {
+        width: 16px;
+        margin: 0 auto 10px;
+        padding: 0;
+        font-size: 1em;
+        opacity: 1;
+        height: 16px;
+        display: block;
+    }
 
+    .inputcheckbox input[type=checkbox]:not(old) + label, .inputcheckbox input[type=radio ]:not(old) + label {
+        display: inline-block;
+        line-height: 22px;
+        width: 100%;
+        margin-bottom: 0px !important;
+    }
+
+    .tranding_videoandlisting .trending_video_list .video_list p:nth-child(1) {
+        height: auto;
+        max-height: inherit;
+        font-size: 14px;
+    }
 
     .picture_modal .bodybloc5bottom .feedslinks span.feedslinks3.userrightmrnu {
         vertical-align: middle;

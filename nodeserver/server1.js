@@ -1740,13 +1740,36 @@ app.get('/getPlaylistByUserid',function(req,resp){
 });
 
 
+app.get('/getallmusicplaylistbyuserid',function(req,resp){
+
+
+    var collection = db.collection('playlistview');
+    var cond = {};
+    cond = {
+        $and : [
+            {user_id :new mongodb.ObjectID(req.query.user_id)},
+            {type: req.query.type},
+
+        ]
+    };
+    collection.find(cond).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            // resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
+
+
 app.get('/adduserplaylistdata',function(req,resp){
     var collection = db.collection('userplaylist');
     var tvarr=[];
     var tempvarforv='';
     for(c in req.query.videoarray){
 
-        tempvarforv={type:req.query.type,playlist_id:new mongodb.ObjectID(req.query.playlist_id),videoid:new mongodb.ObjectID(req.query.videoarray[c])} ;
+        tempvarforv={type:req.query.type,playlist_id:new mongodb.ObjectID(req.query.playlist_id),user_id:new mongodb.ObjectID(req.query.user_id), videoid:new mongodb.ObjectID(req.query.videoarray[c])} ;
         tvarr.push(tempvarforv);
     }
 
@@ -1773,7 +1796,7 @@ app.get('/adduserplaylistdata',function(req,resp){
 
 
             clearuserplaylistdata();
-            resp.send(JSON.stringify({'status': 'success'}));
+            resp.send(JSON.stringify({'status': 'success','item':result}));
         }
     });
 
@@ -2111,6 +2134,25 @@ app.get('/deleteMusicByID',function(req,resp){
     var collection= db.collection('music');
     var o_id = new mongodb.ObjectID(req.query.id);
     collection.deleteOne({_id: o_id}, function(err, results) {
+        if(err){
+            resp.send(JSON.stringify({'status':'failed'}));
+        }else{
+            resp.send(JSON.stringify({'status':'success'}));
+        }
+    });
+});
+
+app.get('/deleteItemByItemidInPlaylist',function(req,resp){
+    var collection= db.collection('userplaylist');
+    var cond = {};
+    cond = {
+        $and : [
+            {playlist_id : new mongodb.ObjectID(req.query.playlist_id)},
+            {videoid:new mongodb.ObjectID(req.query.videoid)}
+
+        ]
+    };
+    collection.deleteOne(cond, function(err, results) {
         if(err){
             resp.send(JSON.stringify({'status':'failed'}));
         }else{
@@ -2602,6 +2644,22 @@ app.get('/getlinkdetailsbyid',function (req,resp) {
     });
 });
 
+app.get('/getplaylistnamebyplaylistid',function (req,resp) {
+
+    var collection = db.collection('userplaylistview');
+    var o_id = new mongodb.ObjectID(req.query._id);
+    collection.find({playlist_id:o_id}).toArray(function (err,items) {
+
+        if(err){
+            console.log(err);
+            resp.send(JSON.stringify({'status':'error','item':[]}));
+        }
+        else {
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
+
 app.get('/getsearchedvalue', function(req,resp){
 
     var collection = db.collection('userview_trending');
@@ -2650,6 +2708,8 @@ app.get('/getsearchedvalue', function(req,resp){
     });*/
 
 });
+
+
 
 
 

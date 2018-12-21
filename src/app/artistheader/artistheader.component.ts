@@ -29,14 +29,14 @@ export class ArtistheaderComponent implements OnInit {
     console.log('this.user_id');
     console.log(this.user_id);
     if(this.user_id=='' )
-    this.liWidth = '19.8%';
+    this.liWidth = '16.46%';
     else
       this.liWidth='16.46%';
 
     if(this.user_id=='' )
       this.liWidth2='16.46%';
     else
-      this.liWidth2 = '19.8%';
+      this.liWidth2 = '16.46%';
 
   }
 

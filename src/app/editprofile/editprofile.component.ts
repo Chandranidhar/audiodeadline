@@ -370,34 +370,53 @@ export class EditprofileComponent implements OnInit {
                               this.genrelist = result1.res;
                               //        to select the chosen value in music genre list
                               //starts here
-                              if(this.musicians == 1 || this.dancer == 1){
-                                  let link=this.serverurl+'getusergenredetail';
-                                  let data = {'user_id':this.userid};
 
-                                  this._http.post(link,data)
+                              setTimeout(()=> {
+                                  if (this.musicians == 1 || this.dancer == 1) {
+                                  let link = this.serverurl + 'getusergenredetail';
+                                  let data = {'user_id': this.userid};
+
+                                  this._http.post(link, data)
                                       .subscribe(res => {
                                           let result1 = res.json();
                                           this.usergenrelist = result1.item;
                                           /* console.log('this.usergenrelist');
                                            console.log(this.usergenrelist);*/
-                                          let musicgenarr=[];
-                                          let dancegenarr=[];
-                                          for(let x in this.usergenrelist){
+                                          let musicgenarr = [];
+                                          let dancegenarr = [];
+                                          for (let x in this.usergenrelist) {
 
                                               console.log(this.usergenrelist[x]);
-                                              console.log($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length);
-                                              if($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                              console.log('music genre count..');
+                                              console.log($('select[name="musicgenre"]').find('option').length);
+                                              console.log('dancer genre count..');
+                                              console.log($('select[name="dancergenre"]').find('option').length);
+                                              console.log($('select[name="musicgenre"]').find('option[ng-reflect-value="' + this.usergenrelist[x].genreid + '"]').length);
+                                              if ($('select[name="musicgenre"]').find('option[ng-reflect-value="' + this.usergenrelist[x].genreid + '"]').length > 0) {
                                                   musicgenarr.push(this.usergenrelist[x].genreid);
                                               }
-                                              if($('select[name="dancergenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                              if ($('select[name="dancergenre"]').find('option[ng-reflect-value="' + this.usergenrelist[x].genreid + '"]').length > 0) {
+                                                  dancegenarr.push(this.usergenrelist[x].genreid);
+                                              } if ($('select[name="musicgenre"]').find('option[oval="' + this.usergenrelist[x].genreid + '"]').length > 0) {
+                                                  musicgenarr.push(this.usergenrelist[x].genreid);
+                                              }
+                                              if ($('select[name="dancergenre"]').find('option[oval="' + this.usergenrelist[x].genreid + '"]').length > 0) {
                                                   dancegenarr.push(this.usergenrelist[x].genreid);
                                               }
                                               console.log($('select[name="musicgenre"]').find('option').length);
                                           }
-                                          if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
+                                          if (this.userdetails.musicians == 1 || this.userdetails.dancer == 1) {
                                               //this.dataForm.controls['ability'].setValidators(Validators.required);
-                                              this.dataForm.controls['musicgenre'].setValue(musicgenarr);
-                                              this.dataForm.controls['dancergenre'].setValue(dancegenarr);
+
+
+                                              setTimeout(()=> {    //<<<---    using ()=> syntax
+                                                  this.dataForm.controls['musicgenre'].setValue(musicgenarr);
+                                                  console.log('musicgenarr');
+                                                  console.log(musicgenarr);
+
+                                              }, 10);
+
+                                              //this.dataForm.controls['dancergenre'].setValue(dancegenarr);
 
                                           }
 
@@ -405,6 +424,7 @@ export class EditprofileComponent implements OnInit {
                                           console.log("Oooops!");
                                       });
                               }
+                          },20);
 
 
                               //ends here
@@ -424,40 +444,56 @@ export class EditprofileComponent implements OnInit {
                               let result1 = res.json();
                               this.genrelist1 = result1.res;
 
-                              if(this.musicians == 1 || this.dancer == 1){
-                                  let link=this.serverurl+'getusergenredetail';
-                                  let data = {'user_id':this.userid};
+                              setTimeout(()=> {
+                                  if (this.musicians == 1 || this.dancer == 1) {
+                                  let link = this.serverurl + 'getusergenredetail';
+                                  let data = {'user_id': this.userid};
 
-                                  this._http.post(link,data)
+                                  this._http.post(link, data)
                                       .subscribe(res => {
                                           let result1 = res.json();
                                           this.usergenrelist = result1.item;
                                           console.log('this.usergenrelist');
                                           console.log(this.usergenrelist);
-                                          let musicgenarr=[];
-                                          let dancegenarr=[];
-                                          for(let x in this.usergenrelist){
+                                          let musicgenarr = [];
+                                          let dancegenarr = [];
+                                          for (let x in this.usergenrelist) {
 
                                               console.log(this.usergenrelist[x]);
-                                              console.log($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length);
-                                              if($('select[name="musicgenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                              console.log($('select[name="musicgenre"]').find('option[ng-reflect-value="' + this.usergenrelist[x].genreid + '"]').length);
+                                              if ($('select[name="musicgenre"]').find('option[ng-reflect-value="' + this.usergenrelist[x].genreid + '"]').length > 0) {
+                                                  console.log('musicgenarr found ..' + this.usergenrelist[x].genreid);
                                                   musicgenarr.push(this.usergenrelist[x].genreid);
                                               }
-                                              if($('select[name="dancergenre"]').find('option[ng-reflect-value="'+this.usergenrelist[x].genreid+'"]').length>0){
+                                              if ($('select[name="dancergenre"]').find('option[ng-reflect-value="' + this.usergenrelist[x].genreid + '"]').length > 0) {
+                                                  dancegenarr.push(this.usergenrelist[x].genreid);
+                                                  console.log('dancergenre found ..' + this.usergenrelist[x].genreid);
+                                              }
+                                              if ($('select[name="musicgenre"]').find('option[oval="' + this.usergenrelist[x].genreid + '"]').length > 0) {
+                                                  musicgenarr.push(this.usergenrelist[x].genreid);
+                                              }
+                                              if ($('select[name="dancergenre"]').find('option[oval="' + this.usergenrelist[x].genreid + '"]').length > 0) {
                                                   dancegenarr.push(this.usergenrelist[x].genreid);
                                               }
                                               console.log($('select[name="musicgenre"]').find('option').length);
                                           }
-                                          if(this.userdetails.musicians == 1 || this.userdetails.dancer == 1){
+                                          if (this.userdetails.musicians == 1 || this.userdetails.dancer == 1) {
                                               //this.dataForm.controls['ability'].setValidators(Validators.required);
-                                              this.dataForm.controls['musicgenre'].setValue(musicgenarr);
-                                              this.dataForm.controls['dancergenre'].setValue(dancegenarr);
+                                              //this.dataForm.controls['musicgenre'].setValue(musicgenarr);
+
+
+                                              setTimeout(()=> {    //<<<---    using ()=> syntax
+                                                  this.dataForm.controls['dancergenre'].setValue(dancegenarr);
+                                                  console.log('dancegenarr');
+                                                  console.log(dancegenarr);
+                                              }, 10);
 
                                           }
                                       }, error => {
                                           console.log("Oooops!");
                                       });
                               }
+                          },20);
                           }, error => {
                               console.log("Oooops!");
                           });

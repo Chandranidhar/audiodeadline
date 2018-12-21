@@ -47,8 +47,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
       </div>  
 </div>
 `;*/
-    html1='';
 
+
+    html1: string = ``;
     html2: string = ``;
     /*for share popover*/
 
@@ -136,6 +137,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public value1:any=0;
     public value2:any=0;
     public value3:any=0;
+    public value4:any=0;
+    public value5:any=0;
     public piclimitstart:any=0;
     public piclimitend:any=8;
     public currentvideoviewcount:any=0;
@@ -149,6 +152,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public options1;
     public options2;
     public options3;
+    public options4;
+    public options5;
 
 
     public videodetailArray:any=[];
@@ -161,11 +166,15 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
     public chosenaudiourl:any;
     public isaudioplay:boolean=false;
+    public isaudioplayforplaylist:boolean=false;
     public audioDuration:any='';
+    public audioDurationforplaylist:any='';
     public playstate:any='';
+    public playstateforplaylist:any='';
     public oldvolume:any=0;
     public audioDurationfortrending:any='';
     public ismuteaudio:boolean = false;
+    public ismuteaudioplaylist:boolean = false;
     public selectedaudiourl:any='';
     public chosenaudiotitle:any;
 
@@ -174,6 +183,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public twitterinterval:any='';
 
     public oldvolumetrending:any=0;
+    public oldvolumeplaylist:any=0;
 
     public chkerror;
     public chkerror2;
@@ -187,6 +197,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public audiousernamefortrending:any;
     public videoplayfag:any=false;
     public shuffleflag2:boolean = false;
+    public shuffleflag3:boolean = false;
     public ismuteaudiotrending:boolean = false;
     public selectedpicture:any;
     public selectedpicturetrending:any;
@@ -249,9 +260,31 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public friendsarray:any=[];
     public favoritesarray:any=[];
     public videocheckarr:any=[];
+    public musiccheckarr:any=[];
     public videoselectflag:any=false;
+    public musicselectflag:any=false;
     private tempimage:any;
     private tempuserprofilepicfile:any;
+    public showsuccessforplaylist:any = false;
+    public countofvideoplaylist:any = 0;
+    public selectedplaylistid:any='';
+    public selectedplaylistname:any = '';
+    public showplaylistmodal:any = false;
+    public musicplaylistdetails:any = [];
+    public playlistname:any = [];
+    public playlistModalArray:any =[];
+    public chosenaudiotitleforplaylist:any;
+    public audiousernameforplaylist:any = '';
+    public audioplayerindexforplaylist:any = 0;
+    public chosenaudiourlforplaylist:any = '';
+    public selectedaudioplaylist:any = [];
+    public showvideoplaylistmodal:any = false;
+    public choosenvideourlplaylist:any ='';
+    public selectedvideoplaylist:any = [];
+    public videoplayerindexplaylist:any = 0;
+    public currentvideotypeplaylist:any ='';
+    public currentvideoidplaylist:any;
+    public videoplayflagplaylist:any = 0;
     //public FBS:any;
 
 
@@ -272,9 +305,19 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             floor: 0,
             ceil: 100
         };
+        this.value5 =75;                     //playlist volume  slider
+        this.options5={
+            floor: 0,
+            ceil: 100
+        };
 
         this.value1=0;                      //duration slider
         this.options1= {
+            floor: 0,
+            ceil: 200
+        };
+        this.value4=0;                      //playlist duration slider
+        this.options4= {
             floor: 0,
             ceil: 200
         };
@@ -311,6 +354,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.isModalfbShown = false;
         this.shuffleflag = false;
         this.shuffleflag2 = false;
+        this.shuffleflag3 = false;
 
 
 
@@ -328,7 +372,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.user_id = this.userdata.get('user_id');
         this.user_id_new = this.userdata.get('user_id');
         this.fan = 0;
-        // this.image = this.userdata.get('image');
+        this.image = this.userdata.get('image');
 
         if(this.activeRoute.snapshot.params.id==null || typeof(this.activeRoute.snapshot.params.id)=='undefined') {
             // console.log('in profile ...');
@@ -827,6 +871,64 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     }
 
 
+    playthumbforplaylist(item:any){            // playing the playlist thumbnail video
+
+        this.choosenvideourlplaylist='';
+        console.log(' playthumbforplaylist callled  ....');
+        console.log(item);
+        this.selectedvideoplaylist = item;
+        this.selectedpost = item;
+        this.videoplayerindexplaylist=this.playlistModalArray.indexOf(item);
+        if(item.videoviews[0]!=null){
+
+            this.currentvideoviewcount = item.videoviews[0].vcount;
+        }
+        else{
+
+            this.currentvideoviewcount = 0;
+        }
+        if(this.playlistModalArray[0].videolikes[0]!=null){
+
+            this.currentlikecount = this.playlistModalArray[0].videolikes[0].vlike;
+        }
+        else {
+            this.currentlikecount = 0;
+        }
+        this.currentvideotypeplaylist='';
+        this.currentvideoidplaylist=item.videoid;
+        //this.currentvideotype='youtube';
+        if(item.videotype=='vimeo'){
+
+            let vimeourl = item.videourl.split('/');
+            let videoid = vimeourl[vimeourl.length - 1];
+           /* console.log('videoid ......');
+            console.log(videoid);*/
+            this.currentvideotypeplaylist='vimeo';
+            this.choosenvideourlplaylist = this.sanitizer.bypassSecurityTrustResourceUrl("https://player.vimeo.com/video/" + videoid);
+            console.log(this.choosenvideourlplaylist);
+
+        }
+        if(item.videotype=='youtube') {
+            setTimeout(()=> {    //<<<---    using ()=> syntax
+                let videourl = item.videourl.split('v=');
+                this.choosenvideourlplaylist='';
+                let videoid = videourl[videourl.length - 1];
+                this.choosenvideourlplaylist=videoid;
+                console.log('videoid');
+                console.log(item.videourl);
+                console.log(this.choosenvideourl);
+                this.currentvideotypeplaylist='youtube';
+               /* console.log(videoid);*/
+            }, 50);
+            //let url = item.videoUrl.replace('watch?v=', 'embed/');
+
+            //this.choosenvideourl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            console.log(this.choosenvideourlplaylist);
+        }
+
+    }
+
+
 
     playthumbtrending(item:any){            // playing the thumbnail video
 
@@ -992,9 +1094,11 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         /*console.log('this.satizedurl updated ...');
         console.log(this.satizedurl);*/
     }
-    getthumbnail(item:any){                     //getting the thumbnail image
+    getthumbnail(item:any){             //getting the thumbnail image
+
 
         if(item.type=='youtube') {
+
             let url = item.videoUrl.replace('watch?v=', 'embed/');
             url=url.split('/');
             let urlid=url[url.length-1];
@@ -1006,8 +1110,26 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         }
         if(item.type=='vimeo'){
 
+            return this.sanitizer.bypassSecurityTrustResourceUrl(item.thumbnail);           //this.videoArray[x1].thumbnail
+
+        }
+    }
+
+    getthumbnailplaylist(item:any){                     //getting the thumbnail image
+
+        if(item.videotype=='youtube') {
+            let url = item.videourl.replace('watch?v=', 'embed/');
+            url=url.split('/');
+            let urlid=url[url.length-1];
+            //return "https://i1.ytimg.com/vi/"+urlid+"/0.jpg";
+            return this.sanitizer.bypassSecurityTrustResourceUrl("https://i1.ytimg.com/vi/"+urlid+"/0.jpg");
+            // this.videoThumbnailimage = this.sanitizer.bypassSecurityTrustResourceUrl("https://i1.ytimg.com/vi/"+urlid+"/0.jpg");
 
 
+        }
+        if(item.videotype=='vimeo'){
+
+            console.log()
             return this.sanitizer.bypassSecurityTrustResourceUrl(item.thumbnail);           //this.videoArray[x1].thumbnail
 
         }
@@ -1065,6 +1187,34 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         }
     }
+
+    showvideolikeplaylist(val:any) {
+        if (this.isloggedin == 1) {
+            this.currentlikecount = val;
+            let link4 = this.serverurl + 'addvideolike';
+            var data = {'user_id': this.user_id, videoid: val.videoid};
+            this._http.post(link4, data)
+                .subscribe(res=> {
+
+                    var result = res.json();
+                    // console.log(result);
+                    if (result.status == 'success') {
+
+                        if(this.fan==0){
+                            this.getVideoDetails();
+                            this.getallvideo();
+                        }
+                        if(this.fan==1){
+                            this.getfanlikeditems();
+                            this.getallvideo();
+                        }
+
+                        // console.log('suceess like');
+                    }
+                })
+
+        }
+    }
     showmusiclike(val:any) {
 
         if (this.isloggedin == 1) {
@@ -1096,6 +1246,38 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         }
     }
+    showmusiclikeplaylist(val:any) {
+
+        if (this.isloggedin == 1) {
+            this.currentmusiclikecount = val;
+            let user_id = this.userdata.get('user_id');
+            let link4 = this.serverurl + 'addvideolike';
+            var data = {'user_id': user_id, videoid: val.videoid};
+            this._http.post(link4, data)
+                .subscribe(res=> {
+
+                    var result = res.json();
+                    // console.log(result);
+                    if (result.status == 'success') {
+
+                        if(this.fan==0){
+                            this.getmusicdetails();
+                            this.getallmusic();
+                        }
+                        if(this.fan==1){
+                            this.getfanlikeditems();
+                            this.getallmusic();
+                        }
+
+                        /*this.getmusicdetails();
+                        this.getallmusic();*/
+                        console.log('suceess like');
+                    }
+                })
+
+        }
+    }
+
     showpicturelike(val:any) {
         if (this.isloggedin==1) {
             this.currentpicturelikecount = val;
@@ -1189,6 +1371,34 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 })
         }
     }
+    showvideounlikeplaylist(val:any) {
+
+        if (this.isloggedin == 1) {
+            this.currentlikecount = val;
+            let user_id = this.userdata.get('user_id');
+            let link4 = this.serverurl + 'deletevideolike';
+            var data = {'user_id': user_id, videoid: val.videoid};
+            this._http.post(link4, data)
+                .subscribe(res=> {
+
+                    var result = res.json();
+                    // console.log(result);
+                    if (result.status == 'success') {
+
+                        if(this.fan==0){
+                            this.getVideoDetails();
+                            this.getallvideo();
+                        }
+                        if(this.fan==1){
+                            this.getfanlikeditems();
+                            this.getallvideo();
+                        }
+
+                        // console.log('suceess unlike');
+                    }
+                })
+        }
+    }
     showmusicunlike(val:any) {
 
         if (this.isloggedin == 1) {
@@ -1213,6 +1423,34 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                         }
 
                         // console.log('suceess unlike');
+                    }
+                })
+        }
+    }
+    showmusicunlikeplaylist(val:any) {
+
+        if (this.isloggedin == 1) {
+            this.currentmusiclikecount = val;
+            let user_id = this.userdata.get('user_id');
+            let link4 = this.serverurl + 'deletevideolike';
+            var data = {'user_id': user_id, videoid: val.videoid};
+            this._http.post(link4, data)
+                .subscribe(res=> {
+
+                    var result = res.json();
+                    // console.log(result);
+                    if (result.status == 'success') {
+
+                        if(this.fan==0){
+                            this.getmusicdetails();
+                            this.getallmusic();
+                        }
+                        if(this.fan==1){
+                            this.getfanlikeditems();
+                            this.getallmusic();
+                        }
+
+                        console.log('suceess unlike');
                     }
                 })
         }
@@ -1498,6 +1736,69 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 })
         }
     }
+    addcommentplaylist(val:any){
+
+        // console.log('val');
+        // console.log(val);
+
+      /*  // this.selectedpicture = val;
+        console.log('this.musicArray');
+        console.log(this.musicArray);
+*/
+        // this.currentaudioid= this.selectedaudio._id;
+      /*  console.log('this.currentaudioid');
+        console.log(this.currentaudioid);
+
+        console.log(val.keyCode);
+        console.log(val.shiftKey);*/
+        if(val.keyCode==13 && !val.shiftKey && this.commentval.length>0){
+
+            /*console.log('submit comment here ....');*/
+            let link = this.serverurl+'addcomment';
+            let data = {'post_id': this.selectedpost.videoid,'user_id':this.user_id, 'comment':this.commentval};
+           /* console.log('data');
+            console.log(data);*/
+            this._http.post(link, data)
+                .subscribe(val =>{
+
+                    var res = val.json();
+                  /*  console.log('success');
+                    console.log('res');
+                    console.log(res.item);*/
+
+                    this.getallpicture();
+
+                    this.getallmusic();
+
+                    this.getallvideo();
+                    if(this.fan==0) {
+                        this.getPictureDetails();
+                        this.getmusicdetails();
+                        this.getLinkDetails();
+                        this.getVideoDetails();
+                        this.showvideoplaylist();
+                    }
+                    else{
+                        this.getfanlikeditems();
+                    }
+
+                    this.commentval='';
+                    /*console.log('this.tabselectedpictureindex');
+                     console.log(this.tabselectedpictureindex);
+                     if(this.selectedpictureindex>0){
+                     console.log('selected picture index block');
+
+                     // this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
+                     this.selectedpicture = this.picturedetailArray[this.selectedpictureindex];
+                     }*/
+
+
+
+
+
+                })
+        }
+    }
     getPictureDetails(){
 
         let link10= this.serverurl+'getPictureListByUserid';
@@ -1727,6 +2028,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         if(this.value==0) this.ismuteaudio=true;
         else this.ismuteaudio=false;
     }
+    changeaudioplayervolumeplaylist(){
+
+        let myAudio:any = {};
+        myAudio=  document.querySelector("#audioplayer3");
+        myAudio.volume =this.value5/100;
+        if(this.value5==0) this.ismuteaudioplaylist=true;
+        else this.ismuteaudioplaylist=false;
+    }
     changeaudioplayervolumetrending(){
 
         let myAudio:any = {};
@@ -1744,6 +2053,15 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         let myAudio:any = {};
         myAudio=  document.querySelector("#audioplayer1");
         myAudio.currentTime =this.value1;
+    }
+
+    changeaudioplayertimerplaylist(){
+        /*console.log('this is timer change');
+        console.log('this.value1');
+        console.log(this.value1);*/
+        let myAudio:any = {};
+        myAudio=  document.querySelector("#audioplayer3");
+        myAudio.currentTime =this.value4;
     }
 
     changeaudioplayertimertrending(){
@@ -1770,6 +2088,15 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.ismuteaudio = true;
 
     }
+    muteaudioplaylist(){
+        this.value5=0;
+        let myAudio:any = {};
+        myAudio=  document.querySelector("#audioplayer3");
+        this.oldvolumeplaylist=myAudio.volume;
+        myAudio.volume =0;
+        this.ismuteaudioplaylist = true;
+
+    }
     muteaudiotrending(){
         this.value3=0;
         let myAudio:any = {};
@@ -1789,6 +2116,19 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         myAudio.volume = this.oldvolume;
         this.ismuteaudio = false;
         this.value = this.oldvolume*100;
+        /*console.log(this.value);
+        console.log(this.oldvolume);
+        console.log(myAudio.volume);*/
+
+
+    }
+    unmuteaudioplaylist(){
+
+        let myAudio:any = {};
+        myAudio=  document.querySelector("#audioplayer3");
+        myAudio.volume = this.oldvolumeplaylist;
+        this.ismuteaudio = false;
+        this.value5 = this.oldvolumeplaylist*100;
         /*console.log(this.value);
         console.log(this.oldvolume);
         console.log(myAudio.volume);*/
@@ -1827,6 +2167,25 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
     }
+
+    playbackwardplaylist(){
+        let indexval=0;
+        if(this.shuffleflag3==true){
+
+            this.playshuffleplaylist();
+        }else
+        {
+            if(this.audioplayerindexforplaylist> 0 )
+                 indexval=this.audioplayerindexforplaylist-1;
+            else {
+                this.audioplayerindexforplaylist = 0;
+            }
+            this.isaudioplayforplaylist = false;
+            this.playaudioforplaylist(this.playlistModalArray[indexval]);
+        }
+
+
+    }
     playbackwardffortrending(){
         let indexval=0;
         if(this.shuffleflag2==true){
@@ -1850,6 +2209,11 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         let randomVal = this.getRandomInt(0,this.musicArray.length);
         this.playaudio(this.musicArray[randomVal]);
+    }
+    playshuffleplaylist() {
+
+        let randomVal = this.getRandomInt(0,this.playlistModalArray.length);
+        this.playaudioforplaylist(this.playlistModalArray[randomVal]);
     }
     playshufflefortrending() {
 
@@ -1875,6 +2239,24 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
             this.isaudioplay = false;
             this.playaudio(this.musicArray[indexval]);
+        }
+
+    }
+
+    playforwardplaylist(){
+        let indexval=0;
+        if(this.shuffleflag3==true){
+            this.playshuffleplaylist();
+        }else {
+            if(this.audioplayerindexforplaylist <this.playlistModalArray.length)
+
+                indexval=this.audioplayerindexforplaylist+1;
+            else {
+                this.audioplayerindexforplaylist = this.playlistModalArray.length;
+            }
+
+            this.isaudioplayforplaylist = false;
+            this.playaudioforplaylist(this.playlistModalArray[indexval]);
         }
 
     }
@@ -2148,9 +2530,192 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
     }
 
+    /*------------------------*/
+    playaudioforplaylist(val:any){
+
+        let oldaudio:any={};
+        if(this.selectedaudioplaylist!=null ) oldaudio=this.selectedaudioplaylist;
+        this.selectedaudioplaylist = val;
+        this.selectedpost = val;
+
+        this.chosenaudiotitleforplaylist = val.musictitle;
+        console.log(this.chosenaudiotitleforplaylist);
+        console.log(this.audiousernameforplaylist);
+        console.log(this.chosenaudiourlforplaylist);
+        //this.audiousername = this.real_name;
+        this.audiousernameforplaylist = val.userdetailsofmusic[0].firstname+" "+val.userdetailsofmusic[0].lastname;
+        if(this.audioplayerindexforplaylist==this.playlistModalArray.indexOf(val))
+        {
+            /*console.log('equal index ......');
+            console.log('equal index ......');*/
+            if(this.isaudioplayforplaylist==false){
+                this.playmusicforplaylist();
+            }
+            else {
+                let myAudio:any = {};
+                myAudio=  document.querySelector("#audioplayer3");
+                myAudio.pause();
+                this.isaudioplayforplaylist = false;
+                return;
+            }
+
+        }
+        else {
+            //alert(3);
+            this.audioplayerindexforplaylist = this.playlistModalArray.indexOf(val);
+            this.chosenaudiourlforplaylist = '';
+/*
+            console.log('chosenaudiourl');
+            console.log(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + val.user_id + '/' + val.music);
+            console.log(this.chosenaudiourl);*/
+            this.isaudioplayforplaylist = false;
+            setTimeout(()=> {
+                this.chosenaudiourlforplaylist = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + val.user_id + '/' + val.musicurl);
+            }, 500);
+            this.value4 = 0;
+            setTimeout(()=> {    //<<<---    using ()=> syntax
+
+                let myAudio:any = {};
+                myAudio=  document.querySelector("#audioplayer3");
+                //this.audioDurationforplaylist = myAudio.duration.toFixed(0);
+                //myAudio.pause();
+                clearInterval(this.playstateforplaylist);
+                /*----------for counting view -------------*/
+                let link = this.serverurl+'addmusicview';
+                var data = {'user_id':this.user_id,_id:val.videoid};
+                this._http.post(link,data)
+                    .subscribe(res=>{
+
+                        let result:any = {};
+                        result = res.json();
+                        // console.log('result view');
+                        // console.log(result);
+                        if(result.status=='success'){
+
+                            if(this.fan==0)this.getmusicdetails();
+                            if(this.fan==1)this.getfanlikeditems();
+
+                            // console.log('suceess view');
+                        }
+                    });
+
+                /*-----------------------*/
+                this.isaudioplayforplaylist = false;
+                this.value4 = 0;
+
+                //myAudio.play();
+                //this.isaudioplay=true;
+/*
+                console.log($(myAudio).length);
+                console.log($('#audioplayer1').length);*/
+                // myAudio.currentTime =23;
+                if (this.isaudioplayforplaylist) {
+                    myAudio.pause();
+                    clearInterval(this.playstateforplaylist);
+                    this.isaudioplayforplaylist = false;
+                } else {
+                    this.value4 = 0;
+                    clearInterval(this.playstateforplaylist);
+                    myAudio.play();
+                    this.options4 = {
+                        floor: 0,
+                        ceil: myAudio.duration.toFixed(0)
+                    };
+                    myAudio.volume=this.value5/100;
+                    this.audioDurationforplaylist = myAudio.duration.toFixed(0);
+
+                    setTimeout(()=> {
+                        if (isNaN(this.audioDurationforplaylist)) {
+                            this.playmusicforplaylist();
+                            this.playmusicforplaylist();
+                        }
+                    },2000);
+                    //console.log('audioDurationforplaylist');
+                    //console.log(this.audioDurationforplaylist);
+
+                    this.playstateforplaylist = setInterval(() => {
+                        //console.log('in onplay interval ....');
+                        //console.log(myAudio.currentTime);
+                        this.value4 = (myAudio.currentTime.toFixed(0));
+                        //console.log(this.value1);
+                        //console.log(this.value);
+
+
+                    }, 1000);
+                    this.isaudioplayforplaylist = true;
+                }
+                myAudio.onpause = function () {
+                    //this.playstate.clearInterval();
+                    clearInterval(this.playstateforplaylist);
+                };
+
+                //this.playmusic();
+            }, 1000);
+
+        }
+
+    }
+
+    playmusicforplaylist(){
+        let myAudio :any = {};
+        myAudio = document.querySelector("#audioplayer3");
+        /* console.log('$(myAudio).length');
+         console.log($(myAudio).length);
+         console.log($('#audioplayer1').length);
+
+         console.log('myAudio');
+         console.log(myAudio);
+         console.log(myAudio.duration);*/
+
+        this.audioDurationforplaylist = myAudio.duration.toFixed(0);
+
+        setTimeout(()=> {
+            if (isNaN(this.audioDurationforplaylist)) {
+                this.audioDurationforplaylist=0;
+                this.playmusicforplaylist();
+                this.playmusicforplaylist();
+            }
+        },2000);
+
+        /* console.log('audioDurationforplaylist');
+         console.log(this.audioDurationforplaylist);*/
+        // myAudio.currentTime =23;
+        if (this.isaudioplayforplaylist) {
+            myAudio.pause();
+            clearInterval(this.playstateforplaylist);
+            this.isaudioplayforplaylist=false;
+        } else {
+            myAudio.play();
+            myAudio.volume=this.value5/100;
+            this.playstateforplaylist = setInterval(() => {
+                /* console.log('in onplay interval ....');
+                 console.log(myAudio.currentTime);*/
+                this.value4 = (myAudio.currentTime.toFixed(0));
+                /* console.log(this.value1);
+                 //this.setaudiotimer(Math.ceil(myAudio.currentTime));
+                 console.log(this.value);*/
+
+
+            }, 1000);
+            this.isaudioplayforplaylist=true;
+        }
+        myAudio.onpause = function(){
+            //this.playstate.clearInterval();
+            clearInterval(this.playstateforplaylist);
+        };
+
+
+    }
+
+/*-----------------------*/
+
     shuffleon(){
 
         this.shuffleflag = true;
+    }
+    shuffleonplaylist(){
+
+        this.shuffleflag3 = true;
     }
 
     shuffleontrending(){
@@ -2162,6 +2727,10 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     shuffleoff(){
 
         this.shuffleflag = false;
+    }
+    shuffleoffplaylist(){
+
+        this.shuffleflag3 = false;
     }
     shuffleofftrending(){
 
@@ -2533,6 +3102,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             if(flag1==2) this.commonconfirmmodalmessage='Are you sure you want to delete this link ?';
             if(flag1==3) this.commonconfirmmodalmessage='Are you sure you want to delete this picture ?';
             if(flag1==4) this.commonconfirmmodalmessage='Are you sure you want to delete this music ?';
+            if(flag1==5) this.commonconfirmmodalmessage='Are you sure you want to delete this item from the playlist ?';
+            if(flag1==6) this.commonconfirmmodalmessage='Are you sure you want to delete this item from the playlist ?';
         }
         // console.log(id);
         if(flag==1) {
@@ -2542,6 +3113,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
            if(flag1==2) var link2 = this.serverurl + 'deleteLinkByID';
            if(flag1==3) var link2 = this.serverurl + 'deletePicByID';
            if(flag1==4) var link2 = this.serverurl + 'deleteMusicByID';
+
 
             var data = {'id': id};
             // console.log('username');
@@ -2570,6 +3142,57 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 }, error => {
                     // console.log("Oooops!");
                 });
+
+            if(flag1==5){
+
+                let link2 = this.serverurl + 'deleteItemByItemidInPlaylist';
+                let data ={'playlist_id':id.playlist_id, 'videoid':id.videoid};
+                this._http.post(link2, data)
+                    .subscribe(res=>{
+
+                        let result:any = {};
+                        result = res.json();
+                        console.log(result);
+                        if(result.status == 'success'){
+                            this.iscommonmodal = true;
+
+                            if(flag1==5)this.commonmodalmessage = 'Item deleted successfully !!';
+                            setTimeout(()=> {    //<<<---    using ()=> syntax
+                                this.iscommonmodal = false;
+                                this.commonmodalmessage = '';
+                            }, 4000);
+
+                            this.showvideoplaylist();
+                        }
+
+                    })
+
+            }
+            if(flag1==6){
+
+                let link2 = this.serverurl + 'deleteItemByItemidInPlaylist';
+                let data ={'playlist_id':id.playlist_id, 'videoid':id.videoid};
+                this._http.post(link2, data)
+                    .subscribe(res=>{
+
+                        let result:any = {};
+                        result = res.json();
+                        console.log(result);
+                        if(result.status == 'success'){
+                            this.iscommonmodal = true;
+
+                            if(flag1==6)this.commonmodalmessage = 'Item deleted successfully !!';
+                            setTimeout(()=> {    //<<<---    using ()=> syntax
+                                this.iscommonmodal = false;
+                                this.commonmodalmessage = '';
+                            }, 4000);
+
+                            this.showmyplaylist();
+                        }
+
+                    })
+
+            }
         }
 
     }
@@ -2757,12 +3380,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 console.log(result.item);
                 this.playlistarray= result.item;
                 let vplaylisthtml='';
+                let mplaylisthtml='';
                 for(let c in this.playlistarray){
                     let tempid='id'+this.playlistarray[c]._id;
 
                     if(this.playlistarray[c].type=='video') vplaylisthtml+='<a href="javascript:void(0)" tid="'+tempid+'" class="createlabel createplaylist2"><i class="fa fa-plus"></i> <span class="hide">'+this.playlistarray[c]._id+'</span> '+this.playlistarray[c].playlist_name+'</a>  ';
-                    console.log('vplaylisthtml');
-                    console.log(vplaylisthtml);
+                    if(this.playlistarray[c].type=='music') mplaylisthtml+='<a href="javascript:void(0)" tid="'+tempid+'" class="createlabel createplaylist"><i class="fa fa-plus"></i> <span class="hide">'+this.playlistarray[c]._id+'</span> '+this.playlistarray[c].playlist_name+'</a>  ';
+                    /*console.log('mplaylisthtml');
+                    console.log(mplaylisthtml);*/
                 }
 
                 this.html2 = `
@@ -2778,9 +3403,22 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 </form>
 </div>
 `;
+                this.html1 = `
+<div class="socialmediaicons socialmediaiconsform">   
+<form action="">
+     <input type="checkbox" class="hide" name="watchlater" value="watchlater" >My Playlist    
+        `+mplaylisthtml+`
+     <a href="javascript:void(0)" class="createlabel createplaylist"><i class="fa fa-plus"></i> Create new playlist</a>  
+     <div class="hide">
+       <input class="form-control" placeholder="Enter playlist name..." tabindex="0" maxlength="150">          
+       <input type="button" value="Create">
+     </div>
+</form>
+</div>
+`;
 
-                console.log('this.html2');
-                console.log(this.html2);
+               /* console.log('this.html2');
+                console.log(this.html2);*/
 
                 // this.html1="<div>5465656</div>";
             });
@@ -3163,6 +3801,32 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             this.getallvideo();
         }
     }
+    onStateChangeplaylist(event){
+        // console.log('event ....');
+        // console.log(event.data);
+        this.videoplayflagplaylist=true;
+        if(event.data == -1){
+            var link2= this.serverurl+'addvideoviews';
+            var data = {'user_id':this.user_id,videoid:this.currentvideoidplaylist};
+            // console.log('username');
+            //console.log(data.username);
+            this._http.post(link2, data)
+                .subscribe(res => {
+                    var result = res.json();
+                    // console.log(result.item);
+                    if(result.status=='success'){
+                        //this.getVideoDetails();
+                    }
+                }, error => {
+                    // console.log("Oooops!");
+                });
+            //this.getVideoDetails();
+        }
+        if(event.data==0){
+            this.videoplayflagplaylist=true;
+            this.getallvideo();
+        }
+    }
 
 
     onHidden(){                 //modal hide function
@@ -3180,6 +3844,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.iscommonmodal=false;
         this.isPlaylistModalShown = false;
         this.isPlaylistVideoModalShown = false;
+        this.showsuccessforplaylist = false;
+        this.showplaylistmodal = false;
+        this.showvideoplaylistmodal = false;
 
     }
 
@@ -3928,11 +4595,69 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             //children4[i4].removeEventListener("click");
 
             children5[i5].addEventListener("click", (event: Event) => {
-                //alert("Hello 69!");
-               /* console.log("Hello children5!");
 
-                console.log(event);*/
-                this.isPlaylistModalShown = true;
+                console.log($(children5[i5]).attr('class'));
+                console.log($(children5[i5]).find('span').text());
+
+                if($(children5[i5]).find('span').length == 0)this.isPlaylistModalShown = true;
+                if($(children5[i5]).find('span').length> 0){
+
+                    let tempvarr = [];
+                    for (let y in this.musiccheckarr){
+
+                        if(this.musiccheckarr[y]==true){
+
+                            tempvarr.push(y);
+                        }
+                    }
+                    let data ={playlist_id:$(children5[i5]).find('span').text(), videoarray: tempvarr, type:'music' , 'user_id':this.user_id};
+                    console.log(data);
+                    let link = this.serverurl+'adduserplaylistdata';
+                    this._http.post(link, data)
+                        .subscribe(res=>{
+
+                            let result:any={};
+                            result = res.json();
+                            console.log('result--');
+                            console.log(result);
+                            console.log(result.item.ops);
+                            console.log(result.status);
+                            if(result.status == 'success'){
+
+                                this.countofvideoplaylist = result.item.ops.length;
+                                /*let opsarray=[];
+                                opsarray= result.item.ops;
+                                for(let i in opsarray){
+
+                                    this.musicplaylistdetails = [];
+                                    console.log('in getmusicdetailsbymusicid');
+                                    this.getmusicdetailsbymusicid(opsarray[i].videoid);
+
+                                }*/
+                                console.log(result.item.ops[0].playlist_id);
+                                this.selectedplaylistid = result.item.ops[0].playlist_id;
+
+                                this.getplaylistnamebyplaylistid(this.selectedplaylistid);
+
+
+                                // console.log(this.countofvideoplaylist);
+                                this.showsuccessforplaylist = true;
+
+                                for (let y in this.musiccheckarr){
+                                    this.musiccheckarr[y]= false;
+                                    this.musicselectflag=false;
+                                    console.log('in checkvideoselbox');
+                                    console.log(this.musiccheckarr);
+
+                                }
+
+
+
+                            }
+
+                        })
+
+                }
 
             });
 
@@ -3945,14 +4670,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         console.log(children6.length);*/
 
         for (let i6 = 0; i6 < children6.length; i6++) {
-          /*  console.log('getEventListeners--- for chil4');
-            console.log($._data(children6[i6], "events"));*/
-            //children4[i4].removeEventListener("click");
 
             children6[i6].addEventListener("click", (event: Event) => {
-                //alert("Hello 69!");
-               /* console.log("Hello children5!");
-                console.log(event);*/
 
                console.log($(children6[i6]).attr('class'));
                console.log($(children6[i6]).find('span').text());
@@ -3968,7 +4687,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             tempvarr.push(y);
                         }
                     }
-                    let data ={playlist_id:$(children6[i6]).find('span').text(), videoarray: tempvarr, type:'video'};
+                    let data ={playlist_id:$(children6[i6]).find('span').text(), videoarray: tempvarr, type:'video' ,  'user_id':this.user_id};
                     console.log(data);
                     let link = this.serverurl+'adduserplaylistdata';
                     this._http.post(link, data)
@@ -3976,8 +4695,28 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                             let result:any={};
                             result = res.json();
-                   /*       console.log('result');
-                            console.log(result);*/
+                          console.log('result--');
+                            console.log(result.item.ops);
+                            console.log(result.status);
+                            if(result.status == 'success'){
+
+                                this.countofvideoplaylist = result.item.ops.length;
+                                console.log(result.item.ops[0].playlist_id);
+                                this.selectedplaylistid = result.item.ops[0].playlist_id;
+                                this.getplaylistnamebyplaylistid(this.selectedplaylistid);
+                                // console.log(this.countofvideoplaylist);
+                                this.showsuccessforplaylist = true;
+
+                                for (let y in this.videocheckarr){
+                                    this.videocheckarr[y]= false;
+                                    this.videoselectflag=false;
+                                    console.log('in checkvideoselbox');
+                                    console.log(this.videocheckarr);
+
+                                }
+
+                            }
+
                         })
 
                 }
@@ -3995,6 +4734,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 /*console.log('this.selectedaudio');
                 console.log(this.selectedaudio._id);*/
                 this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+
+            }
+
+            if (stype == 'twitter' && type == 'playlistaudio') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedaudio._id);*/
+                this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
 
 
             }
@@ -4049,6 +4796,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
             }
+            if (stype == 'google' && type == 'playlistaudio') {
+               /* console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
+
+            }
             if (stype == 'google' && type == 'video') {
                 /*console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
@@ -4093,6 +4846,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
             }
+            if (stype == 'linkedin' && type == 'playlistaudio') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
+
+            }
             if (stype == 'linkedin' && type == 'video') {
                /* console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
@@ -4135,6 +4894,13 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 /*console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
                 this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+                /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
+
+            }
+            if (stype == 'tumblr' && type == 'playlistaudio') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
                 /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
 
             }
@@ -4195,8 +4961,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         this.shareflag = type;
         this.selectedsharedpost=selectedpost;
-        /*console.log('in setshareflag');
-        console.log(type);*/
+        console.log('in setshareflag');
+        console.log(type);
     }
 
     getinstavalue(item:any){
@@ -4321,16 +5087,19 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     }
 
     getfeedofusers(){
-        /*console.log(this.videodetailArray);
-        console.log(this.musicdetailArray);
-        console.log(this.picturedetailArray);*/
 
-        this.commontrendingarray.push(this.videodetailArray );
-        /*this.commontrendingarray = this.commontrendingarray.concat(this.videodetailArray);*/
+        /*this.commontrendingarray.push(this.videodetailArray );
         this.commontrendingarray.push(this.musicdetailArray);
-        this.commontrendingarray.push(this.picturedetailArray);
-        // console.log(this.commontrendingarray);
+        this.commontrendingarray.push(this.picturedetailArray);*/
+        /*var d = a.concat(b, c);*/
 
+        this.commontrendingarray = this.videodetailArray.concat(this.musicdetailArray,this.picturedetailArray);
+        console.log('this.commontrendingarray');
+        console.log(this.commontrendingarray);
+        /*for(let i in this.commontrendingarray){
+
+
+        }*/
     }
 
     checkvideoselbox(){
@@ -4360,6 +5129,318 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
     }
+    checkmusicselbox(){
+        /*console.log('in checkvideoselbox');
+        console.log(this.musiccheckarr);*/
+        setTimeout(()=> {
+            this.musicselectflag=false;
+            for (let y in this.musiccheckarr){
+                if(this.musiccheckarr[y]==true){
+
+                    this.musicselectflag = true;
+
+
+                }
+
+                /*console.log('in checkvideoselbox');
+                console.log(this.musiccheckarr);*/
+            }
+        },2000);
+
+
+    }
+
+    getplaylistnamebyplaylistid(val){
+
+        let link = this.serverurl+'getplaylistnamebyplaylistid';
+        let data = {_id:val};
+        this._http.post(link,data)
+            .subscribe(res =>{
+
+                let result:any = {};
+                result = res.json();
+                console.log('result of playlist name');
+                // console.log(result);
+                // console.log(result.item);
+                this.playlistModalArray = result.item;
+
+                for(let i in this.playlistModalArray){
+
+                    console.log(this.playlistModalArray[i].type);
+                    if(this.playlistModalArray[i].type == 'music'){
+
+                        let oldselectedaudio = this.selectedaudioplaylist.musicurl;
+                        if(this.playlistModalArray.length>0  && !this.isaudioplayforplaylist){
+
+                            //this.selectedaudio = this.musicArray[0];
+                            //oldselectedaudio = this.selectedaudio.music;
+
+
+                            if((this.selectedaudioplaylist.comments)==null){
+
+                                this.selectedaudioplaylist = this.playlistModalArray[0];
+                                this.chosenaudiotitleforplaylist = this.playlistModalArray[0].musictitle;
+                                this.audiousernameforplaylist = this.playlistModalArray[0].userdetailsofmusic[0].username;
+                                oldselectedaudio = this.selectedaudioplaylist.musicurl;
+
+                            }
+                            else  {
+                                for(let c1 in this.playlistModalArray){
+                                    if(this.playlistModalArray[c1]._id==this.selectedaudioplaylist._id){
+                                        this.selectedaudioplaylist=this.playlistModalArray[c1];
+                                        if(this.selectedaudioplaylist._id==this.selectedpost._id)this.selectedpost=this.playlistModalArray[c1];
+                                        this.chosenaudiotitle = this.playlistModalArray[c1].title_music;
+                                        this.audiousername = this.playlistModalArray[c1].userdetailsofmusic[0].firstname+' '+this.playlistModalArray[c1].userdetailsofmusic[0].lastname;
+
+                                    }
+                                }
+                            }
+
+
+                            this.chosenaudiourl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[0].musicurl);
+                            this.selectedaudiourl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[0].musicurl);
+
+                            if(this.playlistModalArray[0].musiclikes[0]!=null){
+
+                                this.currentlikecount = this.playlistModalArray[0].musiclikes[0].vlike;
+                            }
+                            else {
+                                this.currentlikecount = 0;
+                            }
+                            //myAudio.play();
+                            //myAudio.pause();
+
+                            setTimeout(()=> {    //<<<---    using ()=> syntax
+                                let myAudio:any = {};
+                                myAudio=  document.querySelector("#audioplayer3");
+                                this.audioDurationforplaylist = myAudio.duration.toFixed(0);
+                                if(isNaN(this.audioDurationforplaylist)){
+                                    setTimeout(()=> {
+                                        this.playmusicforplaylist();
+                                        this.playmusicforplaylist();
+                                        this.audioDurationforplaylist=0;
+                                    },2000);
+                                }
+                                this.value4  = 0;
+                                this.options4= {
+                                    floor: 0,
+                                    ceil: myAudio.duration.toFixed(0)
+                                };
+
+                                console.log('$(myAudio).length');
+                                console.log($(myAudio).length);
+                                console.log($('#audioplayer3').length);
+
+                                console.log('myAudio');
+                                console.log(myAudio);
+                                console.log(myAudio.duration);
+                                myAudio.volume=this.value5/100;
+                                this.value5=75;
+                                console.log('audioDuration for first time loading');
+                                console.log(this.audioDurationforplaylist);
+                            }, 1000);
+
+                            // myAudio.currentTime =23;
+
+
+                        }
+                    }
+
+                    if(this.playlistModalArray[i].type == 'video'){
+
+                        console.log(this.playlistModalArray);
+                        let oldselectedvideo = this.selectedvideoplaylist.videourl;
+                        /* console.log('oldselectedvideo');
+                         console.log(oldselectedvideo);*/
+                        if(this.playlistModalArray.length>0 && !this.videoplayflagplaylist){
+
+                            if((this.selectedvideoplaylist.videocomments)==null) {
+                                this.selectedvideoplaylist = this.playlistModalArray[0];
+                            }
+                            console.log('this.selectedvideoplaylist');
+
+                             console.log((this.selectedvideoplaylist));
+
+                            if(this.videoplayerindexplaylist>0 && (this.selectedvideoplaylist.videocomments)==null){
+
+                                this.selectedvideoplaylist = this.playlistModalArray[this.videoplayerindexplaylist];
+                            }
+                            let tempvurl=this.playlistModalArray[0].videourl;
+                            /* console.log('tempvurl....');
+                             console.log(tempvurl);*/
+                            this.currentvideoidplaylist=this.playlistModalArray[0].videoid;
+                            //this.choosenvideourl=this.videoArray[0].videoUrl;
+
+                            if((this.selectedvideoplaylist.videocomments)==null) {          // for updating the selected video's data
+                                // console.log('in null block ...');
+                                this.selectedvideoplaylist = this.playlistModalArray[0];
+                            }
+                            else{
+
+                                /*console.log('this.selectedvideo');
+                                 console.log(this.selectedvideo);*/
+
+                                for(let c1 in this.playlistModalArray){
+                                    if(this.playlistModalArray[c1].videoid==this.selectedvideoplaylist.videoid){
+                                        this.selectedvideoplaylist=this.playlistModalArray[c1];
+                                        // console.log('in selection block ....');
+                                        if(oldselectedvideo!=this.selectedvideoplaylist.videourl){
+                                            /*console.log('in selection block oldselectedvideo....');
+                                             console.log('this.selectedvideo');
+                                             console.log(this.selectedvideo);*/
+                                            setTimeout(()=> {
+                                                this.playthumbforplaylist(this.selectedvideoplaylist);
+                                            },50);
+                                        }
+                                        if(this.selectedvideoplaylist.videoid==this.selectedpost.videoid)this.selectedpost=this.playlistModalArray[c1];
+                                        // if
+                                    }
+                                }
+
+                            }
+                            if(this.playlistModalArray[0].videotype=='vimeo' && !this.videoplayflagplaylist){
+                                if(this.playlistModalArray[0].videoviews[0]!=null){
+                                    this.currentvideoviewcount = this.playlistModalArray[0].videoviews[0].vcount;
+                                }
+                                else {
+
+                                    this.currentvideoviewcount = 0;
+                                }
+
+
+                                if(this.playlistModalArray[0].videolikes[0]!=null){
+
+                                    this.currentlikecount = this.playlistModalArray[0].videolikes[0].vlike;
+                                }
+                                else {
+                                    this.currentlikecount = 0;
+                                }
+
+
+
+                                let vimeourl = tempvurl.split('/');
+                                let videoid = vimeourl[vimeourl.length - 1];
+                                /*console.log('videoid ......');
+                                 console.log(videoid);*/
+                                this.currentvideotypeplaylist='vimeo';
+                                this.choosenvideourlplaylist = this.sanitizer.bypassSecurityTrustResourceUrl("https://player.vimeo.com/video/" + videoid);
+                                console.log(this.choosenvideourlplaylist);
+
+                            }
+                            if(this.playlistModalArray[0].videotype=='youtube' && !this.videoplayflagplaylist) {
+                                let videourl = this.playlistModalArray[0].videourl.split('v=');
+                                let videoid = videourl[videourl.length - 1];
+                                this.choosenvideourlplaylist=videoid;
+                                this.currentvideotypeplaylist='youtube';
+                                console.log(this.choosenvideourlplaylist);
+                            }
+
+                        }
+
+                        //getting thumbnail of vimeo videos
+                        for (let x1 in this.playlistModalArray){
+                            if(this.playlistModalArray[x1].videotype=='vimeo'){
+                                let tempvurl=this.playlistModalArray[x1].videourl;
+                                let vimeourl = tempvurl.split('/');
+                                let videoid = vimeourl[vimeourl.length - 1];
+                                this._http.get('https://vimeo.com/api/v2/video/'+videoid+'.json')
+                                    .subscribe(res => {
+                                        var result = res.json();
+                                        /* console.log('vimeo json result ....');
+                                         console.log(result);
+                                         console.log(result[0].thumbnail_large);*/
+                                        this.playlistModalArray[x1].thumbnail=result[0].thumbnail_large;
+
+                                    }, error => {
+                                        // console.log("Oooops!");
+                                    });
+                            }
+                        }
+
+
+                    }
+
+                }
+
+
+                // console.log(result.item[0].playlistdata[0].playlist_name);
+                //this.selectedplaylistname = result.item[0].playlistdata[0].playlist_name;
+
+                //call first playlist musics
+                /**/
+
+
+            })
+    }
+
+
+    showmyplaylist(){
+
+
+        this.showLoader = 1;
+        this.showplaylistmodal = true;
+        let link = this.serverurl + 'getallmusicplaylistbyuserid';
+        let data = {'user_id': this.user_id, 'type':'music'};
+        this._http.post(link ,data)
+            .subscribe(res =>{
+                let result:any = {};
+                result= res.json();
+                console.log('all music playlist for this user');
+                console.log(result);
+                this.playlistname = result.item;
+               if(this.playlistname[0]!=null && this.playlistname[0].playlistdetails[0]!=null && this.playlistname[0].playlistdetails[0].playlist_id!=null ){
+
+                   this.getplaylistnamebyplaylistid(this.playlistname[0].playlistdetails[0].playlist_id);
+               }
+
+
+                this.showLoader = 0;
+
+            });
+    }
+    showvideoplaylist(){
+
+
+        this.showLoader = 1;
+        this.showvideoplaylistmodal = true;
+        let link = this.serverurl + 'getallmusicplaylistbyuserid';
+        let data = {'user_id': this.user_id, 'type':'video'};
+        this._http.post(link ,data)
+            .subscribe(res =>{
+                let result:any = {};
+                result= res.json();
+                console.log('all music playlist for this user');
+                console.log(result);
+                this.playlistname = result.item;
+               if(this.playlistname[0]!=null && this.playlistname[0].playlistdetails[0]!=null && this.playlistname[0].playlistdetails[0].playlist_id!=null ){
+
+                   this.getplaylistnamebyplaylistid(this.playlistname[0].playlistdetails[0].playlist_id);
+               }
+
+                this.showLoader = 0;
+
+            });
+    }
+
+
+
+   /* getmusicdetailsbymusicid(formval){
+
+        let link = this.serverurl+'getmusicdetailsbyid';
+        let data = {music_id:formval};
+        this._http.post(link,data)
+            .subscribe(res =>{
+
+                let result:any = {};
+                result = res.json();
+                console.log('result of music playlist');
+                console.log(result);
+                this.musicplaylistdetails.push(result.item);
+                console.log('this.musicplaylistdetails');
+                console.log(this.musicplaylistdetails);
+
+        })
+    }*/
 
 }
 

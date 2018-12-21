@@ -31,28 +31,28 @@
               <div class="form-group">
                 <label><span>First Name</span> </label>
                 <input name="firstname" class="form-control" type="text" [formControl]="dataForm.controls['firstname']">
-                <span class="has-error" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid"> First Name field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['firstname'].touched && !dataForm.controls['firstname'].valid">* First Name field can not be blank</span>
               </div>
 
               <div class="form-group">
                 <label><span>Last Name</span> </label>
                 <input name="lastname" class="form-control" type="text" [formControl]="dataForm.controls['lastname']">
-                <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid"> First Name field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['lastname'].valid">* Last Name field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Email</span></label>
                 <input name="email" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['email']" disabled>
-                <span class="has-error" *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid"> Email field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['email'].touched && !dataForm.controls['email'].valid">* Email field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>User Name</span> </label>
                 <input name="username" class="form-control" type="text" [formControl]="dataForm.controls['username']" disabled>
-                <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['username'].valid"> User Name field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['lastname'].touched && !dataForm.controls['username'].valid">* User Name field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Phone</span></label>
                 <input name="phone" value="" size="40" class="form-control" aria-required="true" aria-invalid="false" type="text" [formControl]="dataForm.controls['phone']">
-                <span class="has-error" *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid"> Phone field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['phone'].touched && !dataForm.controls['phone'].valid">* Phone field can not be blank</span>
               </div>
 
 
@@ -60,12 +60,12 @@
               <div class="form-group">
                 <label><span>Real Name</span> </label>
                 <input name="realname" class="form-control" type="text" [formControl]="dataForm.controls['realname']">
-                <span class="has-error" *ngIf ="dataForm.controls['realname'].touched && !dataForm.controls['realname'].valid"> Real Name field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['realname'].touched && !dataForm.controls['realname'].valid">* Real Name field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Aliases:</span> </label>
                 <input name="alias" class="form-control" type="text" [formControl]="dataForm.controls['alias']">
-                <span class="has-error" *ngIf ="dataForm.controls['alias'].touched && !dataForm.controls['alias'].valid"> Aliases field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['alias'].touched && !dataForm.controls['alias'].valid">* Aliases field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Gender</span></label>
@@ -74,21 +74,21 @@
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
-                <span class="has-error" *ngIf ="dataForm.controls['gender'].touched && !dataForm.controls['gender'].valid"> Gender field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['gender'].touched && !dataForm.controls['gender'].valid">* Gender field can not be blank</span>
               </div>
               <div class="form-group" *ngIf="userdetails.musicians == 1">
                 <label><span>Performance Category/ Genre (Music):</span></label>
                 <select class="form-control classic mselbox" multiple="multiple"  name="musicgenre"  [formControl]="dataForm.controls['musicgenre']">
                   <option value="">Select Genre</option>
-                  <option *ngFor="let item of genrelist" value="{{item._id}}">{{item.genrename}}</option></select>
-                <span class="has-error" *ngIf ="dataForm.controls['musicgenre'].touched && !dataForm.controls['musicgenre'].valid"> Performance Category/Genre field can not be blank</span>
+                  <option *ngFor="let item of genrelist" [attr.oval]="item._id" value="{{item._id}}">{{item.genrename}}</option></select>
+                <span class="has-error" *ngIf ="dataForm.controls['musicgenre'].touched && !dataForm.controls['musicgenre'].valid">* Performance Category/Genre field can not be blank</span>
               </div>
               <div class="form-group" *ngIf="userdetails.dancer == 1">
                 <label><span>Performance Category/ Genre (Dancer):</span></label>
                 <select class="form-control classic mselbox"  name="dancergenre" multiple="multiple" [formControl]="dataForm.controls['dancergenre']">
                   <option value="">Select Genre</option>
-                  <option *ngFor="let item of genrelist1" value="{{item._id}}">{{item.genrename}}</option></select>
-                <span class="has-error" *ngIf ="dataForm.controls['dancergenre'].touched && !dataForm.controls['dancergenre'].valid"> Performance Category/Genre field can not be blank</span>
+                  <option *ngFor="let item of genrelist1" [attr.oval]="item._id" value="{{item._id}}">{{item.genrename}}</option></select>
+                <span class="has-error" *ngIf ="dataForm.controls['dancergenre'].touched && !dataForm.controls['dancergenre'].valid">* Performance Category/Genre field can not be blank</span>
               </div>
               <div class="form-group" *ngIf="userdetails.model == 1">
                 <label><span>Ethnicity:</span></label>
@@ -139,7 +139,7 @@
                     </li>
                   </ul>
                 </div>
-                <span class="has-error" *ngIf ="dataForm.controls['ethnicity'].touched && !dataForm.controls['ethnicity'].valid"> Ethnicity field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['ethnicity'].touched && !dataForm.controls['ethnicity'].valid">* Ethnicity field can not be blank</span>
               </div>
               <div class="form-group" *ngIf="userdetails.musicians == 1 || userdetails.dancer == 1">
                 <label><span>Ability:</span></label>
@@ -172,7 +172,7 @@
                     </li>
                   </ul>
                 </div>
-                <span class="has-error" *ngIf ="dataForm.controls['ability'].touched && !dataForm.controls['ability'].valid"> Ability field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['ability'].touched && !dataForm.controls['ability'].valid">* Ability field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Experiences:</span></label>
@@ -180,7 +180,7 @@
                   <input name="websites[]" class="form-control" type="url" [formControl]="item.controls['name']">
                   <button type="button" class="addbtn" (click)="addExperience('')" style="right: 38px;"><i class="fa fa-plus"></i></button>
                   <button type="button" class="addbtn" (click)="delExperience(i)"><i class="fa fa-minus"></i></button>
-                  <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid"> Experience field can not be blank</span>
+                  <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid">* Experience field can not be blank</span>
                 </div>
               </div>
               <div class="form-group">
@@ -189,7 +189,7 @@
                   <input name="websites[]" class="form-control" type="url" [formControl]="item.controls['name']">
                   <button type="button" class="addbtn" (click)="addWebsite('')" style="right: 38px;"><i class="fa fa-plus"></i></button>
                   <button type="button" class="addbtn" (click)="delWebsite(i)"><i class="fa fa-minus"></i></button>
-                  <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid"> Website field can not be blank</span>
+                  <span class="has-error" *ngIf ="item.controls['name'].touched && !item.controls['name'].valid">* Website field can not be blank</span>
                 </div>
               </div>
               <div class="form-group">
@@ -209,12 +209,12 @@
               <div class="form-group">
                 <label><span>Bio:</span> </label>
                 <textarea name="bio" class="form-control" [formControl]="dataForm.controls['bio']"></textarea>
-                <span class="has-error" *ngIf ="dataForm.controls['bio'].touched && !dataForm.controls['bio'].valid"> Bio field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['bio'].touched && !dataForm.controls['bio'].valid">* Bio field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Hometown:</span> </label>
                 <input name="city" class="form-control" type="text" [formControl]="dataForm.controls['city']">
-                <span class="has-error" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid"> Hometown field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['city'].touched && !dataForm.controls['city'].valid">* Hometown field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>State/Province:</span></label>
@@ -222,17 +222,17 @@
                   <option value="">Select State</option>
                   <option *ngFor="let item of state" value="{{item.abbreviation}}">{{item.name}}</option>
                 </select>
-                <span class="has-error" *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid"> State/Province field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['state'].touched && !dataForm.controls['state'].valid">* State/Province field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>Address:</span> </label>
                 <input name="address" class="form-control" type="text" [formControl]="dataForm.controls['address']">
-                <span class="has-error" *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid"> Address field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['address'].touched && !dataForm.controls['address'].valid">* Address field can not be blank</span>
               </div>
               <div class="form-group">
                 <label><span>ZipCode:</span> </label>
                 <input name="zip" class="form-control" type="text" [formControl]="dataForm.controls['zip']">
-                <span class="has-error" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid"> ZipCode field can not be blank</span>
+                <span class="has-error" *ngIf ="dataForm.controls['zip'].touched && !dataForm.controls['zip'].valid">* ZipCode field can not be blank</span>
               </div>
 
               <div class="form-group inlinedivbottom">

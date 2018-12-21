@@ -110,6 +110,7 @@ import { MyvideoComponent } from './myvideo/myvideo.component';
 import { MylinkComponent } from './mylink/mylink.component';
 import { MypictureComponent } from './mypicture/mypicture.component';
 import { MyphotosComponent } from './myphotos/myphotos.component';
+import { MediawallComponent } from './mediawall/mediawall.component';
 
 
 @NgModule({
@@ -202,7 +203,8 @@ import { MyphotosComponent } from './myphotos/myphotos.component';
     MyvideoComponent,
     MylinkComponent,
     MypictureComponent,
-    MyphotosComponent
+    MyphotosComponent,
+    MediawallComponent
   ],
   imports: [
     BrowserModule,
