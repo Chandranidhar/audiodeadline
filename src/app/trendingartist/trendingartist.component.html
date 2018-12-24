@@ -1412,8 +1412,24 @@
       <div class="modal-body">
 
         <div class="btntopformgraylistsnew" >
+
+            <!--<form  name="stateForm" novalidate [formGroup]="stateForm" (ngSubmit)="statesubmit(stateForm.value)">
+
+                <div class="form-group">
+                    <label>Name of the state:</label>
+                    <select name="state" class="form-control classic" [formControl]="stateForm.controls['state']">
+                        <option value="">Select State</option>
+                        <option *ngFor="let item of statearray" value="{{item.abbreviation}}">{{item.name}}</option>
+                    </select>
+                    <span class="has-error" *ngIf ="stateForm.controls['state'].touched && !stateForm.controls['state'].valid">State field can not be blank</span>
+                </div>
+            </form>-->
           <div class="col" *ngFor="let valc of statearray"><a class="btntopformgraynew" (click)="selectedstate(valc)">{{valc.name}}</a></div>
-         <!-- <div class="col"><a class="btntopformgraynew">Ballet</a></div>
+         <!--
+          <select name="state" class="form-control classic" [formControl]="dataForm.controls['state']">
+                  <option value="">Select State</option>
+                  <option *ngFor="let item of statearray" value="{{item.abbreviation}}">{{item.name}}</option>
+                </select><div class="col"><a class="btntopformgraynew">Ballet</a></div>
           <div class="col"><a class="btntopformgraynew">Contemporary</a></div>
           <div class="col"><a class="btntopformgraynew">Hip-Hop (Dance)</a></div>
           <div class="col"><a class="btntopformgraynew">Jazz (Dance)</a></div>
@@ -1427,7 +1443,10 @@
         <div><h2>Selected Genre</h2></div>
         <div class="btntopformredlistsnew">
           <div class="col" *ngFor="let vals of selectedstatearray"><a class="btntopformrednew" (click)="removeselectedstate(vals)" ><i class="fa fa-close"></i>{{vals.name}}</a></div>
-          <!--(click)="removeselectedgenre(vals)"-->
+          <!--
+
+
+          (click)="removeselectedgenre(vals)"-->
           <!--<div class="col" ><a class="btntopformrednew"><i class="fa fa-close"></i> Jazz</a></div>
           <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Instrumental</a></div>
           <div class="col"><a class="btntopformrednew"><i class="fa fa-close"></i> Modern</a></div>

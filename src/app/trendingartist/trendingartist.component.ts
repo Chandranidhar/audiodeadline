@@ -25,7 +25,7 @@ export class TrendingartistComponent implements OnInit {
     public statearray=[];
     public selectedstatearray=[];
     public isStateModalShown = 0;
-    // public stateForm: FormGroup;
+    public stateForm: FormGroup;
     public cityForm: FormGroup;
     public zipcodeForm: FormGroup;
     public isCityModalShown = 0;
@@ -142,11 +142,11 @@ export class TrendingartistComponent implements OnInit {
             zipcode: ["", Validators.required]
 
         });
-       /* this.stateForm = this.fb.group({
+        this.stateForm = this.fb.group({
 
-            state: ["",Validators.required]
+            state: [""]
 
-        });*/
+        });
 
     }
     convertunixtotimeago(val:any){
@@ -859,7 +859,7 @@ export class TrendingartistComponent implements OnInit {
                     if (result.length > 0) {
 
                         this.statearray.push(result[i]);
-                        // console.log(this.statearray);
+                         console.log(this.statearray);
                     }
                     /*this.cityarray = result.*/
                 }
@@ -1009,6 +1009,29 @@ export class TrendingartistComponent implements OnInit {
             console.log(' this.selectedcitysearcharray');
             console.log( this.selectedcitysearcharray);
             this.cityForm.reset();
+
+        }
+    }
+    statesubmit(formval){
+
+        console.log('hgjhgjv');
+        for (let x in this.stateForm.controls) {
+
+            this.stateForm.controls[x].markAsTouched();
+
+
+        }
+        console.log('this.stateForm.valid');
+        console.log(this.stateForm.valid);
+        if(this.stateForm.valid){
+
+            this.selectedstatearray.push(formval);
+            console.log(' this.selectedstatearray');
+            console.log( this.selectedstatearray);
+            this.selectedstatesearcharray.push(formval.abbreviation);
+            console.log(this.selectedstatesearcharray);
+
+            // this.stateForm.reset();
 
         }
     }

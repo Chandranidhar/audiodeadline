@@ -1231,6 +1231,13 @@ select::-ms-expand {
 .modalVideoUpload .modal-content .modal-body{
     background-color: transparent;
 }
+
+.modalVideoUpload .modal-content .modal-header h1{
+    padding: 10px 5px; margin: 0; font-family: 'RobotoBold'; font-size: 24px; color:#fff; text-transform: uppercase; margin-right: 24px;
+}
+
+
+
 .modalVideoUpload .modal-content{
     background-color: #000;
     border: 5px solid #c3c3c3;
@@ -1286,7 +1293,7 @@ select::-ms-expand {
     width: 100%;
 }
 .av_xp_tab_contant_new{
-    z-index: 999999;
+    z-index: 500;
     position: relative;
     width: 100%;
     display: block;
@@ -2457,7 +2464,7 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .feedslinks{display: table;width: 100%;}
 .feedslinks span{display: table-cell;vertical-align: middle;padding: 4px;color: #fff;font-size: 12px;cursor: pointer; text-align: center;}
 .feedslinks input.form-control{width: 100%;height: 26px;display: block;border-radius: 100px;background-color: #464b4d;border: 0px !important; color: #bdbdbd;}
-.feedslinks .imgwrapper{width: 35px; height: 35px; border: 0px !important; border-radius: 100px; display: inline-block;}
+.feedslinks .imgwrapper{width: 35px !important; height: 35px !important; border: 0px !important; border-radius: 100px; display: inline-block;}
 .feedslinks .imgwrapper img{width: 100%;}
 .feedslinks .fa{margin-right: 2px; font-size: 12px;}
 .feedslinks .fa-comment{color:#9b1446;}
@@ -5800,8 +5807,8 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     margin-top: 5px;
 }
 
-.playlistmodal .col-md-12 .av_button button{width: 32.33%; margin: .5%;}
-.playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting {border-bottom: 2px solid #1c3349;}
+.playlistmodal .col-md-12 .av_button button{width: 48.33%; margin: .5%;}
+.playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting {border-bottom: 0px solid #1c3349;}
 .playlistmodal .avi_trandingmedia .trending_video_list {padding-right: 0px;}
 .playlistmodal .col-md-12 .avi_xp_tab_contant {width: 99%;}
 .playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-7.col-xs-12{padding-left:0px; padding-right:5px;}
@@ -5809,6 +5816,25 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 .playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar{height: 281px;}
 .playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar .video_list .col-md-4.col-sm-3.col-xs-3{padding-left:0; padding-right:0;}
 .playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar .video_list .col-md-8.col-sm-9.col-xs-9 {padding-left: 0; padding-right: 0;}
+.playlistmodal .avi_trandingmedia .trending_video_list .playlistactionbtn {position: relative; right: 0; bottom: 0; width: auto; margin-right: 0px; display: inline-block; text-align: right; width: 100%;}
+.playlistmodal .avi_trandingmedia .trending_video_list .playlistactionbtn span {padding: 0px 0px;}
+.playlistmodal .player_con .avi_trandingmedia .feedslinks .imgwrapper {width: 35px !important; height: 35px !important;}
+.tranding_videoandlisting .trending_video_list .video_list:last-child {margin-bottom: 0px;}
+.playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting .avi_trandingmedia .trending_video_list .scrollbar4 {margin-bottom: 2px;}
+.playlistmodal .playlistactionbtn {position: relative; display: inline-block; text-align: right; width: 100%; bottom: 0;}
+
+
+/*.playlistmodal .video_list .col-md-8 p:nth-child(2) {position: inherit;bottom: 0;}*/
+.playlistmodal.modalVideoUpload .modal-body p {margin-top: 0px;}
+.playlistmodal .trending_video_list .video_list p:nth-child(2){bottom:25px;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 .scrollbar .video_list{margin-bottom: 6px;}
+.playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12 {padding-left: 0px;}
+.playlistmodal .video_list .col-md-8 p:nth-child(1) {width: 100%;}
+.playlistmodal .video_list .col-md-8 p:nth-child(2) {width: 100%;}
+.playlistmodal .modal-dialog {width: 90%;}
+.playlistmodal .avi_trandingmedia .audioplayer_play .col-container {display: inline-block;}
+.playlistmodal .col-md-12 .sectionbody .tranding_videoandlisting.col-container {display: inline-block;}
+
 
 /*---Media Css Start Here----*/
 
@@ -6641,8 +6667,6 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 
 @media (max-width: 1199px){
 
-
-
     #tabPlayer .player_con .play_video_status {
         text-align: left;
         padding: 14px;
@@ -7245,6 +7269,16 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 991px){
+    .playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-7.col-xs-12 {
+        width: 100%;
+    }
+    .playlistmodal .col-md-12 .avi_xp_tab_contant .col-md-6.col-sm-5.col-xs-12{
+        width: 100%;
+    }
+
+  /*  .playlistmodal .trending_video_list .video_list p:nth-child(2) {position: inherit; bottom: 0px;}
+    .playlistmodal .video_list .tranding_blogp p:nth-child(3) {position: inherit; bottom: 0px;}*/
+
     .as_mediawall .col-container .col-1-2{width: 100%;}
     .as_artistfeed .col-container .col-1-2{width: 100%;}
     .as_friendsfeed .col-container .col-1-2{width: 100%;}
@@ -7650,7 +7684,6 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
     }
 }
 
-
 @media (max-width: 850px) {
     .video_list .col-md-8 p:nth-child(1) {
         height: 36px;
@@ -7668,7 +7701,6 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         height: 32px;
     }
 }
-
 
 @media (max-width: 767px){
     #tabPlayer .player_con .scrollbar4 {
@@ -7886,6 +7918,20 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 767px){
+    .playlistmodal .player_con .play_video_status p {
+        text-align: center;
+    }
+
+    .playlistmodal .trending_video_list .video_list p:nth-child(2) {
+        bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .playlistmodal .trending_video_list .video_list p:nth-child(1) {
+        bottom: 0px;
+        margin-top: 10px;
+    }
+
     .playlistmodal .modal-dialog {
         width: 90%;
     }
@@ -8373,6 +8419,10 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media(max-width: 540px) {
+    .playlistmodal .trending_video_list .video_list p:nth-child(1) {margin-top: 0px; text-align: left; width: auto;}
+    .playlistmodal .video_list .tranding_blogp p:nth-child(2) span:nth-child(2) {text-align: right; width: auto; float: none;}
+    .playlistmodal .video_list .tranding_blogp p:nth-child(2) span {width: auto; float: left; text-align: left;}
+
     .inputcheckbox input[type=checkbox]:not(old), .inputcheckbox input[type=radio ]:not(old) {
         width: 16px;
         margin: 0 auto 10px;
@@ -8774,6 +8824,45 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 }
 
 @media (max-width: 480px){
+    .playlistmodal .video_list .col-md-4.col-sm-3.col-xs-3 {
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
+        position: relative;
+        width: 100%;
+    }
+
+    .playlistmodal .trending_video_list .video_list p:nth-child(1) {
+        margin-top: 0px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .playlistmodal .video_list .tranding_blogp p:nth-child(2) span {
+        width: 100%;
+        float: none;
+        text-align: center;
+        display: block;
+    }
+
+    .playlistmodal .video_list .tranding_blogp p:nth-child(2) span:nth-child(2) {
+        text-align: center;
+        width: 100%;
+        float: none;
+        display: block;
+    }
+
+    .playlistmodal .video_list .col-md-8.col-sm-9.col-xs-9.tranding_blogp {
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
+        position: relative;
+        width: 100%;
+    }
+    .playlistmodal .trending_video_list .video_list p:nth-child(2) {
+        bottom: 0px;
+    }
+
     .friendsblock1 .sectionbody .sectionheaderinner .col-1-5 {
         width: 98%;
     }
@@ -9257,6 +9346,7 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
         left: 32% !important;
     }
 }
+
 @media (max-width: 330px) {
     .competitionblocknew .compnewblock2content h5 a.btnpink{
         padding: 10px 10px;
@@ -9297,4 +9387,27 @@ popover-container.popover .socialmediaicons .fa{display: inline-block !important
 /*---Media Css End Here----*/
 
 
+.playlistmodal .col-md-12 .av_button button.active {
+    width: 48.33%;
+    margin: .5%;
+    color: #fff!important;
+    background: #616161;
+}
 
+.playlistmodalaudio{
+
+    z-index: 9999 !important;
+}
+
+.av_xp_tab_contant_new{
+    z-index: 500;      //change
+    position: relative;
+    width: 100%;
+    display: block;
+    margin: 0;
+    /* padding: 10px;*/
+    background-color: #1c3349;
+    top: 0% !important;
+    left: 0% !important;
+    transform: inherit !important;
+}

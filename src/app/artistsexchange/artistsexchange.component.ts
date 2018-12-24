@@ -66,6 +66,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     //     customClass: 'customClass'
     //   }
     // ];
+
+    public isClicked = [];
+
     public userdata: CookieService;
 
     public modalform: FormGroup;
@@ -285,6 +288,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     public currentvideotypeplaylist:any ='';
     public currentvideoidplaylist:any;
     public videoplayflagplaylist:any = 0;
+    public selectedaudiourlforplaylist:any ='';
     //public FBS:any;
 
 
@@ -655,12 +659,37 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             console.log('selectedsharedpost');
             console.log(this.selectedsharedpost);*/
         }
+        if( type=='playlistaudio'){
+
+             options = {
+                method: 'share',
+
+                href: 'http://artistxp.com/sharetools.php?type=m&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost.videoid
+            };
+
+            /*console.log('trending audio');
+            console.log('selectedsharedpost');
+            console.log(this.selectedsharedpost);*/
+        }
         if(type=='video'){
 
              options = {
                 method: 'share',
 
                 href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost._id
+            };
+
+           /* console.log('video');
+            console.log('selectedsharedpost');
+            console.log(this.selectedsharedpost);*/
+
+        }
+        if(type=='playlistvideo'){
+
+             options = {
+                method: 'share',
+
+                href: 'http://artistxp.com/sharetools.php?type=v&userid='+this.selectedsharedpost.user_id+'&itemid='+this.selectedsharedpost.videoid
             };
 
            /* console.log('video');
@@ -874,7 +903,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     playthumbforplaylist(item:any){            // playing the playlist thumbnail video
 
         this.choosenvideourlplaylist='';
-        console.log(' playthumbforplaylist callled  ....');
+        console.log(' playthumbforplaylist callled ....');
         console.log(item);
         this.selectedvideoplaylist = item;
         this.selectedpost = item;
@@ -1736,7 +1765,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 })
         }
     }
-    addcommentplaylist(val:any){
+    addcommentvideoplaylist(val:any){
 
         // console.log('val');
         // console.log(val);
@@ -1795,6 +1824,44 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
 
+
+                })
+        }
+    }
+    addcommentmusicplaylist(val:any){
+
+        if(val.keyCode==13 && !val.shiftKey && this.commentval.length>0){
+
+            /*console.log('submit comment here ....');*/
+            let link = this.serverurl+'addcomment';
+            let data = {'post_id': this.selectedpost.videoid,'user_id':this.user_id, 'comment':this.commentval};
+           /* console.log('data');
+            console.log(data);*/
+            this._http.post(link, data)
+                .subscribe(val =>{
+
+                    var res = val.json();
+                  /*  console.log('success');
+                    console.log('res');
+                    console.log(res.item);*/
+
+                    this.getallpicture();
+
+                    this.getallmusic();
+
+                    this.getallvideo();
+                    if(this.fan==0) {
+                        this.getPictureDetails();
+                        this.getmusicdetails();
+                        this.getLinkDetails();
+                        this.getVideoDetails();
+                        this.showmyplaylist();
+                    }
+                    else{
+                        this.getfanlikeditems();
+                    }
+
+                    this.commentval='';
 
                 })
         }
@@ -2129,6 +2196,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         myAudio.volume = this.oldvolumeplaylist;
         this.ismuteaudio = false;
         this.value5 = this.oldvolumeplaylist*100;
+        this.ismuteaudioplaylist = false;
         /*console.log(this.value);
         console.log(this.oldvolume);
         console.log(myAudio.volume);*/
@@ -2539,9 +2607,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
         this.selectedpost = val;
 
         this.chosenaudiotitleforplaylist = val.musictitle;
-        console.log(this.chosenaudiotitleforplaylist);
-        console.log(this.audiousernameforplaylist);
-        console.log(this.chosenaudiourlforplaylist);
+
         //this.audiousername = this.real_name;
         this.audiousernameforplaylist = val.userdetailsofmusic[0].firstname+" "+val.userdetailsofmusic[0].lastname;
         if(this.audioplayerindexforplaylist==this.playlistModalArray.indexOf(val))
@@ -2564,14 +2630,15 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             //alert(3);
             this.audioplayerindexforplaylist = this.playlistModalArray.indexOf(val);
             this.chosenaudiourlforplaylist = '';
-/*
-            console.log('chosenaudiourl');
-            console.log(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + val.user_id + '/' + val.music);
-            console.log(this.chosenaudiourl);*/
+            console.log('chosenaudiourl1');
+            console.log(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + val.user_id + '/' + val.musicurl);
+            console.log(this.chosenaudiourlforplaylist);
             this.isaudioplayforplaylist = false;
             setTimeout(()=> {
                 this.chosenaudiourlforplaylist = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + val.user_id + '/' + val.musicurl);
             }, 500);
+            console.log('chosenaudiourl2');
+            console.log(this.chosenaudiourlforplaylist);
             this.value4 = 0;
             setTimeout(()=> {    //<<<---    using ()=> syntax
 
@@ -2659,6 +2726,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     playmusicforplaylist(){
         let myAudio :any = {};
         myAudio = document.querySelector("#audioplayer3");
+        /*console.log('myaudio===========');
+        console.log(myaudio);*/
         /* console.log('$(myAudio).length');
          console.log($(myAudio).length);
          console.log($('#audioplayer1').length);
@@ -3081,6 +3150,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             scrollTop: this.scrolled
         });
     }
+
     scrolldown(){
         //document.getElementById("vlist").scrollIntoView();
         //var scrolled = 0;
@@ -3102,8 +3172,15 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
             if(flag1==2) this.commonconfirmmodalmessage='Are you sure you want to delete this link ?';
             if(flag1==3) this.commonconfirmmodalmessage='Are you sure you want to delete this picture ?';
             if(flag1==4) this.commonconfirmmodalmessage='Are you sure you want to delete this music ?';
-            if(flag1==5) this.commonconfirmmodalmessage='Are you sure you want to delete this item from the playlist ?';
-            if(flag1==6) this.commonconfirmmodalmessage='Are you sure you want to delete this item from the playlist ?';
+            if(flag1==5){
+                // this.showplaylistmodal = false;
+                // console.log(this.showplaylistmodal);
+                this.commonconfirmmodalmessage='Are you sure you want to delete this music from the playlist ?';
+
+            }
+            if(flag1==6) {
+                // this.showvideoplaylistmodal = false;
+                this.commonconfirmmodalmessage='Are you sure you want to delete this video from the playlist ?';}
         }
         // console.log(id);
         if(flag==1) {
@@ -3152,17 +3229,17 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                         let result:any = {};
                         result = res.json();
-                        console.log(result);
+                        // console.log(result);
                         if(result.status == 'success'){
                             this.iscommonmodal = true;
 
-                            if(flag1==5)this.commonmodalmessage = 'Item deleted successfully !!';
+                            if(flag1==5)this.commonmodalmessage = 'Music deleted successfully !!';
                             setTimeout(()=> {    //<<<---    using ()=> syntax
                                 this.iscommonmodal = false;
                                 this.commonmodalmessage = '';
                             }, 4000);
 
-                            this.showvideoplaylist();
+                            this.showmyplaylist();
                         }
 
                     })
@@ -3177,22 +3254,23 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                         let result:any = {};
                         result = res.json();
-                        console.log(result);
+                        // console.log(result);
                         if(result.status == 'success'){
                             this.iscommonmodal = true;
 
-                            if(flag1==6)this.commonmodalmessage = 'Item deleted successfully !!';
+                            if(flag1==6)this.commonmodalmessage = 'Video deleted successfully !!';
                             setTimeout(()=> {    //<<<---    using ()=> syntax
                                 this.iscommonmodal = false;
                                 this.commonmodalmessage = '';
                             }, 4000);
 
-                            this.showmyplaylist();
+                            this.showvideoplaylist();
                         }
 
                     })
 
             }
+
         }
 
     }
@@ -3232,7 +3310,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                    link3=this.serverurl+'editvideos';
                 let data=formval;
                 data.user_id = this.user_id;
-                console.log(data);
+                // console.log(data);
                 this.showLoader = 1;
                 this._http.post(link3,data)
 
@@ -3241,7 +3319,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             var res = val.json();
                             //loader
                             if (res.status=='success'){
-                                console.log('Success');
+                                // console.log('Success');
                                 this.isModalVideoShown= false;
                                 this.showLoader = 0;                //loader
                                 this.isVideoSaved = 1;
@@ -3255,7 +3333,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                         }, error =>{
 
-                            console.log('Error');
+                            // console.log('Error');
                         }
                     )
 
@@ -3353,6 +3431,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             console.log(res.item.ops[0]);*/
                             // this.musicplaylistarray = res.item.ops[0];
                             this.getplaylists();
+                            this.isPlaylistModalShown = false;
 
 
 
@@ -3376,8 +3455,8 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                 let result:any={};
                 result= res.json();
-                console.log('result of playlist ...');
-                console.log(result.item);
+                // console.log('result of playlist ...');
+                // console.log(result.item);
                 this.playlistarray= result.item;
                 let vplaylisthtml='';
                 let mplaylisthtml='';
@@ -4753,6 +4832,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
 
             }
+            if (stype == 'twitter' && type == 'playlistvideo') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedvideo._id);
+                console.log(this.selectedvideo.user_id);*/
+                this.generalshareurl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
+
+
+            }
             if (stype == 'twitter' && type == 'trendingvideo') {
                 /*console.log('this.selectedaudio');
                 console.log(this.selectedvideo._id);
@@ -4808,6 +4895,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
 
             }
+            if (stype == 'google' && type == 'playlistvideo') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://plus.google.com/share?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
+
+            }
             if (stype == 'google' && type == 'trendingvideo') {
               /*  console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
@@ -4856,6 +4949,12 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                /* console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
                 this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+
+            }
+            if (stype == 'linkedin' && type == 'playlistvideo') {
+               /* console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://www.linkedin.com/shareArticle?url=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
 
             }
             if (stype == 'linkedin' && type == 'trendingvideo') {
@@ -4908,6 +5007,13 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 /*console.log('this.selectedaudio');
                 console.log(this.selectedaudio);*/
                 this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost._id);
+                /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
+
+            }
+            if (stype == 'tumblr' && type == 'playlistvideo') {
+                /*console.log('this.selectedaudio');
+                console.log(this.selectedaudio);*/
+                this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl=' + encodeURIComponent('http://artistxp.com/sharetools.php?type=v&userid=' + this.selectedsharedpost.user_id + '&itemid=' + this.selectedsharedpost.videoid);
                 /* this.generalshareurl = 'https://www.tumblr.com/widgets/share/tool/preview?shareSource=legacy&canonicalUrl='+encodeURIComponent('http://artistxp.com/sharetools.php?type=m&userid=5bf50f4560c4416209c032e4&itemid=5bf6490f249d4cd32803db75');*/
 
             }
@@ -5154,15 +5260,28 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
         let link = this.serverurl+'getplaylistnamebyplaylistid';
         let data = {_id:val};
+
         this._http.post(link,data)
             .subscribe(res =>{
 
                 let result:any = {};
                 result = res.json();
+                this.playlistModalArray = [];
                 console.log('result of playlist name');
                 // console.log(result);
                 // console.log(result.item);
                 this.playlistModalArray = result.item;
+                $('#playlistbuttondiv').find('.active').removeClass('active');
+                $('span[playbuttonid="'+val+'"]').parent().addClass('active');
+
+
+                $('#playlistmusicbuttondiv').find('.active').removeClass('active');
+                $('span[musicplaybuttonid="'+val+'"]').parent().addClass('active');
+
+
+
+                console.log(result.item[0].playlistdata[0].playlist_name);
+                this.selectedplaylistname = this.playlistModalArray[0].playlistdata[0].playlist_name;
 
                 for(let i in this.playlistModalArray){
 
@@ -5180,8 +5299,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
 
                                 this.selectedaudioplaylist = this.playlistModalArray[0];
                                 this.chosenaudiotitleforplaylist = this.playlistModalArray[0].musictitle;
-                                this.audiousernameforplaylist = this.playlistModalArray[0].userdetailsofmusic[0].username;
+                                this.audiousernameforplaylist = this.playlistModalArray[0].userdetailsofmusic[0].firstname+''+this.playlistModalArray[0].userdetailsofmusic[0].lastname;
                                 oldselectedaudio = this.selectedaudioplaylist.musicurl;
+                                this.selectedplaylistname = this.playlistModalArray[0].playlistdata[0].playlist_name;
 
                             }
                             else  {
@@ -5189,16 +5309,21 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                                     if(this.playlistModalArray[c1]._id==this.selectedaudioplaylist._id){
                                         this.selectedaudioplaylist=this.playlistModalArray[c1];
                                         if(this.selectedaudioplaylist._id==this.selectedpost._id)this.selectedpost=this.playlistModalArray[c1];
-                                        this.chosenaudiotitle = this.playlistModalArray[c1].title_music;
-                                        this.audiousername = this.playlistModalArray[c1].userdetailsofmusic[0].firstname+' '+this.playlistModalArray[c1].userdetailsofmusic[0].lastname;
+                                        this.chosenaudiotitleforplaylist = this.playlistModalArray[c1].title_music;
+                                        this.audiousernameforplaylist = this.playlistModalArray[c1].userdetailsofmusic[0].firstname+' '+this.playlistModalArray[c1].userdetailsofmusic[0].lastname;
+                                        this.chosenaudiourlforplaylist = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[c1].musicurl);
+                                        this.selectedaudiourlforplaylist = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[c1].musicurl);
+                                        this.selectedplaylistname = this.playlistModalArray[c1].playlistdata[0].playlist_name;
 
                                     }
                                 }
                             }
 
 
-                            this.chosenaudiourl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[0].musicurl);
-                            this.selectedaudiourl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[0].musicurl);
+                            this.chosenaudiotitleforplaylist = this.playlistModalArray[0].musictitle;
+                            this.audiousernameforplaylist = this.playlistModalArray[0].userdetailsofmusic[0].firstname+''+this.playlistModalArray[0].userdetailsofmusic[0].lastname;
+                           /* this.chosenaudiourlforplaylist = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[0].musicurl);
+                            this.selectedaudiourlforplaylist = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl+'nodeserver/uploads/audio/'+this.user_id+'/'+ this.playlistModalArray[0].musicurl);*/
 
                             if(this.playlistModalArray[0].musiclikes[0]!=null){
 
@@ -5213,6 +5338,9 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                             setTimeout(()=> {    //<<<---    using ()=> syntax
                                 let myAudio:any = {};
                                 myAudio=  document.querySelector("#audioplayer3");
+                                console.log('myAudio===========');
+                               // console.log(myAudio);
+                                console.log($('#audioplayer3').html());
                                 this.audioDurationforplaylist = myAudio.duration.toFixed(0);
                                 if(isNaN(this.audioDurationforplaylist)){
                                     setTimeout(()=> {
@@ -5283,6 +5411,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                                 for(let c1 in this.playlistModalArray){
                                     if(this.playlistModalArray[c1].videoid==this.selectedvideoplaylist.videoid){
                                         this.selectedvideoplaylist=this.playlistModalArray[c1];
+                                        this.selectedplaylistname = this.playlistModalArray[c1].playlistdata[0].playlist_name;
                                         // console.log('in selection block ....');
                                         if(oldselectedvideo!=this.selectedvideoplaylist.videourl){
                                             /*console.log('in selection block oldselectedvideo....');
@@ -5315,8 +5444,6 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                                 else {
                                     this.currentlikecount = 0;
                                 }
-
-
 
                                 let vimeourl = tempvurl.split('/');
                                 let videoid = vimeourl[vimeourl.length - 1];
@@ -5363,8 +5490,7 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                 }
 
 
-                // console.log(result.item[0].playlistdata[0].playlist_name);
-                //this.selectedplaylistname = result.item[0].playlistdata[0].playlist_name;
+
 
                 //call first playlist musics
                 /**/
@@ -5391,8 +5517,16 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                if(this.playlistname[0]!=null && this.playlistname[0].playlistdetails[0]!=null && this.playlistname[0].playlistdetails[0].playlist_id!=null ){
 
                    this.getplaylistnamebyplaylistid(this.playlistname[0].playlistdetails[0].playlist_id);
-               }
 
+
+                   setTimeout(()=> {
+                       console.log("$('#playlistmusicbuttondiv').find('button').length");
+                       console.log($('#playlistmusicbuttondiv').find('button').length);
+                       console.log($('#playlistmusicbuttondiv').length);
+                       $('#playlistmusicbuttondiv').find('button').eq(0).addClass('active');
+                   },2000);
+
+               }
 
                 this.showLoader = 0;
 
@@ -5415,6 +5549,14 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
                if(this.playlistname[0]!=null && this.playlistname[0].playlistdetails[0]!=null && this.playlistname[0].playlistdetails[0].playlist_id!=null ){
 
                    this.getplaylistnamebyplaylistid(this.playlistname[0].playlistdetails[0].playlist_id);
+
+
+                   setTimeout(()=> {
+                       console.log("$('#playlistbuttondiv').find('button').length");
+                       console.log($('#playlistbuttondiv').find('button').length);
+                       console.log($('#playlistbuttondiv').length);
+                       $('#playlistbuttondiv').find('button').eq(0).addClass('active');
+                   },2000);
                }
 
                 this.showLoader = 0;
