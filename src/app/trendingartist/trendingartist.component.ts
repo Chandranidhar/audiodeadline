@@ -144,7 +144,7 @@ export class TrendingartistComponent implements OnInit {
         });
         this.stateForm = this.fb.group({
 
-            state: [""]
+            state: ["", Validators.required]
 
         });
 
@@ -865,7 +865,36 @@ export class TrendingartistComponent implements OnInit {
                 }
             })
     }
+    statesubmit(formval){
 
+        console.log('hgjhgjv');
+        for (let x in this.stateForm.controls) {
+
+            this.stateForm.controls[x].markAsTouched();
+
+
+        }
+        console.log('this.stateForm.valid');
+        console.log(this.stateForm.valid);
+        if(this.stateForm.valid){
+
+            console.log('formval');
+            console.log(formval);
+            this.selectedstate(formval);
+           /* this.selectedstatearray.push(val);
+            console.log(' this.selectedstatearray');
+            console.log( this.selectedstatearray);
+            this.selectedstatesearcharray.push(val);
+            console.log('this.selectedstatesearcharray');
+            console.log(this.selectedstatesearcharray);*/
+
+
+
+
+            // this.stateForm.reset();
+
+        }
+    }
 
     selectedstate(val:any){
 
@@ -873,8 +902,10 @@ export class TrendingartistComponent implements OnInit {
 
         console.log('val');
         console.log(val);
-        this.selectedstatearray.push(val);
-        this.selectedstatesearcharray.push(val.abbreviation);
+        this.selectedstatearray.push(val.state);
+        console.log(' this.selectedstatearray');
+        console.log( this.selectedstatearray);
+        this.selectedstatesearcharray.push(val.state.abbreviation);
         console.log(this.selectedstatesearcharray);
     }
     removeselectedstate(vals:any){
@@ -1012,29 +1043,7 @@ export class TrendingartistComponent implements OnInit {
 
         }
     }
-    statesubmit(formval){
 
-        console.log('hgjhgjv');
-        for (let x in this.stateForm.controls) {
-
-            this.stateForm.controls[x].markAsTouched();
-
-
-        }
-        console.log('this.stateForm.valid');
-        console.log(this.stateForm.valid);
-        if(this.stateForm.valid){
-
-            this.selectedstatearray.push(formval);
-            console.log(' this.selectedstatearray');
-            console.log( this.selectedstatearray);
-            this.selectedstatesearcharray.push(formval.abbreviation);
-            console.log(this.selectedstatesearcharray);
-
-            // this.stateForm.reset();
-
-        }
-    }
 
     ZipCodeSubmit(formval){
 
@@ -1147,10 +1156,9 @@ export class TrendingartistComponent implements OnInit {
                 console.log('this.commonsearcharray');
                 console.log(this.commonsearcharray);
 
-                /*this.isStateModalShown = 0;
+                this.isStateModalShown = 0;
                 this.isCityModalShown = 0;
                 this.isZipcodeModalShown = 0;
-*/
             })
     }
 

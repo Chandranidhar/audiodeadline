@@ -2787,7 +2787,8 @@ blockquote {padding: 0px 11px; margin: 0 0 0px; font-size: 18px; border-left: 3p
 .picture_modal .modal-body .col-md-12 .pic_modal_right .comment_input_se{position: relative; bottom: 0; background: #353535; width: 100%;}
 .picture_modal .modal-body .col-md-12 .pic_modal_right .comment_modal .comment_container .bodybloc5bottom:last-child{margin-bottom: 48px;}
 .picture_modal .modal-body .col-md-12 .pic_modal_right .comment_modal .comment_container .comment_input_se.comment_input_se_new .bodybloc5bottom{margin-bottom: 0px !important;}
-.picture_modal .modal-body .col-md-12 .pic_modal_right .comment_input_se.comment_input_se_new{position: absolute; bottom: 0; background: #353535; width: 100%;}
+.picture_modal .modal-body .col-md-12 .pic_modal_right .comment_input_se.comment_input_se_new{position: relative; bottom: 0; background: #353535; width: 100%;} /*change on 26/12/18 by chandrani*/
+
 .picture_modal .modal-body .col-md-12 .pic_modal_right .pic_modal_right_wrapper {padding-bottom: 0px !important;}
 .modalVideoUploadgallery .modal-dialog .comment_user_image img {border: 0px solid #505050;}
 

@@ -1413,23 +1413,20 @@
 
         <div class="btntopformgraylistsnew" >
 
-            <!--<form  name="stateForm" novalidate [formGroup]="stateForm" (ngSubmit)="statesubmit(stateForm.value)">
+            <form  name="stateForm" novalidate [formGroup]="stateForm" (ngSubmit)="statesubmit(stateForm.value)">
 
                 <div class="form-group">
                     <label>Name of the state:</label>
-                    <select name="state" class="form-control classic" [formControl]="stateForm.controls['state']">
+                    <select name="state" class="form-control classic" [formControl]="stateForm.controls['state']" (change)="statesubmit(stateForm.value)">
                         <option value="">Select State</option>
-                        <option *ngFor="let item of statearray" value="{{item.abbreviation}}">{{item.name}}</option>
+                        <option *ngFor="let valc of statearray" [ngValue]="valc">{{valc.name}}</option>
                     </select>
                     <span class="has-error" *ngIf ="stateForm.controls['state'].touched && !stateForm.controls['state'].valid">State field can not be blank</span>
                 </div>
-            </form>-->
-          <div class="col" *ngFor="let valc of statearray"><a class="btntopformgraynew" (click)="selectedstate(valc)">{{valc.name}}</a></div>
+            </form>
+          <!--<div class="col" *ngFor="let valc of statearray"><a class="btntopformgraynew" (click)="selectedstate(valc)">{{valc.name}}</a></div>-->
          <!--
-          <select name="state" class="form-control classic" [formControl]="dataForm.controls['state']">
-                  <option value="">Select State</option>
-                  <option *ngFor="let item of statearray" value="{{item.abbreviation}}">{{item.name}}</option>
-                </select><div class="col"><a class="btntopformgraynew">Ballet</a></div>
+          <div class="col"><a class="btntopformgraynew">Ballet</a></div>
           <div class="col"><a class="btntopformgraynew">Contemporary</a></div>
           <div class="col"><a class="btntopformgraynew">Hip-Hop (Dance)</a></div>
           <div class="col"><a class="btntopformgraynew">Jazz (Dance)</a></div>

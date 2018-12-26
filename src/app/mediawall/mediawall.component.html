@@ -1,5 +1,11 @@
 <app-artistheader></app-artistheader>
 
+<div *ngIf="commontrendingarray.length==0" class="loder_body">
+    <div class="loder_wrapper">
+        <div class="loader"></div>
+    </div>
+</div>
+
 <div class="container-fluid pageheaderblock">
   <div class="row no-gutter">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -27,45 +33,79 @@
 
           <div class="sectionbody">
             <div class="row no-gutter sectionheaderinner col-container ">
-              <div class="col-1-2 col">
+              <span *ngFor="let val of commontrendingarray">
+              <div class="col-1-2 col" *ngIf="val.title_music!=null" >
                 <div class="bodybloc5singleblock">
                   <div class="bodybloc5singleblockwrapper">
                     <div class="row no-gutter col-container bodybloc5top">
                       <div class="col-md-1 col bodybloc5topleft">
                         <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg2.jpg" alt="RTP5">
+                          <img src="{{siteurl}}/nodeserver/uploads/{{val.userdata[0].images}}" alt="RTP5">
                         </div>
                       </div>
                       <div class="col-md-11 col bodybloc5topright">
                         <div class="row no-gutter col-container">
                           <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
+                            <h2>{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</h2>
                           </div>
                           <div class="col-md-3 col datecolwrapper">
                             <div class="input-group date" data-date-format="mm-dd-yyyy">
                               <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
+                              <input class="form-control" type="text" placeholder="{{convertunixtotimeago(val.added_time)}}" readonly />
                             </div>
                           </div>
                         </div>
                         <div class="row no-gutter col-container bodybloc5bottom">
                           <div class="col-md-12 col audioblocknew">
                             <div class="imgwrapper">
-                              <audio id="myAudio1">
-                                <source src="http://www.w3schools.com/tags/horse.ogg" type="audio/ogg" />
-                                <source src="http://www.w3schools.com/tags/horse.mp3" type="audio/mpeg" />
+                              <img *ngIf="isaudioplayfortrending" src="../../assets/images/audio-play-image.gif" alt="RTR1">
+                              <img *ngIf="!isaudioplayfortrending" src="../../assets/images/pause-gif-image.jpg" alt="RTR1">
+                              <audio *ngIf="val.murl!='' || val.murl!='undefined'" id="audioplayer4{{val._id}}">
+                                <!--<source src="https://audiodeadline.com/nodeserver/uploads/audio/{{val.user_id}}/{{chosenaudiourlfortrending}}" type="audio/mpeg">-->
+                                <source [attr.src]="val.murl" type="audio/mpeg">
                                 Your browser does not support the audio tag.
                               </audio>
-                              <img src="assets/images/artistfeed-img2.jpg" alt="haveenteredblock-audio1img"/>
-                              <div class="buttons1">
+                              <!--<div class="buttons1">
                                 <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
                                   <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
                                 </button>
                                 <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
                                   <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
                                 </button>
+                              </div>-->
+                              <h2 class="blackheader" *ngIf="val.title_music!='undefined' || val.title_music!=null ">{{val.title_music}}</h2>
+
+                            </div>
+                            <div class="sectionheaderinnercontainer">
+                              <div class="playsilider">
+                                <ng5-slider [(value)]="value2[val._id]" [options]="options2" (userChange)="changeaudioplayertimertrending()" (valueChange)="setval1()"></ng5-slider>
                               </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
+                              <div class="playericons">
+                                <!--<blockquote>
+                                    <p class="mb-0">Total Audience 31,000 </p>
+                                    <p class="mb-1">Genre Hip Hop, Rap </p>
+                                    <p class="mb-2"><a href="javascript:void(0);">See Trade</a></p>
+                                </blockquote>-->
+                                <div class="audioicon_d audioicon1">
+                                  <!--<p>0:00:00/01:21:36</p>-->
+                                  <!--<p>{{value1.toFixed(0)}}/{{audioDuration.toFixed(0)}}</p>-->
+                                  <p>{{convertsecstoformat(value2)}}/{{convertsecstoformat(val.duration)}}</p>
+                                </div>
+                                <div class="audioicon_d audioicon2">
+
+                                  <span *ngIf="!isaudioplayfortrending || (selectedmusictrending._id!=val._id  )" class="icons2" (click)="playaudiotrending(val)"><img src="assets/images/audio_playicon.png" alt="#"> </span>
+                                  <span *ngIf="isaudioplayfortrending && selectedmusictrending._id==val._id" class="icons2" (click)="playaudiotrending(val)"><img src="assets/images/audio_pauseicon.png" alt="#"> </span>
+
+                                </div>
+                                <div class="audioicon_d audioicon3">
+
+                                  <span (click)="muteaudiotrending()" *ngIf="!ismuteaudiotrending" class="icons02"><img src="assets/images/audioicon2.png" alt="#"> </span>
+                                  <span *ngIf="ismuteaudiotrending" (click)="unmuteaudiotrending()"  class="icons02"><img src="../../assets/images/audio_muteicon.png" alt="#"> </span>
+                                  <span class="icons03">
+                                                                            <ng5-slider [(value)]="value3" [options]="options3"  (userChange)="changeaudioplayervolumetrending()"></ng5-slider>
+                                                                        </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -75,19 +115,151 @@
                       <div class="col">
                         <div class="feedslinks">
                           <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
+                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""  [(ngModel)]="commentval" (keyup)="addcomment($event)"></span>
+                          <span class="feedslinks3" (click)="showcommentmodal(val)"><i class="fa fa-comment"></i> Comments [{{val.comments.length}}]</span>
                           <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                          <span class="feedslinks5" *ngIf="val.musicviews[0]!=null"><i class="fa fa-eye"></i>Views:{{val.musicviews[0].musiccount}}</span>
+                           <span class="feedslinks5" *ngIf="val.musicviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+                          <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+                          <span (click)="showmusiclike(val)" *ngIf="val.musiclikes[0]!=null && !getlikeonstatus(val.usermusiclikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{val.musiclikes[0].vlike}}</span>
+                                    <span (click)="showmusiclike(val)" *ngIf="val.musiclikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                    <span (click)="showmusicunlike(val)" *ngIf="val.musiclikes[0]!=null && getlikeonstatus(val.usermusiclikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{val.musiclikes[0].vlike}}</span>
+                          <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-1-2 col">
+              <div class="col-1-2 col" *ngIf="val.title!=null" >
+                <div class="bodybloc5singleblock">
+                  <div class="bodybloc5singleblockwrapper">
+                    <div class="row no-gutter col-container bodybloc5top">
+                      <div class="col-md-1 col bodybloc5topleft">
+                        <div class="imgwrapper">
+                          <img src="{{siteurl}}/nodeserver/uploads/{{val.userdata[0].images}}" alt="RTP5">
+                        </div>
+                      </div>
+                      <div class="col-md-11 col bodybloc5topright">
+                        <div class="row no-gutter col-container">
+                          <div class="col-md-9 col">
+                            <h2>{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</h2>
+                          </div>
+                          <div class="col-md-3 col datecolwrapper">
+                            <div class="input-group date" data-date-format="mm-dd-yyyy">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                              <input class="form-control" type="text" placeholder="{{convertunixtotimeago(val.added_time)}}" readonly />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col-md-12 col audioblocknew">
+                            <div class="imgwrapper">
+
+                              <div class="iframevideo">
+                                        <iframe width="100%" *ngIf="currentvideotypetrending=='vimeo'" height="320" [attr.src]="val.vurl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                        <youtube-player *ngIf="currentvideotypetrending=='youtube'" [videoId]="val.vurl" [height]="320" (change)="onStateChangetrending($event)"></youtube-player>
+                                    </div>
+                              <!--<div class="buttons1">
+                                <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
+                                  <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
+                                </button>
+                                <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
+                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
+                                </button>
+                              </div>-->
+                              <h2 class="blackheader" *ngIf="val.title!='undefined' || val.title!=null">{{val.title}}</h2>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                        <div class="feedslinks">
+                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
+                          <span class="feedslinks2"><input class="form-control" type="text" placeholder="" [(ngModel)]="commentval" (keyup)="addcomment($event)"></span>
+                          <span class="feedslinks3" (click)="showcommentmodal(val)"><i class="fa fa-comment"></i> Comments [{{val.comments.length}}]</span>
+                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                          <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
+                            <span class="feedslinks5" *ngIf="val.videoviews[0]!=null"><i class="fa fa-eye"></i>Views:{{val.videoviews[0].vcount}}</span>
+                                <span class="feedslinks5" *ngIf="val.videoviews[0]==null"><i class="fa fa-eye"></i>Views:0</span>
+                          <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+                            <span (click)="showvideolike(val)" *ngIf="val.videolikes[0]!=null && !getlikeonstatus(val.uservideolikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{val.videolikes[0].vlike}}</span>
+                                <span (click)="showvideolike(val)" *ngIf="val.videolikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                <span (click)="showvideounlike(val)" *ngIf="val.videolikes[0]!=null && getlikeonstatus(val.uservideolikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{val.videolikes[0].vlike}}</span>
+                          <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-1-2 col" *ngIf="val.title_pic!=null" >
+                <div class="bodybloc5singleblock">
+                  <div class="bodybloc5singleblockwrapper">
+                    <div class="row no-gutter col-container bodybloc5top">
+                      <div class="col-md-1 col bodybloc5topleft">
+                        <div class="imgwrapper">
+                          <img src="{{siteurl}}/nodeserver/uploads/{{val.userdata[0].images}}" alt="RTP5">
+                        </div>
+                      </div>
+                      <div class="col-md-11 col bodybloc5topright">
+                        <div class="row no-gutter col-container">
+                          <div class="col-md-9 col">
+                            <h2>{{val.userdata[0].firstname}} {{val.userdata[0].lastname}}</h2>
+                          </div>
+                          <div class="col-md-3 col datecolwrapper">
+                            <div class="input-group date" data-date-format="mm-dd-yyyy">
+                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                              <input class="form-control" type="text" placeholder="{{convertunixtotimeago(val.added_time)}}" readonly />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row no-gutter col-container bodybloc5bottom">
+                          <div class="col-md-12 col audioblocknew">
+                            <div class="imgwrapper" (click)="showpicturedetail(val)">
+<img src="{{siteurl}}nodeserver/uploads/pictures/{{val.user_id}}/{{val.image_pic}}" alt="RTR1">
+
+                              <!--<div class="buttons1">
+                                <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
+                                  <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
+                                </button>
+                                <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
+                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
+                                </button>
+                              </div>-->
+                              <h2 class="blackheader" *ngIf="val.title_pic!='undefined' || val.title_pic!=null">{{val.title_pic}}</h2>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                        <div class="feedslinks">
+                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
+                          <span class="feedslinks2"><input class="form-control" type="text" placeholder="" [(ngModel)]="commentval" (keyup)="addcomment($event)"></span>
+                          <span class="feedslinks3" (click)="showcommentmodal(val)"><i class="fa fa-comment"></i> Comments [{{val.comments.length}}]</span>
+                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
+                          <!--<span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>-->
+                             <span class="feedslinks5"  *ngIf="val.picviews[0]!=null" ><i class="fa fa-eye"></i> Views: {{val.picviews[0].piccount}}</span>
+                                    <span class="feedslinks5"  *ngIf="val.picviews[0]==null" ><i class="fa fa-eye"></i> Views: 0</span>
+                          <!--<span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>-->
+                            <span (click)="showpicturelike(val)" *ngIf="val.picturelikes[0]!=null && !getlikeonstatus(val.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{val.picturelikes[0].vlike}}</span>
+                                    <span (click)="showpicturelike(val)" *ngIf="val.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                    <span (click)="showpictureunlike(val)" *ngIf="val.picturelikes[0]!=null && getlikeonstatus(val.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{val.picturelikes[0].vlike}}</span>
+                          <!--<span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--<div class="col-1-2 col">
                 <div class="bodybloc5singleblock">
                   <div class="bodybloc5singleblockwrapper">
                     <div class="row no-gutter col-container bodybloc5top">
@@ -145,387 +317,15 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>-->
+                </span>
+
             </div>
           </div>
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 artistfeedsblock">
-          <div class="sectionbody">
-            <div class="row no-gutter sectionheaderinner col-container ">
-              <div class="col-1-2 col">
-                <div class="bodybloc5singleblock">
-                  <div class="bodybloc5singleblockwrapper">
-                    <div class="row no-gutter col-container bodybloc5top">
-                      <div class="col-md-1 col bodybloc5topleft">
-                        <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg2.jpg" alt="RTP5">
-                        </div>
-                      </div>
-                      <div class="col-md-11 col bodybloc5topright">
-                        <div class="row no-gutter col-container">
-                          <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
-                          </div>
-                          <div class="col-md-3 col datecolwrapper">
-                            <div class="input-group date" data-date-format="mm-dd-yyyy">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row no-gutter col-container bodybloc5bottom">
-                          <div class="col-md-12 col audioblocknew">
-                            <div class="imgwrapper">
-                              <audio id="myAudio1">
-                                <source src="http://www.w3schools.com/tags/horse.ogg" type="audio/ogg" />
-                                <source src="http://www.w3schools.com/tags/horse.mp3" type="audio/mpeg" />
-                                Your browser does not support the audio tag.
-                              </audio>
-                              <img src="assets/images/artistfeed-img2.jpg" alt="haveenteredblock-audio1img"/>
-                              <div class="buttons1">
-                                <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
-                                  <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
-                                </button>
-                                <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
-                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
-                                </button>
-                              </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row no-gutter col-container bodybloc5bottom">
-                      <div class="col">
-                        <div class="feedslinks">
-                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
-                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-1-2 col">
-                <div class="bodybloc5singleblock">
-                  <div class="bodybloc5singleblockwrapper">
-                    <div class="row no-gutter col-container bodybloc5top">
-                      <div class="col-md-1 col bodybloc5topleft">
-                        <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg4.jpg" alt="RTP5">
-                        </div>
-                      </div>
-                      <div class="col-md-11 col bodybloc5topright">
-                        <div class="row no-gutter col-container">
-                          <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
-                          </div>
-                          <div class="col-md-3 col datecolwrapper">
-                            <div class="input-group date" data-date-format="mm-dd-yyyy">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row no-gutter col-container bodybloc5bottom">
-                          <div class="col-md-12 col videoblocknew">
-                            <div class="imgwrapper">
-                              <video id="myVideo2" width="320" height="240" poster="assets/images/artistfeed-img4.jpg" controls>
-                                <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.mp4" type="video/mp4">
-                                <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.ogg" type="video/ogg">
-                                Your browser does not support the video tag.
-                              </video>
-                              <div class="buttons">
-                                <button class="button uk-button uk-button-primary first" onclick="playVid()" type="button">
-                                  <img src="assets/images/artistvideoplayicon.png" alt="videoplayicon" class="videoplay"/>
-                                </button>
-                                <button class="button uk-button uk-button-primary second" onclick="pauseVid()" type="button">
-                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="videopause"/>
-                                </button>
-                              </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row no-gutter col-container bodybloc5bottom">
-                      <div class="col">
-                        <div class="feedslinks">
-                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg4btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
-                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 artistfeedsblock">
-          <div class="sectionbody">
-            <div class="row no-gutter sectionheaderinner col-container ">
-              <div class="col-1-2 col">
-                <div class="bodybloc5singleblock">
-                  <div class="bodybloc5singleblockwrapper">
-                    <div class="row no-gutter col-container bodybloc5top">
-                      <div class="col-md-1 col bodybloc5topleft">
-                        <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg2.jpg" alt="RTP5">
-                        </div>
-                      </div>
-                      <div class="col-md-11 col bodybloc5topright">
-                        <div class="row no-gutter col-container">
-                          <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
-                          </div>
-                          <div class="col-md-3 col datecolwrapper">
-                            <div class="input-group date" data-date-format="mm-dd-yyyy">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row no-gutter col-container bodybloc5bottom">
-                          <div class="col-md-12 col audioblocknew">
-                            <div class="imgwrapper">
-                              <audio id="myAudio1">
-                                <source src="http://www.w3schools.com/tags/horse.ogg" type="audio/ogg" />
-                                <source src="http://www.w3schools.com/tags/horse.mp3" type="audio/mpeg" />
-                                Your browser does not support the audio tag.
-                              </audio>
-                              <img src="assets/images/artistfeed-img2.jpg" alt="haveenteredblock-audio1img"/>
-                              <div class="buttons1">
-                                <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
-                                  <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
-                                </button>
-                                <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
-                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
-                                </button>
-                              </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row no-gutter col-container bodybloc5bottom">
-                      <div class="col">
-                        <div class="feedslinks">
-                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
-                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-1-2 col">
-                <div class="bodybloc5singleblock">
-                  <div class="bodybloc5singleblockwrapper">
-                    <div class="row no-gutter col-container bodybloc5top">
-                      <div class="col-md-1 col bodybloc5topleft">
-                        <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg4.jpg" alt="RTP5">
-                        </div>
-                      </div>
-                      <div class="col-md-11 col bodybloc5topright">
-                        <div class="row no-gutter col-container">
-                          <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
-                          </div>
-                          <div class="col-md-3 col datecolwrapper">
-                            <div class="input-group date" data-date-format="mm-dd-yyyy">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row no-gutter col-container bodybloc5bottom">
-                          <div class="col-md-12 col videoblocknew">
-                            <div class="imgwrapper">
-                              <video id="myVideo2" width="320" height="240" poster="assets/images/artistfeed-img4.jpg" controls>
-                                <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.mp4" type="video/mp4">
-                                <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.ogg" type="video/ogg">
-                                Your browser does not support the video tag.
-                              </video>
-                              <div class="buttons">
-                                <button class="button uk-button uk-button-primary first" onclick="playVid()" type="button">
-                                  <img src="assets/images/artistvideoplayicon.png" alt="videoplayicon" class="videoplay"/>
-                                </button>
-                                <button class="button uk-button uk-button-primary second" onclick="pauseVid()" type="button">
-                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="videopause"/>
-                                </button>
-                              </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row no-gutter col-container bodybloc5bottom">
-                      <div class="col">
-                        <div class="feedslinks">
-                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg4btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
-                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 artistfeedsblock">
-          <div class="sectionbody">
-            <div class="row no-gutter sectionheaderinner col-container ">
-              <div class="col-1-2 col">
-                <div class="bodybloc5singleblock">
-                  <div class="bodybloc5singleblockwrapper">
-                    <div class="row no-gutter col-container bodybloc5top">
-                      <div class="col-md-1 col bodybloc5topleft">
-                        <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg2.jpg" alt="RTP5">
-                        </div>
-                      </div>
-                      <div class="col-md-11 col bodybloc5topright">
-                        <div class="row no-gutter col-container">
-                          <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
-                          </div>
-                          <div class="col-md-3 col datecolwrapper">
-                            <div class="input-group date" data-date-format="mm-dd-yyyy">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row no-gutter col-container bodybloc5bottom">
-                          <div class="col-md-12 col audioblocknew">
-                            <div class="imgwrapper">
-                              <audio id="myAudio1">
-                                <source src="http://www.w3schools.com/tags/horse.ogg" type="audio/ogg" />
-                                <source src="http://www.w3schools.com/tags/horse.mp3" type="audio/mpeg" />
-                                Your browser does not support the audio tag.
-                              </audio>
-                              <img src="assets/images/artistfeed-img2.jpg" alt="haveenteredblock-audio1img"/>
-                              <div class="buttons1">
-                                <button class="button1 uk-button uk-button-primary first1" onclick="playAudio()" type="button">
-                                  <img src="assets/images/artistaudio1play.png" alt="videoplayicon" class="audioplay"/>
-                                </button>
-                                <button class="button1 uk-button uk-button-primary second1" onclick="pauseAudio()" type="button">
-                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="audiopause"/>
-                                </button>
-                              </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row no-gutter col-container bodybloc5bottom">
-                      <div class="col">
-                        <div class="feedslinks">
-                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg2btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
-                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-1-2 col">
-                <div class="bodybloc5singleblock">
-                  <div class="bodybloc5singleblockwrapper">
-                    <div class="row no-gutter col-container bodybloc5top">
-                      <div class="col-md-1 col bodybloc5topleft">
-                        <div class="imgwrapper">
-                          <img src="assets/images/artistfeed-smlimg4.jpg" alt="RTP5">
-                        </div>
-                      </div>
-                      <div class="col-md-11 col bodybloc5topright">
-                        <div class="row no-gutter col-container">
-                          <div class="col-md-9 col">
-                            <h2>Toni Tillman</h2>
-                          </div>
-                          <div class="col-md-3 col datecolwrapper">
-                            <div class="input-group date" data-date-format="mm-dd-yyyy">
-                              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                              <input class="form-control" type="text" placeholder="March 13,2018" readonly />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row no-gutter col-container bodybloc5bottom">
-                          <div class="col-md-12 col videoblocknew">
-                            <div class="imgwrapper">
-                              <video id="myVideo2" width="320" height="240" poster="assets/images/artistfeed-img4.jpg" controls>
-                                <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.mp4" type="video/mp4">
-                                <source src="http://treehouse-code-samples.s3.amazonaws.com/html-video-and-audio/bridge.ogg" type="video/ogg">
-                                Your browser does not support the video tag.
-                              </video>
-                              <div class="buttons">
-                                <button class="button uk-button uk-button-primary first" onclick="playVid()" type="button">
-                                  <img src="assets/images/artistvideoplayicon.png" alt="videoplayicon" class="videoplay"/>
-                                </button>
-                                <button class="button uk-button uk-button-primary second" onclick="pauseVid()" type="button">
-                                  <img src="assets/images/artistvideopauseicon.png" alt="videopauseicon" class="videopause"/>
-                                </button>
-                              </div>
-                              <h2 class="blackheader">Lorem ipsum dolor sit amet</h2>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row no-gutter col-container bodybloc5bottom">
-                      <div class="col">
-                        <div class="feedslinks">
-                          <span class="feedslinks1"><div class="imgwrapper"><img src="assets/images/artistfeed-smlimg4btm.jpg" alt="RTP5"></div></span>
-                          <span class="feedslinks2"><input class="form-control" type="text" placeholder=""></span>
-                          <span class="feedslinks3"><i class="fa fa-comment"></i> Comments [1]</span>
-                          <span class="feedslinks4"><i class="fa fa-share-alt"></i> Share</span>
-                          <span class="feedslinks5"><i class="fa fa-eye"></i> Views: 389</span>
-                          <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
-                          <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div _ngcontent-c1="" class="col-md-12 buttonviewallwrapper"><a class="btn icon-btn" href="">
-          <label>View More</label><span class="glyphicon btn-glyphicon fa fa-angle-down img-circle text-primary"></span></a>
+
+        <div _ngcontent-c1="" class="col-md-12 buttonviewallwrapper"><a class="btn icon-btn">
+          <label>Load More</label><span (click)="loadMoreValue()" class="glyphicon btn-glyphicon fa fa-angle-down img-circle text-primary"></span></a>
         </div>
         <!--<div class="row no-gutter sectionheaderinner col-container paginationtabwrapper">
           <nav class="paginationtab">
@@ -586,6 +386,489 @@
 <app-artistfooter></app-artistfooter>
 
 
+
+<!--picture detail modal starts here-->
+<div *ngIf="isModalPicDetail" class="modal fade modalVideoUpload modalVideoUploadgallery picture_modal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header deletemodal">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="isModalPicDetail=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!--<div>
+            <img src="{{siteurl}}nodeserver/uploads/pictures/{{user_id}}/{{selectedpicture.image_pic}}">
+
+
+            <div class="play_video_status">
+                <p>
+                    <span *ngIf="selectedpicture.picviews[0]!=null "><i class="fa fa-eye" aria-hidden="true"></i> Views: {{selectedpicture.picviews[0].piccount}}</span>
+                    <span *ngIf="selectedpicture.picviews[0]==null "><i class="fa fa-eye" aria-hidden="true"></i> Views: 0</span>
+                    <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                    <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                    <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>
+                </p>
+            </div>
+
+        </div>-->
+        <div class="col-md-7 leftimage">
+          <div class="imgwrapper">
+            <img src="{{siteurl}}nodeserver/uploads/pictures/{{selectedpictureuserid}}/{{selectedpost.image_pic}}">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="pic_modal_right">
+            <div class="picmodaltitle">
+              <div class="row no-gutter col-container bodybloc5bottom">
+                <div class="col">
+                  <div class="feedslinks">
+                                        <span class="feedslinks1 userimagetitle">
+                                            <div class="imgwrapper">
+                                                <!--<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                                <a target="_blank" [routerLink]="['/userprofile',selectedpost.user_id,selectedpost.userdata[0].username]">
+                                                <img src="{{siteurl}}nodeserver/uploads/{{selectedpost.userdata[0].images}}" alt="RTP5">
+                                                    </a>
+
+                                            </div>
+                                            <div class="usertitle">
+
+                                                <a target="_blank" [routerLink]="['/userprofile',selectedpost.user_id,selectedpost.userdata[0].username]">{{selectedpost.userdata[0].firstname}}  {{selectedpost.userdata[0].lastname}}</a>
+                                            </div>
+                                        </span>
+                    <span class="feedslinks3 userrightmrnu">
+                                            <!--<b>11/09/2018</b>-->
+                                           <b> {{convertunixtotimeago(selectedpost.added_time)}}</b>
+
+                      <!--  <b> {{selectedpost._id}}</b>-->
+                                        </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="comment_description">
+              <!--<p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>-->
+              <p>{{selectedpost.desc_pic}}</p>
+            </div>
+            <div class="comment_so_icon">
+              <div class="play_video_status">
+                <p>
+
+                  <span *ngIf="selectedpost.picviews[0]!=null "><i class="fa fa-eye" aria-hidden="true"></i> Views: {{selectedpost.picviews[0].piccount}}</span>
+                  <span *ngIf="selectedpost.picviews[0]==null "><i class="fa fa-eye" aria-hidden="true"></i> Views: 0</span>
+                  <!--<span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>-->
+                  <ng-template #popTemplate11 ><div [innerHtml]="html"></div></ng-template>
+                  <span [popover]="popTemplate11" [outsideClick]="true"  (mouseenter)="setshareflag('picture',selectedpost)"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+
+                  <!--<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>-->
+
+                  <span (click)="showpicturelike(selectedpost)" *ngIf="selectedpost.picturelikes[0]!=null && !getlikeonstatus(selectedpost.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedpost.picturelikes[0].vlike}}</span>
+                  <span (click)="showpicturelike(selectedpost)" *ngIf="selectedpost.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                  <span (click)="showpictureunlike(selectedpost)" *ngIf="selectedpost.picturelikes[0]!=null && getlikeonstatus(selectedpost.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedpost.picturelikes[0].vlike}}</span>
+
+
+                  <span><i class="fa fa-comment" aria-hidden="true"></i> Comments: {{selectedpost.comments.length}}</span>
+                </p>
+              </div>
+            </div>
+            <div class="pic_modal_right_wrapper" id="style-6">
+              <div class="comment_modal">
+
+                <div class="comment_container">
+                  <!--<div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                          <div class="feedslinks">
+          <span class="feedslinks1 comment_user_image">
+              <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
+          </span>
+                              <span class="feedslinks3 comment_user_text">
+              <div class="row">
+                  <div class="row comment_box">
+                      <a href="#">User name</a>
+                      <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
+                  </div>
+                  <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                          <div class="feedslinks comment_text_reply">
+                              <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                              <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            <div class="row">
+                  <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                          <div class="feedslinks">
+                              <span class="feedslinks1 comment_user_image">
+                                  <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                              </span>
+                              <span class="feedslinks3 comment_user_text">
+                                  <div class="row">
+                                      <div class="row comment_box">
+                                          <a href="#">User name</a>
+                                          <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
+                                      </div>
+                                      <div class="row no-gutter col-container bodybloc5bottom">
+                                          <div class="col">
+                                              <div class="feedslinks comment_text_reply">
+                                                  <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                  <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                          <div class="feedslinks">
+                              <span class="feedslinks1 comment_user_image">
+                                  <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                              </span>
+                              <span class="feedslinks3 comment_user_text">
+                                  <div class="row">
+                                      <div class="row comment_input">
+                                          <input type="text" class="form-control" (keyup)="addcomment($event)">
+                                      </div>
+
+                                  </div>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </span>
+                          </div>
+                      </div>
+                  </div>-->
+                  <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedpost.comments">
+                    <div class="col">
+                      <div class="feedslinks">
+                            <span class="feedslinks1 comment_user_image">
+                                <div class="imgwrapper">
+                                    <!--<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                     <span *ngIf="valc.userdata[0].images!=null" >
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                        <img src="{{siteurl}}nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                        </a>
+                                    </span>
+
+                                    <span *ngIf="valc.userdata[0].images==null">
+                                            <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+                                            </a>
+                                    </span>
+                                </div>
+                            </span>
+                        <span class="feedslinks3 comment_user_text">
+                                <div class="row comment_box">
+                                    <span class="timespan">{{convertunixtotimeago(valc.added_time)}}</span>
+                                  <!--<a href="#">User name</a>
+                                  <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>-->
+
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                        <b>{{valc.comment}}</b>
+                                </div>
+                          <!--<div class="row no-gutter col-container bodybloc5bottom">
+                              <div class="col">
+                                  <div class="feedslinks comment_text_reply">
+                                      <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                      <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                  </div>
+                              </div>
+                          </div>-->
+                            </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row comment_input_se" *ngIf="isloggedin==1">
+                    <div class="row no-gutter col-container bodybloc5bottom">
+                      <div class="col">
+                        <div class="feedslinks">
+                                                <span class="feedslinks1 comment_user_image">
+                                                    <div class="imgwrapper">
+
+                                                        <!--<img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
+                                                         <span *ngIf="image==null">
+
+                                            <img src="../../assets/images/default_profile_pic.jpg" >
+
+                                        </span>
+                                        <span *ngIf="image!=null" >
+
+                                            <img src="{{siteurl}}nodeserver/uploads/{{image}}" >
+
+                                        </span>
+                                                    </div>
+                                                </span>
+                          <span class="feedslinks3 comment_user_text">
+                                                    <div class="row">
+                                                        <div class="row comment_input">
+                                                            <input type="text" class="form-control" [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                        </div>
+
+                                                    </div>
+                                                </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!--picture detail modal ends here-->
+
+<!--comment modal starts here-->
+<div *ngIf="ismodalcomment" class="modal fade modalVideoUpload modalVideoUploadgallery picture_modal" (onHidden)="onHidden()" bsModal #staticModal="bs-modal" [config]="{ show: true}"
+     tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header deletemodal">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="ismodalcomment=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!--<div>
+                    <img src="{{siteurl}}nodeserver/uploads/pictures/{{user_id}}/{{selectedpicture.image_pic}}">
+
+
+                    <div class="play_video_status">
+                        <p>
+                            <span *ngIf="selectedpicture.picviews[0]!=null "><i class="fa fa-eye" aria-hidden="true"></i> Views: {{selectedpicture.picviews[0].piccount}}</span>
+                            <span *ngIf="selectedpicture.picviews[0]==null "><i class="fa fa-eye" aria-hidden="true"></i> Views: 0</span>
+                            <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                            <span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>
+                            <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>
+                        </p>
+                    </div>
+
+                </div>-->
+
+                <div class="col-md-12">
+                    <div class="pic_modal_right">
+                        <!-- <div class="picmodaltitle">
+                             <div class="row no-gutter col-container bodybloc5bottom">
+                                 <div class="col">
+                                     <div class="feedslinks">
+                                         <span class="feedslinks1 userimagetitle">
+                                             <div class="imgwrapper">
+                                                 <img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">
+                                             </div>
+                                             <div class="usertitle">
+                                                  user name
+                                             </div>
+                                         </span>
+                                         <span class="feedslinks3 userrightmrnu">
+                                             <b>11/09/2018</b>
+                                         </span>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="comment_description">
+                             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                         </div>
+                         <div class="comment_so_icon">
+                             <div class="play_video_status">
+                                 <p>
+
+                                    &lt;!&ndash; <span *ngIf="selectedpicture.picviews[0]!=null "><i class="fa fa-eye" aria-hidden="true"></i> Views: {{selectedpicture.picviews[0].piccount}}</span>
+                                     <span *ngIf="selectedpicture.picviews[0]==null "><i class="fa fa-eye" aria-hidden="true"></i> Views: 0</span>&ndash;&gt;
+                                     <span><i class="fa fa-share-alt" aria-hidden="true"></i> Share</span>
+                                     &lt;!&ndash;<span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like</span>&ndash;&gt;
+
+                                     &lt;!&ndash;<span (click)="showpicturelike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]!=null && !getlikeonstatus(selectedpicture.userpicturelikes)"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like:{{selectedpicture.picturelikes[0].vlike}}</span>
+                                     <span (click)="showpicturelike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]==null"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like: 0</span>
+                                     <span (click)="showpictureunlike(selectedpicture)" *ngIf="selectedpicture.picturelikes[0]!=null && getlikeonstatus(selectedpicture.userpicturelikes)" ><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like: {{selectedpicture.picturelikes[0].vlike}}</span>&ndash;&gt;
+
+
+                                     <span><i class="fa fa-commenting-o" aria-hidden="true"></i> Comment</span>
+                                 </p>
+                             </div>
+                         </div>-->
+                        <div class="pic_modal_right_wrapper" id="style-6">
+                            <div class="comment_modal">
+
+                                <div class="comment_container">
+                                    <!-- <div class="row no-gutter col-container bodybloc5bottom" >
+                                         <div class="col">
+                                             <div class="feedslinks">
+                             <span class="feedslinks1 comment_user_image">
+                                 <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5"></div>
+                             </span>
+                                                 <span class="feedslinks3 comment_user_text">
+                                 <div class="row">
+                                     <div class="row comment_box">
+                                         <a href="#">User name</a>
+                                         <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>
+                                         &lt;!&ndash;<b>{{val.comments[comment]}}</b>&ndash;&gt;
+                                     </div>
+                                     <div class="row no-gutter col-container bodybloc5bottom">
+                                         <div class="col">
+                                             <div class="feedslinks comment_text_reply">
+                                                 <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                 <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                               <div class="row">
+                                     <div class="row no-gutter col-container bodybloc5bottom">
+                                         <div class="col">
+                                             <div class="feedslinks">
+                                                 <span class="feedslinks1 comment_user_image">
+                                                     <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                 </span>
+                                                 <span class="feedslinks3 comment_user_text">
+                                                     <div class="row">
+                                                         <div class="row comment_box">
+                                                             <a href="#">User name</a>
+                                                             <b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </b>
+                                                         </div>
+                                                         <div class="row no-gutter col-container bodybloc5bottom">
+                                                             <div class="col">
+                                                                 <div class="feedslinks comment_text_reply">
+                                                                     <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                                     <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 </span>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="row">
+                                     <div class="row no-gutter col-container bodybloc5bottom">
+                                         <div class="col">
+                                             <div class="feedslinks">
+                                                 <span class="feedslinks1 comment_user_image">
+                                                     <div class="imgwrapper"><img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5"></div>
+                                                 </span>
+                                                 <span class="feedslinks3 comment_user_text">
+                                                     <div class="row">
+                                                         <div class="row comment_input">
+                                                             <input type="text" class="form-control" (keyup)="addcomment($event)" >
+                                                         </div>
+
+                                                     </div>
+                                                 </span>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </span>
+                                             </div>
+                                         </div>
+                                     </div>-->
+
+                                    <div class="row no-gutter col-container bodybloc5bottom" *ngFor="let valc of selectedpost.comments">
+                                        <div class="col">
+                                            <div class="feedslinks">
+                            <span class="feedslinks1 comment_user_image">
+                                <div class="imgwrapper">
+                                    <!--<img src="../../assets/images/artistfeed-smlimg1btm.jpg" alt="RTP5">-->
+                                    <span *ngIf="valc.userdata[0].images==null">
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                        <img src="../../assets/images/default_profile_pic.jpg" >
+                                        </a>
+                                    </span>
+                                    <span *ngIf="valc.userdata[0].images!=null" >
+                                        <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]" >
+                                        <img src="{{siteurl}}nodeserver/uploads/{{valc.userdata[0].images}}" >
+                                        </a>
+                                    </span>
+                                </div>
+                            </span>
+                                                <span class="feedslinks3 comment_user_text">
+                                <div class="row comment_box">
+                                    <span class="timespan">{{convertunixtotimeago(valc.added_time)}}</span>
+                                    <a target="_blank" [routerLink]="['/userprofile',valc.user_id,valc.userdata[0].username]">{{valc.userdata[0].firstname}} {{valc.userdata[0].lastname}}</a>
+                                    <!--<b>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the                                           printing and typesetting industry. </b>-->
+                                    <b>{{valc.comment}}</b>
+                                    <!-- <span class="timespan">{{valc.added_time}}</span>-->
+
+                                </div>
+                                                    <!--<div class="row no-gutter col-container bodybloc5bottom">
+                                                        <div class="col">
+                                                            <div class="feedslinks comment_text_reply">
+                                                                <span class="feedslinks6"><i class="fa fa-thumbs-up"></i> Like</span>
+                                                                <span class="feedslinks7"><i class="fa fa-reply"></i> Reply</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
+                            </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row comment_input_se comment_input_se_new commentinputshow" *ngIf="isloggedin == 1">
+                            <div class="row no-gutter col-container bodybloc5bottom" >
+                                <div class="col">
+                                    <div class="feedslinks">
+                                                <span class="feedslinks1 comment_user_image">
+                                                    <div class="imgwrapper">
+                                                        <!--<img src="../../assets/images/artistfeed-smlimg3.jpg" alt="RTP5">-->
+                                                    <span *ngIf="image==null ">
+                                        <img src="../../assets/images/default_profile_pic.jpg" >
+                                    </span>
+                                    <span *ngIf="image!=null">
+                                        <img src="{{siteurl}}nodeserver/uploads/{{image}}" >
+                                    </span>
+                                                    </div>
+                                                </span>
+                                        <span class="feedslinks3 comment_user_text">
+                                                    <div class="row">
+                                                        <div class="row comment_input" >
+                                                            <input type="text" class="form-control " [(ngModel)]="commentval" (keyup)="addcomment($event)">
+                                                        </div>
+
+                                                    </div>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!--comment modal ends here-->
 
 
 

@@ -1656,6 +1656,19 @@ app.get('/trendingVideoList',function(req,resp){
         }
     });
 });
+app.get('/trendingVideoListwithlimit',function(req,resp){
+
+
+    var collection = db.collection('uservideolistView');
+    collection.find({privacy:"public"}).limit(parseInt(req.query.limit)).skip(parseInt(req.query.skip)).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            // resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
 app.get('/trendingPictureList',function(req,resp){
 
 
@@ -1669,11 +1682,37 @@ app.get('/trendingPictureList',function(req,resp){
         }
     });
 });
+app.get('/trendingPictureListwithlimit',function(req,resp){
+
+
+    var collection = db.collection('userpicturelistView');
+    collection.find({privacy:"public"}).limit(parseInt(req.query.limit)).skip(parseInt(req.query.skip)).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            // resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
 app.get('/trendingMusicList',function(req,resp){
 
 
     var collection = db.collection('usermusiclistView');
     collection.find({privacy:"public"}).toArray(function(err, items) {
+        if (err) {
+            resp.send(JSON.stringify({'status':'error','id':0}));
+        } else {
+            // resitem = items[0];
+            resp.send(JSON.stringify({'status':'success','item':items}));
+        }
+    });
+});
+app.get('/trendingMusicListwithlimit',function(req,resp){
+
+
+    var collection = db.collection('usermusiclistView');
+    collection.find({privacy:"public"}).limit(parseInt(req.query.limit)).skip(parseInt(req.query.skip)).toArray(function(err, items) {
         if (err) {
             resp.send(JSON.stringify({'status':'error','id':0}));
         } else {

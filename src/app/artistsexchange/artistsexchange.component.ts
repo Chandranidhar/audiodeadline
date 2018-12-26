@@ -67,7 +67,6 @@ export class ArtistsexchangeComponent implements OnInit,AfterViewInit {
     //   }
     // ];
 
-    public isClicked = [];
 
     public userdata: CookieService;
 
