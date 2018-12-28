@@ -33,8 +33,8 @@ function callpostagain($data){
         CURLOPT_URL => "http://audiodeadline.com:3008/" . $_GET['q'].'?'.$d,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
+        CURLOPT_MAXREDIRS => 100,
+        CURLOPT_TIMEOUT => 300,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
 
@@ -86,13 +86,16 @@ function callgetagain(){
 
 if(count($data)==0) {
   //echo "http://greenvalleyportal.com:3020/" . $_GET['q'];
+    //exit;
+    $x=time();
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_URL => "http://audiodeadline.com:3008/" . $_GET['q'],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
+        CURLOPT_MAXREDIRS => 100,
+        CURLOPT_TIMEOUT => 300,
+        CURLOPT_FOLLOWLOCATION => 1,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
 
@@ -107,7 +110,11 @@ if(count($data)==0) {
 //print_r($err);
 //echo "<pre>";
     //print_r(($response));
-    if(strlen($response)==0) echo $response;
+    //echo time()-$x;
+    if(strlen($response)>0){
+        echo $response;
+        exit;
+    }
     else callgetagain();
 
 }
@@ -148,7 +155,7 @@ else{
 
     //print_r($data);
     //exit;
-}
+}  
 
 
 

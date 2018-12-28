@@ -29,19 +29,20 @@ export class Commonservices{
 
 
     constructor(private http: Http,private router: Router, userdata: CookieService) {
-            this.siteurl = 'https://audiodeadline.com/';
-            this.demositeurl = 'https://demo.artistxp.com/#/';
-            this.nodeurl = 'http://192.169.196.208:3009/';
-            this.url = 'https://audiodeadline.com/server1.php?q=';
+        this.siteurl = 'https://audiodeadline.com/';
+        this.demositeurl = 'https://demo.artistxp.com/#/';
+        this.nodeurl = 'http://192.169.196.208:3009/';
+        this.url = 'https://audiodeadline.com/server1.php?q=';
+        //this.url = 'http://phpaudiodeadlineserver.the-webdevelopers.com/server1.php?q=';
         this.uploadurl = 'https://audiodeadline.com/fileupload.php';
         this.pictureuploadurl = 'https://audiodeadline.com/fileupload_picture.php';
         this.audiouploadurl = 'https://audiodeadline.com/fileupload_audio.php';
-            this.FB_APP_ID = '906815096194208';
-            this.FB_APP_SECRET = 'f569451eb41a239d2045ebf115a3bcc7';
-            this.LI_CLIENT_ID = '81dhgq228xfquu';
-            this.LI_CLIENT_SECRET = 'EjwBLpUq5683vifK';
-            this.CONSUMER_KEY = 'fhwawEUbSsyNG8L5667cmZpYZ';
-            this.CONSUMER_SECRET = 'nHxQhn3ApgpNxYRIDfE5rBuL2U4fmLzVMBxBTls5CLOJz4fnKv';
+        this.FB_APP_ID = '906815096194208';
+        this.FB_APP_SECRET = 'f569451eb41a239d2045ebf115a3bcc7';
+        this.LI_CLIENT_ID = '81dhgq228xfquu';
+        this.LI_CLIENT_SECRET = 'EjwBLpUq5683vifK';
+        this.CONSUMER_KEY = 'fhwawEUbSsyNG8L5667cmZpYZ';
+        this.CONSUMER_SECRET = 'nHxQhn3ApgpNxYRIDfE5rBuL2U4fmLzVMBxBTls5CLOJz4fnKv';
         this.demourl = 'https://demo.artistxp.com/assets/twitter/';
         this.demourl1 = 'https://demo.artistxp.com/instagram/';
         this.items = [

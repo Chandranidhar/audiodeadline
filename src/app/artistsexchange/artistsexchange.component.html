@@ -2315,15 +2315,15 @@ Your browser does not support the video tag.
                     <div class="sectionheader">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col">
-                                <h2>Friends Feed</h2>
-                                <a class="btngraysml">My Likes and Comments</a>
+                                <h2>artists feed</h2>
+                                <!--<a class="btngraysml">My Likes and Comments</a>-->
                             </div>
                             <!--<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 col">
                                 <h3>...</h3>
                             </div>-->
                         </div>
                     </div>
-                    <div class="sectionbody">
+                    <!--<div class="sectionbody">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-1-1 col">
                                 <div class="bodybloc5singleblock">
@@ -2445,18 +2445,19 @@ Your browser does not support the video tag.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 buttonviewallwrapper">
-                            <a class="btn icon-btn" href="javascrip:void(0);">
-                                <label>View All</label> <span class="glyphicon btn-glyphicon fa fa-angle-down img-circle text-primary"></span>
+                        &lt;!&ndash;<div class="col-md-12 buttonviewallwrapper">
+                            <a class="btn icon-btn" [routerLink]="['/friendsfeed']" target="_blank">
+                                <label >View All</label> <span class="glyphicon btn-glyphicon fa fa-angle-down img-circle text-primary" ></span>
                             </a>
-                        </div>
-                    </div>
+                        </div>&ndash;&gt;
+                    </div>-->
+                    <app-mediawall limitflag="1"></app-mediawall>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 artistfeedsblock">
                     <div class="sectionheader">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col">
-                                <h2>artists feed</h2>  <a class="btngraysml">My Likes and Comments</a>
+                                <!--<h2>artists feed</h2>-->  <!--<a class="btngraysml">My Likes and Comments</a>-->
                             </div>
                             <!--<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 col">
                                 <h3>...</h3>
@@ -2464,7 +2465,8 @@ Your browser does not support the video tag.
                         </div>
                     </div>
 
-                    <div class="sectionbody">
+                    <app-mediawall limitflag="2"></app-mediawall>
+                    <!--<div class="sectionbody">
                         <div class="row no-gutter sectionheaderinner col-container">
                             <div class="col-1-1 col">
                                 <div class="bodybloc5singleblock">
@@ -2587,11 +2589,11 @@ Your browser does not support the video tag.
                             </div>
                         </div>
                         <div class="col-md-12 buttonviewallwrapper">
-                            <a class="btn icon-btn" href="javascrip:void(0);">
+                            <a class="btn icon-btn"  [routerLink]="['/artistfeed']" target="_blank" target="_blank">
                                 <label>View All</label> <span class="glyphicon btn-glyphicon fa fa-angle-down img-circle text-primary"></span>
                             </a>
                         </div>
-                    </div>
+                    </div>-->
 
                 </div>
             </div>

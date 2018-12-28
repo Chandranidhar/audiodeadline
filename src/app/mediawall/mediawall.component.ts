@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {Commonservices} from "../app.commonservices";
 import {Http} from "@angular/http";
-import {ActivatedRoute } from '@angular/router';
+import {ActivatedRoute,Router } from '@angular/router';
 import { DomSanitizer} from '@angular/platform-browser';
 import { FormGroup, Validators, FormControl, FormBuilder} from '@angular/forms';
 declare var $:any;
@@ -16,10 +16,13 @@ declare var moment: any;
 })
 export class MediawallComponent implements OnInit {
 
+  @Input()
+  limitflag: string;
+
   public userdata: CookieService;
 
   public serverurl;
-  public showLoader:any = 0;
+  public showLoader:any;
   public currentlikecount:any=0;
     public currentpicturelikecount:any=0;
   public siteurl;
@@ -63,20 +66,26 @@ export class MediawallComponent implements OnInit {
   public currentvideotypetrending:any;
   public choosenvideourlfortrending:any;
 
-  public musicLimit:any = 10;
+  public musicLimit:any = 4;
   public musicSkip:any = 0;
-  public videoLimit:any = 10;
+  public videoLimit:any = 4;
   public videoSkip:any = 0;
-  public pictureLimit:any = 10;
+  public pictureLimit:any = 4;
   public pictureSkip:any = 0;
   public selectedpictureuserid:any;
   public commentval:any = '';
   public selectedpictureindex:any;
   public ismodalcomment:any = 0;
+  private commentvalVideo:any = {};
+  private commentvalPicture:any = {};
+  private commentvalMusic:any = {};
 
-  constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,fb:FormBuilder, private sanitizer: DomSanitizer) {
+  constructor(userdata: CookieService, private activeRoute: ActivatedRoute,private _http: Http,  private _commonservices: Commonservices,fb:FormBuilder, private sanitizer: DomSanitizer ,public routes:Router) {
 
 
+
+    console.log('limitflag');
+    console.log(this.limitflag);
     // this.value2=0;                      //trending audio duration slider
     this.options2= {
       floor: 0,
@@ -102,6 +111,9 @@ export class MediawallComponent implements OnInit {
     this.user_id = this.userdata.get('user_id');
     this.fan = 0;
     this.image = this.userdata.get('image');
+    console.log('this.activeRoute.snapshot');
+    console.log(this.activeRoute.snapshot);
+    console.log(this.routes.url);
 
     if(this.activeRoute.snapshot.params.id==null || typeof(this.activeRoute.snapshot.params.id)=='undefined') {
       // console.log('in profile ...');
@@ -124,16 +136,19 @@ export class MediawallComponent implements OnInit {
       /* this.isloggedin=1;*/
 
     }
+
   }
 
   ngOnInit() {
 
 
+    this.showLoader = 1;
     this.getallvideo();
     this.getallmusic();
     this.getallpicture();
     this.getfeedofusers();
 
+    this.showLoader = 0;
 
 
 
@@ -347,9 +362,43 @@ export class MediawallComponent implements OnInit {
 
         })
   }
+
+
+  ngAfterViewChecked(){
+
+  }
+
   onStateChangetrending(event){
-    // console.log('event ....');
-    // console.log(event.data);
+    let oldaudio=this.selectedmusictrending;
+    let myAudio:any = {};
+    myAudio=  document.querySelector("#audioplayer4"+oldaudio._id);
+    if(event.data!=3){
+      myAudio.pause();
+    }
+    this.isaudioplayfortrending=false;
+     /*console.log('event ....');
+     console.log(event);
+     console.log(event.target.b.b.videoId);
+     console.log(event.target.b);
+     console.log(event.data);*/
+    let selectedvideoval=this.selectedvideotrending;
+    $('iframe').each(function(i) {
+      /*console.log('in ifrmae  each loop ..');
+      console.log($(this).attr('src'));
+      console.log('indexof checkval'+$(this).attr('src').indexOf('https://www.youtube.com/embed/'+event.target.b.b.videoId));*/
+      setTimeout(()=> {
+        if ($(this).attr('src').indexOf('https://www.youtube.com/embed/' + event.target.b.b.videoId) == -1 && event.data!=2) {
+          console.log(event.target.b.b);
+          console.log(event.data);
+          this.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }else{
+          //this.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+      },300);
+      /*console.log(selectedvideoval.videoUrl);
+      console.log(selectedvideoval.vurl);*/
+
+    });
     this.videoplayfag=true;
     if(event.data == -1){
       var link2= this.serverurl+'addvideoviews';
@@ -433,9 +482,13 @@ export class MediawallComponent implements OnInit {
 
       setTimeout(()=> {    //<<<---    using ()=> syntax
           let myAudio:any = {};
+        console.log('in setmusic info');
+        console.log(val._id);
+        console.log('audioplayer4'+val._id);
           myAudio=  document.querySelector("#audioplayer4"+val._id);
           //this.audioDurationfortrending = myAudio.duration.toFixed(0);
-          this.musicdetailArray[i].duration=myAudio.duration.toFixed(0);
+          if(this.musicSkip==0)this.musicdetailArray[i].duration=myAudio.duration.toFixed(0);
+          this.commontrendingarray[i].duration=myAudio.duration.toFixed(0);
           this.value2[val._id]  = 0;
           this.options2[val._id]= {
               floor: 0,
@@ -453,7 +506,7 @@ export class MediawallComponent implements OnInit {
           //this.value=75;
           /* console.log('audioDuration for first time loading');
            console.log(this.audioDurationfortrending);*/
-      }, 1900);
+      }, 300);
   }
 
 
@@ -577,20 +630,85 @@ export class MediawallComponent implements OnInit {
   }
 
   playaudiotrending(val:any){
-    /*console.log('val');
-     console.log(val);
-     console.log('val.userdata[0].firstname');
-     console.log(val.userdata[0].firstname);*/
 
+
+
+     $('iframe').each(function(i) {
+       this.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+     });
+
+    /*console.log(selectedvideoval.videoUrl);
+     console.log(selectedvideoval.vurl);*/
+    console.log('audio val');
+    console.log(val);
+    console.log(this.isaudioplayfortrending);
+
+
+
+    let oldaudio=this.selectedmusictrending;
     this.selectedmusictrending = val;
     this.chosenaudiotitletrending = val.title_music;
     this.audiousernamefortrending = val.userdata[0].firstname+' '+val.userdata[0].lastname;
-    if(this.audioplayerindextrending==this.musicdetailArray.indexOf(val))
+    if(this.audioplayerindextrending==this.commontrendingarray.indexOf(val))
     {
-      /*console.log('equal index ......');
-       console.log('equal index ......');*/
+      console.log('equal index ......');
+      console.log('equal index ......');
       if(this.isaudioplayfortrending==false){
-        this.playmusicfortrending(val);
+        //this.isaudioplayfortrending = false;
+        //this.playmusicfortrending(val);
+        //in set time out , the same function playmusicfortrending has been called
+
+        setTimeout(()=> {    //<<<---    using ()=> syntax
+
+          let myAudio:any = {};
+          myAudio=  document.querySelector("#audioplayer4"+val._id);
+          clearInterval(this.playstatetrending);
+          this.isaudioplayfortrending = false;
+          this.value2[val._id] = 0;
+
+          //myAudio.play();
+          //this.isaudioplay=true;
+
+          /* console.log($(myAudio).length);
+           console.log($('#audioplayer4').length);*/
+
+          if (this.isaudioplayfortrending) {
+            myAudio.pause();
+            clearInterval(this.playstatetrending);
+            this.isaudioplayfortrending = false;
+          } else {
+            this.value2[val._id] = 0;
+            clearInterval(this.playstatetrending);
+            myAudio.play();
+            this.options2 = {
+              floor: 0,
+              ceil: myAudio.duration.toFixed(0)
+            };
+            myAudio.volume=this.value3/100;
+            this.audioDurationfortrending = myAudio.duration.toFixed(0);
+            //console.log('audioDuration');
+            //console.log(this.audioDuration);
+
+            this.playstatetrending = setInterval(() => {
+              //console.log('in onplay interval ....');
+              //console.log(myAudio.currentTime);
+              this.value2[val._id] = (myAudio.currentTime.toFixed(0));
+              //console.log(this.value1);
+              //console.log(this.value);
+
+
+            }, 1800);
+            this.isaudioplayfortrending = true;
+          }
+          myAudio.onpause = function () {
+            //this.playstate.clearInterval();
+            clearInterval(this.playstatetrending);
+          };
+
+          //this.playmusic();
+        }, 2000);
+        console.log('in false block !!! ');
+        return;
       }
       else {
         let myAudio:any = {};
@@ -602,10 +720,15 @@ export class MediawallComponent implements OnInit {
 
     }
     else {
+      let myAudio:any = {};
+      myAudio=  document.querySelector("#audioplayer4"+oldaudio._id);
+      myAudio.pause();
+
+
       clearInterval(this.playstatetrending);
       this.isaudioplayfortrending = false;
         this.value2[val._id] = 0;
-      this.audioplayerindextrending = this.musicdetailArray.indexOf(val);
+      this.audioplayerindextrending = this.commontrendingarray.indexOf(val);
 
       /*----------for counting view -------------*/
       let link = this.serverurl+'addmusicview';
@@ -716,10 +839,15 @@ export class MediawallComponent implements OnInit {
     // myAudio.currentTime =23;
     if (this.isaudioplayfortrending) {
       myAudio.pause();
+      console.log('pause block');
       clearInterval(this.playstatetrending);
       this.isaudioplayfortrending=false;
     } else {
+      console.log('play block');
       myAudio.play();
+      //myAudio.play();
+      console.log('music play called ...');
+      this.isaudioplayfortrending=true;
       myAudio.volume=this.value3/100;
       this.playstatetrending = setInterval(() => {
         /*console.log('in onplay interval ....');
@@ -731,7 +859,7 @@ export class MediawallComponent implements OnInit {
 
 
       }, 1000);
-      this.isaudioplayfortrending=true;
+
     }
     myAudio.onpause = function(){
       //this.playstatetrending.clearInterval();
@@ -746,7 +874,7 @@ export class MediawallComponent implements OnInit {
   muteaudiotrending(){
     this.value3=0;
     let myAudio:any = {};
-    myAudio=  document.querySelector("#audioplayer4");
+    myAudio=  document.querySelector("#audioplayer4"+this.selectedmusictrending._id);
     this.oldvolumetrending=myAudio.volume;
     myAudio.volume =0;
     this.ismuteaudiotrending = true;
@@ -756,10 +884,11 @@ export class MediawallComponent implements OnInit {
   unmuteaudiotrending(){
 
     let myAudio:any = {};
-    myAudio=  document.querySelector("#audioplayer4");
+    myAudio=  document.querySelector("#audioplayer4"+this.selectedmusictrending._id);
     myAudio.volume = this.oldvolumetrending;
     this.ismuteaudiotrending = false;
     this.value3 = this.oldvolumetrending*100;
+    // this.ismuteaudiotrending = false;
     /* console.log(this.value3);
      console.log(this.oldvolumetrending);
      console.log(myAudio.volume);*/
@@ -770,7 +899,7 @@ export class MediawallComponent implements OnInit {
   changeaudioplayervolumetrending(){
 
     let myAudio:any = {};
-    myAudio=  document.querySelector("#audioplayer4");
+    myAudio=  document.querySelector("#audioplayer4"+this.selectedmusictrending._id);
     myAudio.volume =this.value3/100;
     if(this.value3==0) this.ismuteaudiotrending=true;
     else this.ismuteaudiotrending=false;
@@ -796,7 +925,8 @@ export class MediawallComponent implements OnInit {
             if (result.status == 'success') {
 
 
-              this.getallmusic();
+              //this.getallmusic();
+              this.getallcurrentmusic();
 
 
 
@@ -814,8 +944,11 @@ export class MediawallComponent implements OnInit {
     if(val.length==0) return false;
     else {
       for(let x in val){
+        //console.log('like userId found !!');
+        if(this.user_id==val[x].user_id) {
 
-        if(this.user_id==val[x].user_id) return true;
+          return true;
+        }
       }
 
 
@@ -837,7 +970,8 @@ export class MediawallComponent implements OnInit {
             // console.log(result);
             if (result.status == 'success') {
 
-              this.getallmusic();
+              //this.getallmusic();
+              this.getallcurrentmusic();
               console.log('suceess unlike');
             }
           })
@@ -893,7 +1027,7 @@ export class MediawallComponent implements OnInit {
 
     let link = this.serverurl + 'trendingMusicListwithlimit';
     //this.musicLimit = this.musicLimit+10;
-    this.musicSkip = this.musicSkip+10;
+    this.musicSkip = this.musicSkip+4;
     console.log(this.musicLimit);
     console.log(this.musicSkip);
     this._http.post(link,{'limit':this.musicLimit,'skip':this.musicSkip})
@@ -905,19 +1039,84 @@ export class MediawallComponent implements OnInit {
             console.log('result of getnextvalueoftrendingmusic');
             console.log(result);
             console.log(result.item.length);
-            this.commontrendingarray = this.commontrendingarray.concat(result.item);
+            //this.commontrendingarray = this.commontrendingarray.concat(result.item);
 
-            console.log('this.commontrendingarray');
-            console.log(this.commontrendingarray);
+          let marray=result.item;
+          for(let i in marray){
 
-            this.commontrendingarray.sort(this.dynamicSort("-added_time"));
+            marray[i].murl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + marray[i].user_id + '/' + marray[i].music);
+            this.value2[marray[i]._id]=0;
+
+            //this.commontrendingarray = this.musicdetailArray.concat(marray[i]);
+            this.setmusictimeandoption(this.musicdetailArray[this.musicdetailArray.length-1],this.musicdetailArray.length-1);
+
+
+
+            }
+
+          this.commontrendingarray = this.commontrendingarray.concat(marray);
+
+
+          setTimeout(()=> {
+            for(let c in this.commontrendingarray){
+              if(this.commontrendingarray[c].murl!=null){
+                this.setmusictimeandoption(this.commontrendingarray[c],c);
+              }
+            }
+          },2500);
+          console.log('this.commontrendingarray');
+          console.log(this.commontrendingarray);
+
+          this.commontrendingarray.sort(this.dynamicSort("-added_time"));
         });
   }
+
+
+  getallcurrentmusic(){
+
+    let link = this.serverurl + 'trendingMusicListwithlimit';
+    //this.musicLimit = this.musicLimit+10;
+    //this.musicSkip = this.musicSkip+4;
+    console.log(this.musicLimit);
+    console.log(this.musicSkip);
+    this._http.post(link,{'limit':this.musicSkip+4,'skip':0})
+        .subscribe(res => {
+
+            console.log('yuyuuturu');
+            let result:any = {};
+            result = res.json();
+            console.log('result of getnextvalueoftrendingmusic');
+            console.log(result);
+            console.log(result.item.length);
+            //this.commontrendingarray = this.commontrendingarray.concat(result.item);
+
+          let marray=result.item;
+          for(let i in marray){
+            marray[i].murl = this.sanitizer.bypassSecurityTrustResourceUrl(this._commonservices.siteurl + 'nodeserver/uploads/audio/' + marray[i].user_id + '/' + marray[i].music);
+            for(let c in this.commontrendingarray){
+
+              if(marray[i]._id==this.commontrendingarray[c]._id){
+                this.commontrendingarray[c].comments=marray[i].comments;
+                this.commontrendingarray[c].musicviews=marray[i].musicviews;
+                this.commontrendingarray[c].musiclikes=marray[i].musiclikes;
+                this.commontrendingarray[c].usermusiclikes=marray[i].usermusiclikes;
+              }
+            }
+
+            }
+
+
+
+        });
+  }
+
+
+
 
   getnextvalueoftrendingvideo(){
       let link = this.serverurl + 'trendingVideoListwithlimit';
       //this.musicLimit = this.musicLimit+10;
-      this.videoSkip = this.videoSkip+10;
+      this.videoSkip = this.videoSkip+4;
       console.log(this.videoLimit);
       console.log(this.videoSkip);
       this._http.post(link,{'limit':this.videoLimit,'skip':this.videoSkip})
@@ -943,7 +1142,9 @@ export class MediawallComponent implements OnInit {
                       let videourl = tempvideoarray[i].videoUrl.split('v=');
                       let videoid = videourl[videourl.length - 1];
 
-                      tempvideoarray.vurl = videoid;
+                    tempvideoarray[i].vurl = videoid;
+                    /*console.log('videoid');
+                    console.log(videoid);*/
                   }
 
               }
@@ -958,10 +1159,61 @@ export class MediawallComponent implements OnInit {
           });
 
   }
+
+  getallcurrentvideo(){
+      let link = this.serverurl + 'trendingVideoListwithlimit';
+      //this.musicLimit = this.musicLimit+10;
+      // this.videoSkip = this.videoSkip+4;
+      console.log(this.videoLimit);
+      console.log(this.videoSkip);
+    /* this._http.post(link,{'limit':this.musicSkip+4,'skip':0})*/
+      this._http.post(link,{'limit':this.videoSkip+4,'skip':0})
+          .subscribe(res => {
+
+              console.log('----yuyuuturu');
+              let result:any = {};
+              result = res.json();
+              console.log('result of getnextvalueoftrendingvideo');
+              console.log(result);
+              let tempvideoarray = result.item;
+
+              for(let i in tempvideoarray){
+
+                  if(tempvideoarray[i].type=='vimeo'){
+                      let tempvurl=tempvideoarray[i].videoUrl;
+                      let vimeourl = tempvurl.split('/');
+                      let videoid = vimeourl[vimeourl.length - 1];
+                      tempvideoarray[i].vurl = this.sanitizer.bypassSecurityTrustResourceUrl("https://player.vimeo.com/video/" + videoid);
+
+                  }
+                  if(tempvideoarray[i].type=='youtube' ) {
+                      let videourl = tempvideoarray[i].videoUrl.split('v=');
+                      let videoid = videourl[videourl.length - 1];
+
+                    tempvideoarray[i].vurl = videoid;
+                    /*console.log('videoid');
+                    console.log(videoid);*/
+                  }
+
+                for(let c in this.commontrendingarray){
+
+                  if(tempvideoarray[i]._id==this.commontrendingarray[c]._id){
+                    this.commontrendingarray[c].comments=tempvideoarray[i].comments;
+                    this.commontrendingarray[c].uservideolikes=tempvideoarray[i].uservideolikes;
+                    this.commontrendingarray[c].videoviews=tempvideoarray[i].videoviews;
+                    this.commontrendingarray[c].videolikes=tempvideoarray[i].videolikes;
+                  }
+                }
+
+              }
+
+          });
+
+  }
   getnextvalueoftrendingphotos(){
       let link = this.serverurl + 'trendingPictureListwithlimit';
       //this.musicLimit = this.musicLimit+10;
-      this.pictureSkip = this.pictureSkip+10;
+      this.pictureSkip = this.pictureSkip+4;
       console.log(this.pictureLimit);
       console.log(this.pictureSkip);
       this._http.post(link,{'limit':this.pictureLimit,'skip':this.pictureSkip})
@@ -990,17 +1242,22 @@ export class MediawallComponent implements OnInit {
             this._http.post(link4, data)
                 .subscribe(res=> {
 
+                  this.showLoader = 1;
                     var result = res.json();
                     // console.log(result);
                     if (result.status == 'success') {
 
 
 
-                            this.getallvideo();
+                     /* this.getallvideo();
+                      this.getfeedofusers();*/
+                      this.getallcurrentvideo();
 
+                      this.showLoader = 0;
 
                         // console.log('suceess like');
                     }
+
                 })
 
         }
@@ -1021,10 +1278,11 @@ export class MediawallComponent implements OnInit {
                     if (result.status == 'success') {
 
 
-                            this.getallvideo();
+                      /*this.getallvideo();
+                      this.getfeedofusers();*/
+                      this.getallcurrentvideo();
 
-
-                        // console.log('suceess unlike');
+                        console.log('suceess unlike');
                     }
                 })
         }
@@ -1117,13 +1375,9 @@ export class MediawallComponent implements OnInit {
                      console.log(res.item);*/
 
                     this.getallpicture();
-
                     this.getallmusic();
-
                     this.getallvideo();
                     this.getfeedofusers();
-
-
 
                     this.commentval='';
                     /*console.log('this.tabselectedpictureindex');
@@ -1135,11 +1389,142 @@ export class MediawallComponent implements OnInit {
                      this.selectedpicture = this.picturedetailArray[this.selectedpictureindex];
                      }*/
 
+                })
+        }
+    }
+  addcommentformusic(val:any,valid:any){
 
+        /* console.log('val');
+         console.log(val);
+         console.log(valid);
+         console.log(this.commentvalMusic[valid]);*/
 
+        /*  // this.selectedpicture = val;
+         console.log('this.musicArray');
+         console.log(this.musicArray);
+         */
 
+        /*  console.log('this.currentaudioid');
+         console.log(this.currentaudioid);
+
+         console.log(val.keyCode);
+         console.log(val.shiftKey);*/
+        if(val.keyCode==13 && !val.shiftKey && this.commentvalMusic[valid].length>0){
+
+            /*console.log('submit comment here ....');*/
+            let link = this.serverurl+'addcomment';
+          this.showLoader = 1;
+            let data = {'post_id': valid,'user_id':this.user_id, 'comment':this.commentvalMusic[valid]};
+            /* console.log('data');
+             console.log(data);*/
+            this._http.post(link, data)
+                .subscribe(val =>{
+
+                    var res = val.json();
+
+                    this.getallcurrentmusic();
+
+                    this.commentvalMusic[valid]='';
+
+                  this.showLoader = 0;
 
                 })
+
+        }
+    }
+  addcommentforvideo(val:any,valid:any){
+
+
+     console.log('val');
+     console.log(val);
+     console.log(valid);
+     console.log(this.commentvalVideo[valid]);
+        if(val.keyCode==13 && !val.shiftKey && this.commentvalVideo[valid].length>0){
+
+
+            /*console.log('submit comment here ....');*/
+            let link = this.serverurl+'addcomment';
+          this.showLoader = 1;
+            let data = {'post_id': valid,'user_id':this.user_id, 'comment':this.commentvalVideo[valid]};
+            /* console.log('data');
+             console.log(data);*/
+            this._http.post(link, data)
+                .subscribe(val =>{
+
+
+
+                    var res = val.json();
+
+                    this.getallcurrentvideo();
+
+                    this.commentvalVideo[valid]='';
+
+                  this.showLoader = 0;
+                    /*console.log('this.tabselectedpictureindex');
+                     console.log(this.tabselectedpictureindex);
+                     if(this.selectedpictureindex>0){
+                     console.log('selected picture index block');
+
+                     // this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
+                     this.selectedpicture = this.picturedetailArray[this.selectedpictureindex];
+                     }*/
+
+                });
+
+        }
+    }
+  addcommentforpicture(val:any,valid:any){
+
+        // console.log('val');
+        // console.log(val);
+
+        /*  // this.selectedpicture = val;
+         console.log('this.musicArray');
+         console.log(this.musicArray);
+         */
+
+        /*  console.log('this.currentaudioid');
+         console.log(this.currentaudioid);
+
+         console.log(val.keyCode);
+         console.log(val.shiftKey);*/
+        if(val.keyCode==13 && !val.shiftKey && this.commentvalPicture[valid].length>0){
+
+
+            /*console.log('submit comment here ....');*/
+            let link = this.serverurl+'addcomment';
+          this.showLoader = 1;
+            let data = {'post_id': valid,'user_id':this.user_id, 'comment':this.commentvalPicture[valid]};
+            /* console.log('data');
+             console.log(data);*/
+            this._http.post(link, data)
+                .subscribe(val =>{
+
+                    var res = val.json();
+                    /*  console.log('success');
+                     console.log('res');
+                     console.log(res.item);*/
+
+                    this.getallpicture();
+                    /*this.getallmusic();
+                    this.getallvideo();*/
+                    this.getfeedofusers();
+
+                    this.commentvalPicture[valid]='';
+
+                  this.showLoader = 0;
+                    /*console.log('this.tabselectedpictureindex');
+                     console.log(this.tabselectedpictureindex);
+                     if(this.selectedpictureindex>0){
+                     console.log('selected picture index block');
+
+                     // this.showpicturedetail(this.picturedetailArray[this.selectedpictureindex]);
+                     this.selectedpicture = this.picturedetailArray[this.selectedpictureindex];
+                     }*/
+
+                })
+
+
         }
     }
 
